@@ -6,7 +6,7 @@
 
 # Projeto Interdisciplinar: Website Responsivo
 
-## Nome do Grupo: ClassSync
+## Nome do Grupo: **ClassSync**
 
 ## Integrantes: <a href="">Matheus Gajewski de Melo</a>, <a href="">Mel Oliva</a>, <a href="">Rayna Froes</a>
 
