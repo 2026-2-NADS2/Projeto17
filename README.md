@@ -30,56 +30,45 @@ O sistema possui três perfis: Administrador, Professor e Pai/Responsável, cada
 -Raiz<br>
 |<br>
 |-->documentos<br>
-  &emsp;|-->antigos<br>
-  &emsp;|Documentação.docx<br>
-|-->executáveis<br>
-  &emsp;|-->windows<br>
-  &emsp;|-->android<br>
-  &emsp;|-->HTML<br>
+|  &emsp;|-->Entrega 1<br>
+|  &emsp; &emsp;|-->BD<br>
+|  &emsp; &emsp;|-->Desenvolvimento Web Fullstack<br>
+|  &emsp; &emsp;|-->Design de Interface Digital<br>
+|  &emsp; &emsp;|-->Estrutura de Dados<br>
+|  &emsp; &emsp;|-->POO<br>
+|  &emsp; &emsp;|-->Venha para a FECAP!.txt<br>
+|  &emsp;|-->Entrega 2<br>
+|  &emsp; &emsp;|-->BD<br>
+|  &emsp; &emsp;|-->Desenvolvimento Web Fullstack<br>
+|  &emsp; &emsp;|-->Design de Interface Digital<br>
+|  &emsp; &emsp;|-->Estrutura de Dados<br>
+|  &emsp; &emsp;|-->POO<br>
+|  &emsp; &emsp;|-->Venha para a FECAP!.txt<br>
+|  &emsp;|-->Documento - Projeto de Extensão - COM Empresa - 2026_1.docx<br>
+|  &emsp;|-->MODELO_BANNER_FECAP_2026_1.pptx<br>
+|  &emsp;|-->README.md<br>
+|  &emsp;|-->Venha para a FECAP!.txt<br>
+|<br>
 |-->imagens<br>
+|  &emsp;|-->Logo<br>
+|  &emsp; &emsp;|-->BANNER - ClassSync.png<br>
+|<br>
 |-->src<br>
-  &emsp;|-->Backend<br>
-  &emsp;|-->Frontend<br>
+|  &emsp;|-->Entrega 1<br>
+|  &emsp; &emsp;|-->Backend<br>
+|  &emsp; &emsp;&emsp;|-->src<br>
+|  &emsp; &emsp;|-->Frontend<br>
+|  &emsp; &emsp;&emsp;|-->public<br>
+|  &emsp; &emsp;&emsp;|-->src<br>
+|  &emsp; &emsp;&emsp;&emsp;|-->assets<br>
+|  &emsp; &emsp;&emsp;&emsp;|-->components<br>
+|  &emsp; &emsp;&emsp;&emsp;|-->pages<br>
+|  &emsp;|-->Entrega 2<br>
+|  &emsp; &emsp;|-->Backend<br>
+|  &emsp; &emsp;|-->Frontend<br>
+|<br>
+|.gitignore<br>
 |readme.md<br>
-
-A pasta raiz contem dois arquivos que devem ser alterados:
-
-<b>README.MD</b>: Arquivo que serve como guia e explicação geral sobre seu projeto. O mesmo que você está lendo agora.
-
-Há também 4 pastas que seguem da seguinte forma:
-
-<b>documentos</b>: Toda a documentação estará nesta pasta.
-
-<b>executáveis</b>: Binários e executáveis do projeto devem estar nesta pasta.
-
-<b>imagens</b>: Imagens do sistema
-
-<b>src</b>: Pasta que contém o código fonte.
-
-## 📥 Instalação
-
-<b>Android:</b>
-
-Faça o Download do JOGO.apk no seu celular.
-Execute o APK e siga as instruções de seu telefone.
-
-```sh
-Coloque código do prompt de comnando se for necessário
-```
-
-<b>Windows:</b>
-
-Não há instalação! Apenas executável!
-Encontre o JOGO.exe na pasta executáveis e execute-o como qualquer outro programa.
-
-```sh
-Coloque código do prompt de comnando se for necessário
-```
-
-<b>HTML:</b>
-
-Não há instalação!
-Encontre o index.html na pasta executáveis e execute-o como uma página WEB (através de algum browser).
 
 ## 💻 Configuração para Desenvolvimento
 
@@ -102,7 +91,8 @@ Coloque código do prompt de comnando se for necessário
   <img align="center" alt="logo-css" height="30" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" />
   <img align="center" alt="logo-js" height="30" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" />
   <img align="center" alt="logo-react" height="30" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" />
-  <img align="center" alt="logo-react" height="30" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" />
+  <img align="center" alt="logo-node" height="30" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" />
+  <img align="center" alt="logo-mysql" height="30" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" />
   <img align="center" alt="logo-figma" height="30" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" />
   <img align="center" alt="logo-vscode" height="30" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" />
 </div>
