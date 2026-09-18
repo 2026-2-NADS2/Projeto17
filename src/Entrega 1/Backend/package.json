@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/2026-2-NADS2/Projeto17#readme",
   "dependencies": {
+    "cors": "^2.8.6",
     "express": "^5.2.1"
   }
 }
