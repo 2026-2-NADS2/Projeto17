@@ -20,6 +20,8 @@
   "homepage": "https://github.com/2026-2-NADS2/Projeto17#readme",
   "dependencies": {
     "cors": "^2.8.6",
-    "express": "^5.2.1"
+    "dotenv": "^18.0.1",
+    "express": "^5.2.1",
+    "mysql2": "^3.24.4"
   }
 }
