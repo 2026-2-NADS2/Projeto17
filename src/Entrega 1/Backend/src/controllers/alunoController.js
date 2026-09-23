@@ -28,4 +28,22 @@ async function criarAluno(req, res) {
   }
 }
 
-module.exports = { listarAlunos, buscarAluno, criarAluno };
+async function atualizarAluno(req, res) {
+  try {
+    const aluno = await AlunoService.atualizarAluno(req.params.id, req.body);
+    res.status(200).json(aluno);
+  } catch (error) {
+    res.status(400).json({ erro: error.message });
+  }
+}
+
+async function excluirAluno(req, res) {
+  try {
+    await AlunoService.excluirAluno(req.params.id);
+    res.status(200).json({ mensagem: "Aluno excluído com sucesso." });
+  } catch (error) {
+    res.status(404).json({ erro: error.message });
+  }
+}
+
+module.exports = { listarAlunos, buscarAluno, criarAluno, atualizarAluno, excluirAluno };

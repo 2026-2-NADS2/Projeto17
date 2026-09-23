@@ -23,6 +23,19 @@ class AlunoRepository {
     );
     return resultado.insertId;
   }
+
+  async atualizar(id, aluno) {
+    const [resultado] = await pool.query(
+      "UPDATE aluno SET nome = ?, data_nascimento = ?, id_turma = ? WHERE id_aluno = ?",
+      [aluno.nome, aluno.dataNascimento, aluno.idTurma, id]
+    );
+    return resultado.affectedRows > 0;
+  }
+
+  async excluir(id) {
+    const [resultado] = await pool.query("DELETE FROM aluno WHERE id_aluno = ?", [id]);
+    return resultado.affectedRows > 0;
+  }
 }
 
 module.exports = new AlunoRepository();

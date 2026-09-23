@@ -24,6 +24,25 @@ class AlunoService {
     const id = await AlunoRepository.criar(aluno);
     return new Aluno(aluno.nome, aluno.dataNascimento, aluno.idTurma, id);
   }
+
+  async atualizarAluno(id, dados) {
+    const aluno = new Aluno(dados.nome, dados.dataNascimento, dados.idTurma, id);
+    aluno.validar();
+
+    const atualizado = await AlunoRepository.atualizar(id, aluno);
+    if (!atualizado) {
+      throw new Error("Aluno não encontrado para atualização.");
+    }
+    return aluno;
+  }
+
+  async excluirAluno(id) {
+    const excluido = await AlunoRepository.excluir(id);
+    if (!excluido) {
+      throw new Error("Aluno não encontrado para exclusão.");
+    }
+    return true;
+  }
 }
 
 module.exports = new AlunoService();
