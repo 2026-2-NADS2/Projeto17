@@ -1,10 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const alunoRoutes = require("./routes/alunoRoutes");
 const PORT = 3000;
 
 app.use(cors());
 app.use(express.json());
+app.use("/api/alunos", alunoRoutes);
 
 const pool = require("./config/database");
 
