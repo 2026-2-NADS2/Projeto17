@@ -1,11 +1,16 @@
-import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LayoutPublico from './components/LayoutPublico/LayoutPublico';
+import Home from './pages/Home';
 
 function App() {
   return (
-    <div>
-      <h1>Bem-vindo ao ClassSync!</h1>
-      <p>Esta é a página inicial do aplicativo.</p>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<LayoutPublico />}>
+          <Route path="/" element={<Home />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
