@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import PerspectivaCard from '../components/PerspectivaCard/PerspectivaCard';
-import EmBreveCard from '../components/EmBreveCard/EmBreveCard';
-import PassoCard from '../components/PassoCard/PassoCard';
+import PerspectivaCard from '../../components/PerspectivaCard/PerspectivaCard';
+import EmBreveCard from '../../components/EmBreveCard/EmBreveCard';
+import PassoCard from '../../components/PassoCard/PassoCard';
 import './Home.css';
 
 function Home() {
