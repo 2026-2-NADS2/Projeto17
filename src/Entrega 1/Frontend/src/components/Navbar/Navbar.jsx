@@ -6,7 +6,9 @@ function Navbar() {
     <header className="navbar">
       <div className="navbar-logo">
         <span className="navbar-logo-icon">◆</span>
-        <span>ClassSync</span>
+        <span className="navbar-logo-texto">
+          Class<span className="navbar-logo-sync">Sync</span>
+        </span>
       </div>
 
       <nav className="navbar-links">

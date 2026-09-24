@@ -47,3 +47,11 @@
 .navbar-btn-entrar:hover {
   background-color: #4338CA;
 }
+
+.navbar-logo-texto {
+  color: #ffffff;
+}
+
+.navbar-logo-sync {
+  color: #60A5FA;
+}
