@@ -3,7 +3,6 @@
   flex-direction: column;
   align-items: flex-start;
   flex: 1;
-  position: relative;
 }
 
 .passo-numero-linha {
@@ -18,11 +17,12 @@
   height: 32px;
   min-width: 32px;
   border-radius: 50%;
-  background-color: #4F46E5;
+  background-color: #0247CB;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: 'Sora', sans-serif;
   font-weight: 700;
   font-size: 14px;
   z-index: 1;
@@ -30,9 +30,33 @@
 
 .passo-linha {
   height: 2px;
-  background-color: #4F46E5;
+  background-color: #0247CB;
   flex: 1;
   margin-left: -1px;
+}
+
+.passo-conteudo {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(15, 27, 51, 0.08);
+}
+
+.passo-conteudo h4 {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #0F1B33;
+  margin-bottom: 6px;
+}
+
+.passo-conteudo p {
+  font-family: 'Sora', sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  color: #5A6B8C;
+  line-height: 1.4;
 }
 
 .passo-conteudo {

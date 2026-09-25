@@ -1,23 +1,26 @@
 .em-breve-card {
   background-color: #ffffff;
-  border-radius: 12px;
+  border-radius: 10px;
   padding: 20px;
   flex: 1;
 }
 
 .em-breve-tag {
   display: inline-block;
-  background-color: #4F46E5;
+  background-color: #0247CB;
   color: #ffffff;
-  font-size: 11px;
+  font-family: 'Sora', sans-serif;
   font-weight: 700;
+  font-size: 11px;
   padding: 4px 10px;
   border-radius: 6px;
   margin-bottom: 12px;
 }
 
 .em-breve-card p {
+  font-family: 'Sora', sans-serif;
+  font-weight: 300;
   font-size: 14px;
-  color: #4B5563;
+  color: #0F1B33;
   line-height: 1.5;
 }

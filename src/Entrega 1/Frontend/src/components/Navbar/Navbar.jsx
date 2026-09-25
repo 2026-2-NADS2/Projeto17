@@ -1,15 +1,13 @@
 import { Link } from 'react-router-dom';
+import logo from '../../assets/Logo_ClassSync.svg';
 import './Navbar.css';
 
 function Navbar() {
   return (
     <header className="navbar">
-      <div className="navbar-logo">
-        <span className="navbar-logo-icon">◆</span>
-        <span className="navbar-logo-texto">
-          Class<span className="navbar-logo-sync">Sync</span>
-        </span>
-      </div>
+      <Link to="/" className="navbar-logo">
+        <img src={logo} alt="ClassSync" />
+      </Link>
 
       <nav className="navbar-links">
         <Link to="/servicos">Serviços</Link>

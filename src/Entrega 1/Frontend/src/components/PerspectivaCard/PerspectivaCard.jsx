@@ -1,10 +1,11 @@
+import iconeModulo from '../../assets/Ícone_módulos.svg';
 import './PerspectivaCard.css';
 
 function PerspectivaCard({ titulo, descricao }) {
   return (
     <div className="perspectiva-card">
       <div className="perspectiva-card-icone">
-        <span>◆</span>
+        <img src={iconeModulo} alt="" />
       </div>
       <h3>{titulo}</h3>
       <p>{descricao}</p>
