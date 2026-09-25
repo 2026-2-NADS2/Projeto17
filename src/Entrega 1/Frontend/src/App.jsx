@@ -5,6 +5,7 @@ import NotFound from './pages/NotFound/NotFound';
 import Login from './pages/Login/Login';
 import DashboardProfessor from './pages/DashboardProfessor/DashboardProfessor';
 import DashboardAdmin from './pages/DashboardAdmin/DashboardAdmin';
+import DashboardResponsavel from './pages/DashboardResponsavel/DashboardResponsavel';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/entrar" element={<Login />} />
         <Route path="/professor" element={<DashboardProfessor />} />
         <Route path="/admin" element={<DashboardAdmin />} />
+        <Route path="/responsavel" element={<DashboardResponsavel />} />
       </Routes>
     </BrowserRouter>
   );
