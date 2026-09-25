@@ -8,6 +8,7 @@
 
 body {
   font-family: 'Sora', sans-serif;
+  min-width: 700px;
 }
 
 a {
