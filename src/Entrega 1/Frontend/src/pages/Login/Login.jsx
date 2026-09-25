@@ -77,10 +77,6 @@ function Login() {
             <button type="submit" className="login-btn-entrar">Entrar</button>
           </form>
 
-          <p className="login-cadastro">
-            Ainda não tem conta? <Link to="/cadastro">Cadastre-se</Link>
-          </p>
-
           <hr className="login-linha" />
 
           <p className="login-demo-titulo">DEMONSTRAÇÃO — ENTRAR COMO</p>

@@ -3,7 +3,6 @@ import LayoutPublico from './components/LayoutPublico/LayoutPublico';
 import Home from './pages/Home/Home';
 import NotFound from './pages/NotFound/NotFound';
 import Login from './pages/Login/Login';
-import Cadastro from './pages/Cadastro/Cadastro';
 import DashboardProfessor from './pages/DashboardProfessor/DashboardProfessor';
 import DashboardAdmin from './pages/DashboardAdmin/DashboardAdmin';
 
@@ -13,7 +12,6 @@ function App() {
       <Routes>
         <Route element={<LayoutPublico />}>
           <Route path="/" element={<Home />} />
-          <Route path="/cadastro" element={<Cadastro />} />
           <Route path="*" element={<NotFound />} />
         </Route>
 
