@@ -1,0 +1,50 @@
+.card-atalho {
+  min-height: 128px;
+  padding: 18px;
+  border: 1px solid #E1E7F0;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+}
+
+.card-atalho__icone {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  margin-bottom: 18px;
+  border-radius: 6px;
+  background-color: #E6F0FF;
+}
+
+.card-atalho__icone span {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background-color: #0247CB;
+}
+
+.card-atalho__titulo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 6px;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.card-atalho__selo {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background-color: #FFF4D6;
+  color: #A66A00;
+  font-size: 0.62rem;
+  font-weight: 600;
+}
+
+.card-atalho__descricao {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: #5A6B8C;
+}
