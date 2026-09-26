@@ -1,0 +1,21 @@
+.resumo-rel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 18px 20px;
+  border-radius: 10px;
+  background-color: #EAFBF0;
+}
+
+.resumo-rel__titulo {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #146C3A;
+}
+
+.resumo-rel__detalhe {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  color: #1F8A4C;
+}
