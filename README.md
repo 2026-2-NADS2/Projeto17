@@ -72,17 +72,66 @@ O sistema possui três perfis: Administrador, Professor e Pai/Responsável, cada
 
 ## 💻 Configuração para Desenvolvimento
 
-Descreva como instalar todas as dependências para desenvolvimento e como rodar um test-suite automatizado de algum tipo. Se necessário, faça isso para múltiplas plataformas.
 
-Para abrir este projeto você necessita das seguintes ferramentas:
+### Pré-requisitos
+- Node.js instalado (verifique com `node -v`)
+- MySQL Server instalado e rodando (versão 8.0.x)
+- Git instalado
 
--<a href="https://godotengine.org/download">GODOT</a>
+### 1. Clonar o repositório
 
-```sh
-make install
-npm test
-Coloque código do prompt de comnando se for necessário
+```bash
+git clone https://github.com/2026-2-NADS2/Projeto17.git
+cd Projeto17
 ```
+
+### 2. Configurar o Backend
+
+```bash
+cd "src/Entrega 1/Backend"
+npm install
+```
+
+Crie um arquivo `.env` dentro da pasta `Backend`, copiando o modelo de `.env.example`, com as seguintes variáveis:
+PORT=3000
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=sua_senha_aqui
+DB_NAME=classsync
+
+### 3. Configurar o Banco de Dados
+
+1. Abra o MySQL Workbench (ou outro cliente de sua preferência) e conecte usando as mesmas credenciais do `.env`.
+2. Execute o script localizado em `Backend/database/schema.sql` para criar o banco `classsync`, suas tabelas, índices e views.
+
+### 4. Rodar o Backend
+
+Ainda dentro da pasta `Backend`:
+
+```bash
+npm run dev
+```
+
+O servidor deve iniciar em `http://localhost:3000`. Para testar, acesse `http://localhost:3000/api/teste` no navegador — deve aparecer a mensagem "ClassSync API funcionando!".
+
+### 5. Configurar e rodar o Frontend
+
+Em um novo terminal:
+
+```bash
+cd "src/Entrega 1/Frontend"
+npm install
+npm run dev
+```
+
+O frontend deve iniciar em `http://localhost:5173`. Acesse esse endereço no navegador para visualizar o sistema.
+
+### Observações importantes
+
+- O Backend e o Frontend precisam estar rodando **ao mesmo tempo**, em terminais separados, para o sistema funcionar por completo.
+- Sem o MySQL configurado e rodando, as telas que consomem dados reais (como o Dashboard do Administrador e a Home do Responsável) vão exibir uma mensagem de erro de conexão — isso é esperado nesse cenário, mas a interface e a navegação continuam funcionando normalmente.
+- Para testar o fluxo completo de login, use os botões de demonstração ("Entrar como Professor/Administrador/Responsável") na tela de Login, já que a autenticação real ainda não foi implementada nesta entrega.
 
 ## 🛠️ Tecnologias e Ferramentas Utilizadas
 
