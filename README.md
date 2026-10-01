@@ -113,7 +113,15 @@ Ainda dentro da pasta `Backend`:
 npm run dev
 ```
 
-O servidor deve iniciar em `http://localhost:3000`. Para testar, acesse `http://localhost:3000/api/teste` no navegador — deve aparecer a mensagem "ClassSync API funcionando!".
+Esse comando usa o `nodemon`, que reinicia o servidor automaticamente a cada alteração nos arquivos.
+
+Se preferir rodar sem o reinício automático, também é possível com:
+
+```bash
+node src/server.js
+```
+
+Qualquer um dos dois comandos inicia o servidor em `http://localhost:3000`. Para confirmar que está funcionando, acesse `http://localhost:3000/api/teste` no navegador — deve aparecer a mensagem "ClassSync API funcionando!".
 
 ### 5. Configurar e rodar o Frontend
 
