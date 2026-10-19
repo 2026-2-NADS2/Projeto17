@@ -1,0 +1,73 @@
+.estado-req {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 16px 18px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+}
+
+.estado-req__mensagem {
+  margin: 0;
+}
+
+.estado-req--carregando,
+.estado-req--vazio {
+  background-color: #F7F9FC;
+  color: #5A6B8C;
+}
+
+.estado-req--erro {
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid #F5C2C2;
+  background-color: #FDF0F0;
+  color: #8A1C1C;
+}
+
+.estado-req__titulo {
+  font-weight: 600;
+}
+
+.estado-req__spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #D5DEEC;
+  border-top-color: #0247CB;
+  border-radius: 50%;
+  animation: estado-req-girar 0.8s linear infinite;
+}
+
+.estado-req__botao {
+  margin-top: 4px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #0247CB;
+  color: #FFFFFF;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.estado-req__botao:hover {
+  background-color: #2695FD;
+}
+
+.estado-req__botao:focus-visible {
+  outline: 2px solid #2695FD;
+  outline-offset: 2px;
+}
+
+@keyframes estado-req-girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .estado-req__spinner {
+    animation-duration: 2.4s;
+  }
+}

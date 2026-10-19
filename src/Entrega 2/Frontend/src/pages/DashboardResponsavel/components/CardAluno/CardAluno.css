@@ -1,0 +1,33 @@
+.card-aluno {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid #E1E7F0;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+}
+
+.card-aluno__avatar {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #E6F0FF;
+  color: #0247CB;
+  font-weight: 700;
+}
+
+.card-aluno__nome {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.card-aluno__info {
+  margin: 2px 0 0;
+  font-size: 0.8rem;
+  color: #5A6B8C;
+}

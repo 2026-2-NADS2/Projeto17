@@ -1,0 +1,49 @@
+.campo-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo-label {
+  font-family: 'Sora', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #0F1B33;
+}
+
+.campo-input {
+  font-family: 'Sora', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  color: #0F1B33;
+  padding: 12px 14px;
+  border: 1.5px solid #D5DDEB;
+  border-radius: 8px;
+  background-color: #ffffff;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.campo-input::placeholder {
+  color: #9AA7BF;
+}
+
+.campo-input:focus {
+  border-color: #2695FD;
+  box-shadow: 0 0 0 3px rgba(38, 149, 253, 0.15);
+}
+
+.campo-input--erro {
+  border-color: #D93025;
+}
+
+.campo-input--erro:focus {
+  border-color: #D93025;
+  box-shadow: 0 0 0 3px rgba(217, 48, 37, 0.15);
+}
+
+.campo-erro {
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  color: #D93025;
+}

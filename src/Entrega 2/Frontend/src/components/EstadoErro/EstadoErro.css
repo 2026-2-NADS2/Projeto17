@@ -1,0 +1,78 @@
+.estado-erro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 48px 24px;
+  background: #FFFFFF;
+  border: 1px solid #F6C9CB;
+  border-radius: 16px;
+}
+
+.estado-erro__icone {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #FDE2E3;
+  color: #A12222;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.estado-erro h2 {
+  margin: 0 0 8px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #0F1B33;
+}
+
+.estado-erro p {
+  margin: 0 0 24px;
+  max-width: 52ch;
+  color: #5A6B8C;
+  line-height: 1.5;
+}
+
+.estado-erro__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.estado-erro__botao {
+  font-family: inherit; /* botões não herdam a fonte sozinhos */
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.estado-erro__botao--primario {
+  background: #2695FD;
+  color: #FFFFFF;
+  border: 1px solid #2695FD;
+}
+
+.estado-erro__botao--primario:hover {
+  background: #1580E6;
+}
+
+.estado-erro__botao--secundario {
+  background: transparent;
+  color: #0247CB;
+  border: 1px solid #C9D4E6;
+}
+
+.estado-erro__botao--secundario:hover {
+  background: #F7F9FC;
+}
+
+.estado-erro__botao:focus-visible {
+  outline: 2px solid #0247CB;
+  outline-offset: 2px;
+}

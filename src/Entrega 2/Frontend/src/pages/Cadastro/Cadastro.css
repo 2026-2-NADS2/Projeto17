@@ -1,0 +1,99 @@
+.cadastro {
+  background-color: #F7F9FC;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 64px 24px;
+  font-family: 'Sora', sans-serif;
+}
+
+.cadastro-card {
+  width: 100%;
+  max-width: 520px;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(15, 27, 51, 0.08);
+}
+
+.cadastro-titulo {
+  font-weight: 700;
+  font-size: 28px;
+  color: #0F1B33;
+  margin: 0 0 8px;
+}
+
+.cadastro-subtitulo {
+  font-weight: 300;
+  font-size: 15px;
+  color: #5A6B8C;
+  margin: 0 0 32px;
+}
+
+.cadastro-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cadastro-linha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.cadastro-btn {
+  margin-top: 8px;
+  background-color: #2695FD;
+  color: #ffffff;
+  font-family: 'Sora', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.cadastro-btn:hover {
+  opacity: 0.9;
+}
+
+.cadastro-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cadastro-alerta {
+  background-color: #FDECEA;
+  color: #B3261E;
+  border: 1px solid #F5C2BE;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.cadastro-rodape {
+  text-align: center;
+  margin: 24px 0 0;
+  font-size: 14px;
+  color: #5A6B8C;
+}
+
+.cadastro-rodape a {
+  color: #0247CB;
+  font-weight: 600;
+}
+
+/* Celular: campos de senha um embaixo do outro */
+@media (max-width: 560px) {
+  .cadastro-card {
+    padding: 28px 20px;
+  }
+
+  .cadastro-linha {
+    grid-template-columns: 1fr;
+  }
+}

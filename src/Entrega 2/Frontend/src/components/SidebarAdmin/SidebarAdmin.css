@@ -1,0 +1,111 @@
+.sidebar-admin {
+  width: 280px;
+  flex-shrink: 0;
+  background: #111B4C;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 16px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.sidebar-admin__topo {
+  display: flex;
+  flex-direction: column;
+  padding: 0 12px;
+  margin-bottom: 36px;
+}
+
+.sidebar-admin__marca {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.sidebar-admin__perfil {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.sidebar-admin__nav {
+  flex: 1;
+}
+
+.sidebar-admin__menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-admin__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.sidebar-admin__item--ativo {
+  background: #0247CB;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.sidebar-admin__tag {
+  font-size: 0.7rem;
+  font-weight: 400;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
+}
+
+.sidebar-admin__sair {
+  color: #FFFFFF;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 600;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.sidebar-admin__sair:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-admin__sair:focus-visible {
+  outline: 2px solid #2695FD;
+  outline-offset: 2px;
+}
+
+/* Celular: a lateral vira uma barra no topo */
+@media (max-width: 768px) {
+  .sidebar-admin {
+    width: 100%;
+    height: auto;
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+  }
+
+  .sidebar-admin__topo {
+    margin-bottom: 0;
+    padding: 0;
+  }
+
+  .sidebar-admin__nav {
+    display: none;
+  }
+}
