@@ -3,12 +3,15 @@ const cors = require('cors');
 const app = express();
 const alunoRoutes = require("./routes/alunoRoutes");
 const acompanhamentoRoutes = require("./routes/acompanhamentoRoutes");
+const authRoutes = require("./routes/authRoutes");
 const PORT = 3000;
 
 app.use(cors());
 app.use(express.json());
 app.use("/api/alunos", alunoRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/api/acompanhamentos", acompanhamentoRoutes);
+
 const pool = require("./config/database");
 
 // Rota de teste para verificar a conexão com o banco de dados
