@@ -26,12 +26,12 @@ function App() {
         <Route path="/entrar" element={<Login />} />
         <Route path="/professor" element={<DashboardProfessor />} />
         <Route path="/professor/turmas" element={<TelaTurmas />} />
-<Route path="/professor/disciplinas" element={<Disciplinas />} />
-<Route path="/professor/acompanhamentos" element={<AcompanhamentosAlunos />} />
-<Route path="/professor/criar-acompanhamento" element={<CriarAcompanhamento />} />
-<Route path="/professor/enviados" element={<EnviadosAdministracao />} />
-<Route path="/professor/devolvidos" element={<RegistrosDevolvidos />} />
-<Route path="/professor/perfil" element={<MeuPerfil />} />
+        <Route path="/professor/disciplinas" element={<Disciplinas />} />
+        <Route path="/professor/acompanhamentos" element={<AcompanhamentosAlunos />} />
+        <Route path="/professor/criar-acompanhamento" element={<CriarAcompanhamento />} />
+        <Route path="/professor/enviados" element={<EnviadosAdministracao />} />
+        <Route path="/professor/devolvidos" element={<RegistrosDevolvidos />} />
+        <Route path="/professor/perfil" element={<MeuPerfil />} />
         <Route path="/admin" element={<DashboardAdmin />} />
         <Route path="/responsavel" element={<DashboardResponsavel />} />
       </Routes>
