@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const UsuarioRepository = require("../repositories/UsuarioRepository");
 const Usuario = require("../models/Usuario");
@@ -54,7 +55,13 @@ class AuthService {
       throw new Error("Credenciais inválidas.");
     }
 
-    return usuario.paraResposta();
+    const token = jwt.sign(
+      { id: usuario.id, perfil: usuario.perfil },
+      process.env.JWT_SECRET,
+      { expiresIn: "2h" }
+    );
+
+    return { token, usuario: usuario.paraResposta() };
   }
 
   async cadastrarUsuario(dados) {
