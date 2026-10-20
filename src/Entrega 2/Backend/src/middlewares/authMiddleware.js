@@ -16,4 +16,13 @@ function autenticar(req, res, next) {
   }
 }
 
-module.exports = { autenticar };
+function exigirPerfil(...perfisPermitidos) {
+  return (req, res, next) => {
+    if (!req.usuario || !perfisPermitidos.includes(req.usuario.perfil)) {
+      return res.status(403).json({ erro: "Acesso negado para este perfil." });
+    }
+    next();
+  };
+}
+
+module.exports = { autenticar, exigirPerfil };
