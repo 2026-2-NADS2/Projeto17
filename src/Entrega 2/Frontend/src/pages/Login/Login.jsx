@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import banner from '../../assets/BANNER - ClassSync.png';
+import { login, rotaDoPerfil } from '../../services/authService';
 import './Login.css';
 
 function Login() {
@@ -8,13 +9,14 @@ function Login() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
+  const [carregando, setCarregando] = useState(false);
 
   function validarEmail(valor) {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(valor);
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     setErro('');
 
@@ -28,12 +30,19 @@ function Login() {
       return;
     }
 
-    if (senha.length < 6) {
-      setErro('A senha deve ter pelo menos 6 caracteres.');
-      return;
+    try {
+      setCarregando(true);
+      const usuario = await login(email.trim(), senha);
+      navigate(rotaDoPerfil(usuario.perfil));
+    } catch (error) {
+      if (error.response) {
+        setErro(error.response.data?.erro || 'Não foi possível entrar.');
+      } else {
+        setErro('Servidor indisponível. Tente novamente em instantes.');
+      }
+    } finally {
+      setCarregando(false);
     }
-
-    navigate('/professor');
   }
 
   return (
@@ -74,7 +83,9 @@ function Login() {
 
             {erro && <p className="login-erro">{erro}</p>}
 
-            <button type="submit" className="login-btn-entrar">Entrar</button>
+            <button type="submit" className="login-btn-entrar" disabled={carregando}>
+              {carregando ? 'Entrando...' : 'Entrar'}
+            </button>
           </form>
 
           <hr className="login-linha" />
