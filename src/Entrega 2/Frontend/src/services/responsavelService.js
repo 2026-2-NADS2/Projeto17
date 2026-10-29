@@ -1,15 +1,13 @@
-import axios from 'axios';
-
-const API_URL = 'http://localhost:3000';
+import api, { extrairLista } from './api';
 
 export async function buscarAlunos() {
-  const resposta = await axios.get(`${API_URL}/api/alunos`);
-  return resposta.data;
+  const resposta = await api.get('/alunos');
+  return extrairLista(resposta.data);
 }
 
 export async function buscarRelatoriosPublicados() {
-  const resposta = await axios.get(`${API_URL}/api/acompanhamentos`);
-  return resposta.data.filter((item) => item.status === 'PUBLICADO');
+  const resposta = await api.get('/acompanhamentos');
+  return extrairLista(resposta.data).filter((item) => item.status === 'PUBLICADO');
 }
 
 export function mensagemDeErro(error) {
