@@ -1,11 +1,20 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { obterUsuario, sair } from '../../services/authService';
 import logo from '../../assets/Logo_ClassSync.svg';
 import iconeModulo from '../../assets/Ícone_módulos.svg';
 import './DashboardProfessor.css';
 
 function DashboardProfessor() {
+  const navigate = useNavigate();
+  const usuario = obterUsuario();
+
+  function handleSair() {
+    sair();
+    navigate('/entrar');
+  }
+
   const professor = {
-    nome: 'Ana Ribeiro',
+    nome: usuario?.nome || 'Professor',
     bimestre: '3º Bimestre 2026',
     bimestreAtual: '3º Bimestre',
     prazoDigitacao: '15/10',
@@ -67,7 +76,9 @@ function DashboardProfessor() {
         </div>
         <div className="dp-header-direita">
           <span>Prof. {professor.nome} · {professor.bimestre}</span>
-          <Link to="/entrar" className="dp-sair">Sair</Link>
+          <button type="button" className="dp-sair" onClick={handleSair}>
+            Sair
+          </button>
         </div>
       </header>
 

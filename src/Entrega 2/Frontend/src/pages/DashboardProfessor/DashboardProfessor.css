@@ -1,4 +1,4 @@
-.dashboard-professor {
+  .dashboard-professor {
     min-height: 100vh;
     background-color: #F7F9FC;
   }
@@ -48,6 +48,10 @@
   }
   
   .dp-sair {
+    background: none;
+    border: none;
+    font-family: 'Sora', sans-serif;
+    font-size: 13px;
     cursor: pointer;
     color: #ffffff !important;
     text-decoration: none;
