@@ -87,15 +87,7 @@ function Login() {
               {carregando ? 'Entrando...' : 'Entrar'}
             </button>
           </form>
-
-          <hr className="login-linha" />
-
-          <p className="login-demo-titulo">DEMONSTRAÇÃO — ENTRAR COMO</p>
-          <div className="login-demo-botoes">
-            <button onClick={() => navigate('/professor')}>Professor</button>
-            <button onClick={() => navigate('/admin')}>Administrador</button>
-            <button onClick={() => navigate('/responsavel')}>Responsável</button>
-          </div>
+          
         </div>
       </div>
     </div>
