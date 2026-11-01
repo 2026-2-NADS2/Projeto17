@@ -16,6 +16,28 @@ class AlunoRepository {
     return new Aluno(row.nome, row.data_nascimento, row.id_turma, row.id_aluno);
   }
 
+  async listarPorResponsavel(idResponsavel) {
+    const [rows] = await pool.query(
+      `SELECT al.*
+         FROM aluno al
+         JOIN responsavel_aluno ra ON ra.id_aluno = al.id_aluno
+        WHERE ra.id_responsavel = ?
+        ORDER BY al.nome`,
+      [idResponsavel]
+    );
+    return rows.map(
+      (row) => new Aluno(row.nome, row.data_nascimento, row.id_turma, row.id_aluno)
+    );
+  }
+
+  async responsavelTemAluno(idResponsavel, idAluno) {
+    const [rows] = await pool.query(
+      "SELECT 1 FROM responsavel_aluno WHERE id_responsavel = ? AND id_aluno = ?",
+      [idResponsavel, idAluno]
+    );
+    return rows.length > 0;
+  }
+
   async criar(aluno) {
     const [resultado] = await pool.query(
       "INSERT INTO aluno (nome, data_nascimento, id_turma) VALUES (?, ?, ?)",

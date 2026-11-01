@@ -2,7 +2,7 @@ const AlunoService = require("../services/AlunoService");
 
 async function listarAlunos(req, res) {
   try {
-    const alunos = await AlunoService.listarAlunos();
+    const alunos = await AlunoService.listarAlunos(req.usuario);
     res.status(200).json(alunos);
   } catch (error) {
     console.error(error);
@@ -12,7 +12,7 @@ async function listarAlunos(req, res) {
 
 async function buscarAluno(req, res) {
   try {
-    const aluno = await AlunoService.buscarAlunoPorId(req.params.id);
+    const aluno = await AlunoService.buscarAlunoPorId(req.params.id, req.usuario);
     res.status(200).json(aluno);
   } catch (error) {
     res.status(404).json({ erro: error.message });
