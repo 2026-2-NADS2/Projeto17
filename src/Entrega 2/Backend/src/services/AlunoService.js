@@ -2,11 +2,21 @@ const AlunoRepository = require("../repositories/AlunoRepository");
 const Aluno = require("../models/Aluno");
 
 class AlunoService {
-  async listarAlunos() {
+  async listarAlunos(usuario) {
+    if (usuario?.perfil === "RESPONSAVEL") {
+      return await AlunoRepository.listarPorResponsavel(usuario.id);
+    }
     return await AlunoRepository.listarTodos();
   }
 
-  async buscarAlunoPorId(id) {
+  async buscarAlunoPorId(id, usuario) {
+    if (usuario?.perfil === "RESPONSAVEL") {
+      const ehFilho = await AlunoRepository.responsavelTemAluno(usuario.id, id);
+      if (!ehFilho) {
+        throw new Error("Aluno não encontrado.");
+      }
+    }
+
     const aluno = await AlunoRepository.buscarPorId(id);
     if (!aluno) {
       throw new Error("Aluno não encontrado.");
