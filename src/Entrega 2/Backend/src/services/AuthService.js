@@ -79,6 +79,14 @@ class AuthService {
     const id = await UsuarioRepository.criar(usuario);
     return new Usuario(usuario.nome, usuario.email, senhaHash, usuario.perfil, true, id).paraResposta();
   }
+
+  async listarUsuarios(perfil) {
+    if (perfil && !["ADMIN", "PROFESSOR", "RESPONSAVEL"].includes(perfil)) {
+      throw new Error("Perfil inválido.");
+    }
+    const usuarios = await UsuarioRepository.listar(perfil || null);
+    return usuarios.map((usuario) => usuario.paraResposta()); // nunca devolve o hash da senha
+  }
 }
 
 module.exports = new AuthService();
