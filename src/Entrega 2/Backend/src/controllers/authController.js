@@ -18,4 +18,13 @@ async function cadastrarUsuario(req, res) {
   }
 }
 
-module.exports = { login, cadastrarUsuario };
+async function listarUsuarios(req, res) {
+  try {
+    const usuarios = await AuthService.listarUsuarios(req.query.perfil);
+    res.status(200).json(usuarios);
+  } catch (error) {
+    res.status(400).json({ erro: error.message });
+  }
+}
+
+module.exports = { login, cadastrarUsuario, listarUsuarios };

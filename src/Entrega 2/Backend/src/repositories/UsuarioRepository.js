@@ -22,6 +22,18 @@ class UsuarioRepository {
     return resultado.insertId;
   }
 
+  async listar(perfil = null) {
+    let sql = "SELECT * FROM usuario";
+    const valores = [];
+    if (perfil) {
+      sql += " WHERE perfil = ?";
+      valores.push(perfil);
+    }
+    sql += " ORDER BY nome";
+    const [rows] = await pool.query(sql, valores);
+    return rows.map((row) => this.#mapearParaObjeto(row));
+  }
+
   #mapearParaObjeto(row) {
     return new Usuario(
       row.nome,
