@@ -44,4 +44,9 @@ export function extrairLista(dados) {
   return [];
 }
 
+// Pega a mensagem de erro que o backend mandou, ou uma genérica
+export function mensagemDeErro(error) {
+  return error.response?.data?.erro || 'Servidor indisponível. Tente novamente.';
+}
+
 export default api;
