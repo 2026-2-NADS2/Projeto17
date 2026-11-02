@@ -1,5 +1,54 @@
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap');
 
+:root {
+  /* Marca */
+  --cor-navy-900: #071233;
+  --cor-navy-800: #111b4e;
+  --cor-navy-700: #1c2869;
+  --cor-azul-700: #083ca6;
+  --cor-azul-600: #0a4bcc;
+  --cor-azul-500: #2d8cf0;
+  --cor-ciano-400: #18c5f2;
+  --cor-azul-100: #d6e3fa;
+  --cor-azul-50: #e8effc;
+
+  /* Neutros */
+  --cor-neutro-900: #0f1a3a;
+  --cor-neutro-700: #3a4560;
+  --cor-neutro-600: #5b6478;
+  --cor-neutro-400: #9aa3b5;
+  --cor-neutro-200: #e2e7f0;
+  --cor-neutro-100: #eef2f7;
+  --cor-neutro-50: #f5f7fb;
+  --cor-branco: #ffffff;
+
+  /* Status do acompanhamento: texto, bolinha e fundo */
+  --status-rascunho: #7c879c;
+  --status-rascunho-bg: #eef1f5;
+  --status-enviado: #2f80ed;
+  --status-enviado-bg: #e3eefd;
+  --status-revisao: #b7790a;
+  --status-revisao-ponto: #f2a516;
+  --status-revisao-bg: #fff4d6;
+  --status-publicado: #16804b;
+  --status-publicado-ponto: #22a867;
+  --status-publicado-bg: #ddf5e8;
+  --status-devolvido: #c9560f;
+  --status-devolvido-ponto: #f07a2a;
+  --status-devolvido-bg: #fdebdd;
+  --status-cancelado: #c62f2f;
+  --status-cancelado-ponto: #e5484d;
+  --status-cancelado-bg: #fbe3e3;
+
+  /* Raios (campos/botões 6 · cards 10 · badges 999) */
+  --raio-campo: 6px;
+  --raio-card: 10px;
+  --raio-badge: 999px;
+
+  /* Sombra leve dos cards */
+  --sombra-card: 0 1px 2px rgba(15, 26, 58, 0.06);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -9,8 +58,19 @@
 body {
   font-family: 'Sora', sans-serif;
   min-width: 700px;
+  color: var(--cor-neutro-900);
+  background-color: var(--cor-neutro-50);
 }
 
 a {
   text-decoration: none;
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
 }
