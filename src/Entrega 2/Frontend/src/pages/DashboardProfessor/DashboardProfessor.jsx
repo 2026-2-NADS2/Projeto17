@@ -1,17 +1,10 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { obterUsuario, sair } from '../../services/authService';
-import logo from '../../assets/Logo_ClassSync.svg';
-import iconeModulo from '../../assets/Ícone_módulos.svg';
-import './DashboardProfessor.css';
+  import { Link } from 'react-router-dom';
+  import { obterUsuario } from '../../services/authService';
+  import iconeModulo from '../../assets/Ícone_módulos.svg';
+  import './DashboardProfessor.css';
 
 function DashboardProfessor() {
-  const navigate = useNavigate();
   const usuario = obterUsuario();
-
-  function handleSair() {
-    sair();
-    navigate('/entrar');
-  }
 
   const professor = {
     nome: usuario?.nome || 'Professor',
@@ -69,19 +62,6 @@ function DashboardProfessor() {
 
   return (
     <div className="dashboard-professor">
-      <header className="dp-header">
-        <div className="dp-header-esquerda">
-          <img src={logo} alt="ClassSync" className="dp-logo-img" />
-          <span className="dp-tag-perfil">PROFESSOR</span>
-        </div>
-        <div className="dp-header-direita">
-          <span>Prof. {professor.nome} · {professor.bimestre}</span>
-          <button type="button" className="dp-sair" onClick={handleSair}>
-            Sair
-          </button>
-        </div>
-      </header>
-
       <main className="dp-conteudo">
         <h1>Olá, {professor.nome.split(' ')[0]}</h1>
         <p className="dp-subtitulo">
