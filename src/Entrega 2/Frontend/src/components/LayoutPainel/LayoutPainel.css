@@ -53,8 +53,19 @@
   padding: 10px 12px;
   border-radius: var(--raio-campo);
   color: rgba(255, 255, 255, 0.85);
-  font-size: 14px;
+  font-size: 13.5px;
   transition: background-color 0.15s;
+  white-space: nowrap;
+}
+
+/* O ícone nunca encolhe; se faltar espaço, quem cede é o texto */
+.painel-item svg {
+  flex-shrink: 0;
+}
+
+.painel-item span {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .painel-item:hover {
