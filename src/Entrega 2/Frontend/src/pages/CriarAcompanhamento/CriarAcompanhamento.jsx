@@ -1,14 +1,22 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { ChevronRight, Info, TriangleAlert, CircleCheck, CircleX, X } from 'lucide-react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { ChevronRight, Info, TriangleAlert, CircleCheck, CircleX, X, Send, Undo2 } from 'lucide-react';
 import BadgeStatus from '../../components/BadgeStatus/BadgeStatus';
+import Modal from '../../components/Modal/Modal';
 import { listarAlunos } from '../../services/alunoService';
 import { listarTurmas, listarDisciplinas, listarBimestres, listarTags } from '../../services/catalogoService';
-import { criarAcompanhamento, atualizarAcompanhamento } from '../../services/acompanhamentoService';
+import {
+  buscarAcompanhamento,
+  criarAcompanhamento,
+  atualizarAcompanhamento,
+  enviarAcompanhamento,
+} from '../../services/acompanhamentoService';
 import { mensagemDeErro } from '../../services/api';
 import './CriarAcompanhamento.css';
 
 const LIMITE_DESCRICAO = 1000;
+const MINIMO_DESCRICAO = 20;
+const STATUS_EDITAVEIS = ['RASCUNHO', 'DEVOLVIDO'];
 
 function formatarData(valor) {
   if (!valor) return '';
@@ -26,7 +34,12 @@ function converterMedia(texto) {
   return Number(limpo);
 }
 
-function CriarAcompanhamento() {
+// 8.5 → "8,5" · null → ""
+function mediaParaTexto(valor) {
+  return valor === null || valor === undefined ? '' : String(valor).replace('.', ',');
+}
+
+function FormularioAcompanhamento({ idEdicao }) {
   const navigate = useNavigate();
 
   // Listas que vêm do backend
@@ -47,10 +60,22 @@ function CriarAcompanhamento() {
   const [tagsSelecionadas, setTagsSelecionadas] = useState([]);
 
   // Situação do registro
-  const [acompanhamento, setAcompanhamento] = useState(null); // preenchido após o 1º salvamento
+  const [acompanhamento, setAcompanhamento] = useState(null); // registro já salvo no banco
   const [salvoEm, setSalvoEm] = useState(null);
   const [salvando, setSalvando] = useState(false);
-  const [aviso, setAviso] = useState(null); // { tipo: 'sucesso' | 'erro', texto }
+  const [aviso, setAviso] = useState(null); // { tipo, titulo, texto }
+  const [erros, setErros] = useState({}); // { aluno, disciplina, descricao, media }
+  const [modalAberto, setModalAberto] = useState(false);
+
+  function preencherComRegistro(registro) {
+    setAcompanhamento(registro);
+    setIdTurma(String(registro.turma.id));
+    setIdAluno(String(registro.aluno.id));
+    setIdDisciplina(String(registro.disciplina.id));
+    setDescricao(registro.descricao || '');
+    setMedia(mediaParaTexto(registro.media));
+    setTagsSelecionadas(registro.tags.map((t) => t.id));
+  }
 
   async function carregarDados() {
     setCarregando(true);
@@ -68,6 +93,10 @@ function CriarAcompanhamento() {
       setDisciplinas(listaDisciplinas);
       setBimestres(listaBimestres);
       setTags(listaTags);
+
+      if (idEdicao) {
+        preencherComRegistro(await buscarAcompanhamento(idEdicao));
+      }
     } catch (error) {
       setErroCarregamento(mensagemDeErro(error));
     } finally {
@@ -79,13 +108,27 @@ function CriarAcompanhamento() {
     carregarDados();
   }, []);
 
-  // Valores calculados a partir do estado
-  const bimestreAberto = bimestres.find((b) => b.aberto);
+  // ---------- Valores calculados a partir do estado ----------
+  const jaSalvo = acompanhamento !== null;
+  const status = acompanhamento?.status || 'RASCUNHO';
+  const devolvido = status === 'DEVOLVIDO';
+
+  // Registro novo: bimestre aberto. Registro existente: o bimestre dele.
+  const bimestreDoRegistro = jaSalvo
+    ? bimestres.find((b) => b.id === acompanhamento.bimestre.id)
+    : bimestres.find((b) => b.aberto);
+  const periodoAberto = Boolean(bimestreDoRegistro?.aberto);
+  const podeEditar = STATUS_EDITAVEIS.includes(status) && periodoAberto;
+
   const alunosDaTurma = alunos.filter((a) => a.idTurma === Number(idTurma));
   const tagsEscolhidas = tags.filter((t) => tagsSelecionadas.includes(t.id));
   const tagsSugeridas = tags.filter((t) => !tagsSelecionadas.includes(t.id));
-  const jaSalvo = acompanhamento !== null;
 
+  const nomeAluno = alunos.find((a) => a.id === Number(idAluno))?.nome || '';
+  const nomeTurma = turmas.find((t) => t.id === Number(idTurma))?.nome || '';
+  const nomeDisciplina = disciplinas.find((d) => d.id === Number(idDisciplina))?.nome || '';
+
+  // ---------- Ações dos campos ----------
   function trocarTurma(valor) {
     setIdTurma(valor);
     setIdAluno(''); // o aluno escolhido era da turma anterior
@@ -97,54 +140,114 @@ function CriarAcompanhamento() {
     );
   }
 
-  async function salvarRascunho() {
-    setAviso(null);
+  // ---------- Validação ----------
+  // modo "rascunho": só o mínimo · modo "envio": tudo que a regra exige
+  function validar(modo) {
+    const novosErros = {};
 
-    if (!idAluno || !idDisciplina) {
-      setAviso({ tipo: 'erro', texto: 'Escolha a turma, o aluno e a disciplina antes de salvar.' });
-      return;
-    }
+    if (!idAluno) novosErros.aluno = 'Escolha a turma e o aluno.';
+    if (!idDisciplina) novosErros.disciplina = 'Escolha a disciplina.';
 
     const mediaNumero = converterMedia(media);
-    if (Number.isNaN(mediaNumero)) {
-      setAviso({ tipo: 'erro', texto: 'A média deve ser um número, como 8,5.' });
-      return;
+    const mediaInvalida =
+      mediaNumero !== null &&
+      (Number.isNaN(mediaNumero) ||
+        mediaNumero < 0 ||
+        mediaNumero > 10 ||
+        Math.abs(mediaNumero * 10 - Math.round(mediaNumero * 10)) > 1e-9); // mais de 1 casa decimal
+
+    if (mediaInvalida) {
+      novosErros.media = 'Informe um valor entre 0,0 e 10,0, com no máximo uma casa decimal.';
     }
 
+    if (modo === 'envio') {
+      if (mediaNumero === null) novosErros.media = 'A média é obrigatória para enviar.';
+      if (descricao.trim().length < MINIMO_DESCRICAO) {
+        novosErros.descricao = `A descrição é obrigatória (mínimo de ${MINIMO_DESCRICAO} caracteres).`;
+      }
+    }
+
+    setErros(novosErros);
+    return Object.keys(novosErros).length === 0;
+  }
+
+  // ---------- Salvar (cria na 1ª vez, atualiza nas próximas) ----------
+  async function salvar() {
     const dados = {
-      media: mediaNumero,
+      media: converterMedia(media),
       descricao: descricao.trim() || null,
       tags: tagsSelecionadas,
     };
 
+    const resultado = jaSalvo
+      ? await atualizarAcompanhamento(acompanhamento.id, dados)
+      : await criarAcompanhamento({
+          ...dados,
+          idAluno: Number(idAluno),
+          idDisciplina: Number(idDisciplina),
+          idBimestre: bimestreDoRegistro.id,
+        });
+
+    setAcompanhamento(resultado);
+    setSalvoEm(new Date());
+    return resultado;
+  }
+
+  async function salvarRascunho() {
+    setAviso(null);
+    if (!validar('rascunho')) return;
+
     setSalvando(true);
     try {
-      const resultado = jaSalvo
-        ? await atualizarAcompanhamento(acompanhamento.id, dados)
-        : await criarAcompanhamento({
-            ...dados,
-            idAluno: Number(idAluno),
-            idDisciplina: Number(idDisciplina),
-            idBimestre: bimestreAberto.id,
-          });
-      setAcompanhamento(resultado);
-      setSalvoEm(new Date());
-      setAviso({ tipo: 'sucesso', texto: 'Rascunho salvo.' });
+      await salvar();
+      setAviso({ tipo: 'sucesso', titulo: 'Rascunho salvo.' });
     } catch (error) {
-      setAviso({ tipo: 'erro', texto: mensagemDeErro(error) });
+      setAviso({ tipo: 'erro', titulo: 'Não foi possível salvar', texto: mensagemDeErro(error) });
     } finally {
       setSalvando(false);
     }
   }
+
+  function pedirEnvio() {
+    setAviso(null);
+    if (!validar('envio')) {
+      setAviso({
+        tipo: 'erro',
+        titulo: 'Não foi possível enviar',
+        texto: 'Corrija os campos destacados. O rascunho foi mantido.',
+      });
+      return;
+    }
+    setModalAberto(true);
+  }
+
+  async function confirmarEnvio() {
+    setSalvando(true);
+    try {
+      const salvo = await salvar(); // garante que o texto mais recente vai junto
+      await enviarAcompanhamento(salvo.id);
+      navigate('/professor/acompanhamentos', {
+        state: { mensagem: 'Acompanhamento enviado para revisão.' },
+      });
+    } catch (error) {
+      setModalAberto(false);
+      setAviso({ tipo: 'erro', titulo: 'Não foi possível enviar', texto: mensagemDeErro(error) });
+    } finally {
+      setSalvando(false);
+    }
+  }
+
+  // ---------- Tela ----------
+  const titulo = !jaSalvo ? 'Novo acompanhamento' : devolvido ? 'Corrigir acompanhamento' : 'Editar acompanhamento';
 
   const cabecalho = (
     <>
       <nav className="ca-trilha">
         <Link to="/professor/acompanhamentos">Acompanhamentos</Link>
         <ChevronRight size={14} />
-        <span>Novo</span>
+        <span>{idEdicao ? nomeAluno || 'Registro' : 'Novo'}</span>
       </nav>
-      <h1 className="ca-titulo">Novo acompanhamento</h1>
+      <h1 className="ca-titulo">{titulo}</h1>
       <p className="ca-subtitulo">Registre a descrição, a média e as tags do aluno no bimestre aberto.</p>
     </>
   );
@@ -180,12 +283,29 @@ function CriarAcompanhamento() {
 
       <div className="ca-grade">
         <div className="ca-principal">
-          {!bimestreAberto && (
+          {devolvido && acompanhamento.motivoDevolucao && (
+            <div className="ca-motivo">
+              <p className="ca-motivo-rotulo"><Undo2 size={14} /> Motivo da devolução (administração)</p>
+              <p>“{acompanhamento.motivoDevolucao}”</p>
+            </div>
+          )}
+
+          {!periodoAberto && (
             <div className="alerta alerta--aviso">
               <TriangleAlert size={18} />
               <div>
-                <p className="alerta-titulo">Nenhum período de digitação aberto</p>
-                <p>Não é possível registrar acompanhamentos agora. Fale com a administração.</p>
+                <p className="alerta-titulo">Período de digitação encerrado</p>
+                <p>Este registro não pode ser criado ou alterado agora. Fale com a administração caso precise de reabertura.</p>
+              </div>
+            </div>
+          )}
+
+          {jaSalvo && !STATUS_EDITAVEIS.includes(status) && (
+            <div className="alerta alerta--info">
+              <Info size={18} />
+              <div>
+                <p className="alerta-titulo">Registro bloqueado para edição</p>
+                <p>Só é possível editar acompanhamentos em rascunho ou devolvidos.</p>
               </div>
             </div>
           )}
@@ -193,7 +313,10 @@ function CriarAcompanhamento() {
           {aviso && (
             <div className={`alerta alerta--${aviso.tipo}`}>
               {aviso.tipo === 'sucesso' ? <CircleCheck size={18} /> : <CircleX size={18} />}
-              <p className="alerta-titulo">{aviso.texto}</p>
+              <div>
+                <p className="alerta-titulo">{aviso.titulo}</p>
+                {aviso.texto && <p>{aviso.texto}</p>}
+              </div>
             </div>
           )}
 
@@ -220,7 +343,7 @@ function CriarAcompanhamento() {
                 <label className="campo-rotulo" htmlFor="disciplina">Disciplina</label>
                 <select
                   id="disciplina"
-                  className="campo-entrada"
+                  className={`campo-entrada ${erros.disciplina ? 'campo-entrada--erro' : ''}`}
                   value={idDisciplina}
                   onChange={(e) => setIdDisciplina(e.target.value)}
                   disabled={jaSalvo}
@@ -230,13 +353,14 @@ function CriarAcompanhamento() {
                     <option key={d.id} value={d.id}>{d.nome}</option>
                   ))}
                 </select>
+                {erros.disciplina && <span className="campo-erro">{erros.disciplina}</span>}
               </div>
 
               <div className="campo">
                 <label className="campo-rotulo" htmlFor="aluno">Aluno</label>
                 <select
                   id="aluno"
-                  className="campo-entrada"
+                  className={`campo-entrada ${erros.aluno ? 'campo-entrada--erro' : ''}`}
                   value={idAluno}
                   onChange={(e) => setIdAluno(e.target.value)}
                   disabled={!idTurma || jaSalvo}
@@ -246,6 +370,7 @@ function CriarAcompanhamento() {
                     <option key={a.id} value={a.id}>{a.nome}</option>
                   ))}
                 </select>
+                {erros.aluno && <span className="campo-erro">{erros.aluno}</span>}
               </div>
 
               <div className="campo">
@@ -254,8 +379,8 @@ function CriarAcompanhamento() {
                   id="bimestre"
                   className="campo-entrada"
                   value={
-                    bimestreAberto
-                      ? `${bimestreAberto.numero}º bimestre · ${bimestreAberto.anoLetivo}`
+                    bimestreDoRegistro
+                      ? `${bimestreDoRegistro.numero}º bimestre · ${bimestreDoRegistro.anoLetivo}`
                       : 'Nenhum período aberto'
                   }
                   disabled
@@ -272,13 +397,18 @@ function CriarAcompanhamento() {
               <label className="campo-rotulo" htmlFor="descricao">Descrição do acompanhamento</label>
               <textarea
                 id="descricao"
-                className="campo-entrada"
+                className={`campo-entrada ${erros.descricao ? 'campo-entrada--erro' : ''}`}
                 placeholder="Descreva o desenvolvimento do aluno no bimestre..."
                 maxLength={LIMITE_DESCRICAO}
                 value={descricao}
                 onChange={(e) => setDescricao(e.target.value)}
+                disabled={!podeEditar}
               />
-              <span className="campo-ajuda">{descricao.length}/{LIMITE_DESCRICAO} caracteres</span>
+              {erros.descricao ? (
+                <span className="campo-erro">{erros.descricao}</span>
+              ) : (
+                <span className="campo-ajuda">{descricao.length}/{LIMITE_DESCRICAO} caracteres</span>
+              )}
             </div>
 
             <div className="ca-linha">
@@ -286,13 +416,18 @@ function CriarAcompanhamento() {
                 <label className="campo-rotulo" htmlFor="media">Média do bimestre</label>
                 <input
                   id="media"
-                  className="campo-entrada"
+                  className={`campo-entrada ${erros.media ? 'campo-entrada--erro' : ''}`}
                   inputMode="decimal"
                   placeholder="Ex.: 8,5"
                   value={media}
                   onChange={(e) => setMedia(e.target.value)}
+                  disabled={!podeEditar}
                 />
-                <span className="campo-ajuda">Escala de 0,0 a 10,0 · uma casa decimal</span>
+                {erros.media ? (
+                  <span className="campo-erro">{erros.media}</span>
+                ) : (
+                  <span className="campo-ajuda">Escala de 0,0 a 10,0 · uma casa decimal</span>
+                )}
               </div>
 
               <div className="campo">
@@ -307,6 +442,7 @@ function CriarAcompanhamento() {
                       key={t.id}
                       className="ca-tag ca-tag--selecionada"
                       onClick={() => alternarTag(t.id)}
+                      disabled={!podeEditar}
                       aria-label={`Remover tag ${t.nome}`}
                     >
                       {t.nome}
@@ -315,7 +451,7 @@ function CriarAcompanhamento() {
                   ))}
                 </div>
 
-                {tagsSugeridas.length > 0 && (
+                {podeEditar && tagsSugeridas.length > 0 && (
                   <div className="ca-tags-sugestoes">
                     <span className="campo-ajuda">Sugestões:</span>
                     {tagsSugeridas.map((t) => (
@@ -336,16 +472,30 @@ function CriarAcompanhamento() {
               className="botao botao--link"
               onClick={() => navigate('/professor/acompanhamentos')}
             >
-              Cancelar
+              {podeEditar ? 'Cancelar' : 'Voltar para a lista'}
             </button>
-            <button
-              type="button"
-              className="botao botao--secundario"
-              onClick={salvarRascunho}
-              disabled={salvando || !bimestreAberto}
-            >
-              {salvando ? 'Salvando...' : 'Salvar rascunho'}
-            </button>
+
+            {podeEditar && (
+              <div className="ca-acoes-direita">
+                <button
+                  type="button"
+                  className="botao botao--secundario"
+                  onClick={salvarRascunho}
+                  disabled={salvando}
+                >
+                  {salvando ? 'Salvando...' : 'Salvar rascunho'}
+                </button>
+                <button
+                  type="button"
+                  className="botao botao--primario"
+                  onClick={pedirEnvio}
+                  disabled={salvando}
+                >
+                  <Send size={16} />
+                  {devolvido ? 'Reenviar para revisão' : 'Enviar para revisão'}
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
@@ -353,7 +503,7 @@ function CriarAcompanhamento() {
           <section className="card">
             <div className="ca-status-topo">
               <h2 className="ca-card-titulo ca-sem-margem">Status</h2>
-              <BadgeStatus status={acompanhamento?.status || 'RASCUNHO'} />
+              <BadgeStatus status={status} />
             </div>
             <div className="ca-status-linha">
               <span>Registro</span>
@@ -372,7 +522,7 @@ function CriarAcompanhamento() {
               <li>
                 <Info size={16} />
                 Edição permitida somente com o período aberto
-                {bimestreAberto ? ` (até ${formatarData(bimestreAberto.dataEncerramento)})` : ''}.
+                {periodoAberto ? ` (até ${formatarData(bimestreDoRegistro.dataEncerramento)})` : ''}.
               </li>
               <li><Info size={16} />Após o envio, o registro fica bloqueado até a revisão.</li>
               <li><Info size={16} />A família só vê o conteúdo depois de publicado.</li>
@@ -380,8 +530,42 @@ function CriarAcompanhamento() {
           </section>
         </aside>
       </div>
+
+      <Modal
+        aberto={modalAberto}
+        titulo={devolvido ? 'Reenviar para revisão?' : 'Enviar para revisão?'}
+        onFechar={() => setModalAberto(false)}
+      >
+        <p className="ca-modal-texto">
+          Após o envio, o registro não poderá ser editado até que a administração o revise ou devolva para ajustes.
+        </p>
+        <div className="ca-modal-resumo">
+          <strong>{nomeAluno} · {nomeTurma} · {nomeDisciplina} · {bimestreDoRegistro?.numero}º bimestre</strong>
+          <span>Média {media || '—'} · {tagsSelecionadas.length} {tagsSelecionadas.length === 1 ? 'tag' : 'tags'}</span>
+        </div>
+        <div className="ca-modal-acoes">
+          <button
+            type="button"
+            className="botao botao--secundario"
+            onClick={() => setModalAberto(false)}
+            disabled={salvando}
+          >
+            Cancelar
+          </button>
+          <button type="button" className="botao botao--primario" onClick={confirmarEnvio} disabled={salvando}>
+            {salvando ? 'Enviando...' : 'Confirmar envio'}
+          </button>
+        </div>
+      </Modal>
     </div>
   );
+}
+
+// O "key" força o React a criar um formulário novo (estado limpo)
+// sempre que mudamos de "novo" para "editar" ou de um registro para outro.
+function CriarAcompanhamento() {
+  const { id } = useParams();
+  return <FormularioAcompanhamento key={id || 'novo'} idEdicao={id} />;
 }
 
 export default CriarAcompanhamento;

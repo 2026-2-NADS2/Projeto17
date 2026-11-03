@@ -144,3 +144,43 @@
   background-color: var(--status-cancelado-bg);
   color: var(--status-cancelado);
 }
+
+/* ----- Motivo da devolução (T11) ----- */
+.ca-motivo {
+  padding: 14px 16px;
+  border: 1px solid #f6c9a8;
+  border-radius: var(--raio-card);
+  background-color: var(--status-devolvido-bg);
+  font-size: 14px;
+  color: var(--cor-neutro-900);
+}
+.ca-motivo-rotulo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--status-devolvido);
+}
+
+.ca-acoes-direita { display: flex; gap: 12px; }
+
+/* ----- Modal de envio (T08) ----- */
+.ca-modal-texto { font-size: 14px; line-height: 1.5; color: var(--cor-neutro-600); }
+
+.ca-modal-resumo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 16px 0;
+  padding: 12px;
+  border-radius: var(--raio-campo);
+  background-color: var(--cor-neutro-50);
+  font-size: 14px;
+}
+.ca-modal-resumo span { font-size: 12px; color: var(--cor-neutro-600); }
+
+.ca-modal-acoes { display: flex; justify-content: flex-end; gap: 8px; }
