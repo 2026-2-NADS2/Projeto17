@@ -1,0 +1,6 @@
+.rd { max-width: 1112px; }
+.rd-titulo { font-size: 28px; font-weight: 700; }
+.rd-subtitulo { margin: 4px 0 24px; font-size: 14px; color: var(--cor-neutro-600); }
+
+.rd-motivo { max-width: 420px; color: var(--cor-neutro-700); }
+.rd-botao { height: 32px; padding: 0 12px; }

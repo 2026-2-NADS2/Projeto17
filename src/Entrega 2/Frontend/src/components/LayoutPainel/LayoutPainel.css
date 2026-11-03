@@ -1,0 +1,147 @@
+.painel {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ---------- Sidebar ---------- */
+.painel-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 248px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 12px;
+  background-color: var(--cor-navy-800);
+  color: var(--cor-branco);
+  overflow-y: auto;
+}
+
+.painel-marca {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 0 8px 28px;
+}
+
+.painel-logo {
+  height: 34px;
+}
+
+.painel-perfil-tag {
+  padding: 2px 10px;
+  border: 1.5px solid var(--cor-ciano-400);
+  border-radius: var(--raio-badge);
+  color: var(--cor-ciano-400);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.painel-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.painel-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--raio-campo);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13.5px;
+  transition: background-color 0.15s;
+  white-space: nowrap;
+}
+
+/* O ícone nunca encolhe; se faltar espaço, quem cede é o texto */
+.painel-item svg {
+  flex-shrink: 0;
+}
+
+.painel-item span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.painel-item:hover {
+  background-color: var(--cor-navy-700);
+  color: var(--cor-branco);
+}
+
+/* O NavLink coloca a classe "active" sozinho na página atual */
+.painel-item.active {
+  background-color: var(--cor-azul-600);
+  color: var(--cor-branco);
+  font-weight: 600;
+}
+
+/* ---------- Rodapé (usuário + sair) ---------- */
+.painel-rodape {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.painel-usuario {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px 14px;
+}
+
+.painel-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--raio-badge);
+  background-color: var(--cor-azul-50);
+  color: var(--cor-azul-600);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.painel-usuario-nome {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.painel-usuario-perfil {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.painel-sair {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: var(--raio-campo);
+  background: transparent;
+  color: var(--cor-branco);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.painel-sair:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ---------- Área das telas ---------- */
+.painel-conteudo {
+  flex: 1;
+  min-width: 0;
+  margin-left: 248px;
+  padding: 32px 40px;
+}
