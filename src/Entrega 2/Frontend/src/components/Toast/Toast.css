@@ -1,0 +1,24 @@
+.toast {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background-color: var(--cor-navy-900);
+  box-shadow: 0 8px 24px rgba(7, 18, 51, 0.25);
+  color: var(--cor-branco);
+  font-size: 13px;
+}
+.toast-icone { color: var(--status-publicado-ponto); }
+.toast-fechar {
+  display: flex;
+  margin-left: 8px;
+  border: none;
+  background: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+}

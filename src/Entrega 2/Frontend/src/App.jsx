@@ -33,6 +33,7 @@ function App() {
             <Route path="/professor/acompanhamentos" element={<AcompanhamentosAlunos />} />
             <Route path="/professor/criar-acompanhamento" element={<CriarAcompanhamento />} />
             <Route path="/professor/acompanhamentos/:id/editar" element={<CriarAcompanhamento />} />
+            <Route path="/professor/acompanhamentos/:id" element={<CriarAcompanhamento />} />
             <Route path="/professor/devolvidos" element={<RegistrosDevolvidos />} />
             <Route path="/professor/relatorios" element={<EmConstrucao titulo="Relatórios e retornos" />} />
             <Route path="/professor/perfil" element={<MeuPerfil />} />
