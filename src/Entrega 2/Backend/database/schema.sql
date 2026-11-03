@@ -101,6 +101,7 @@ CREATE TABLE acompanhamento (
     descricao     TEXT,
     status        ENUM('RASCUNHO','ENVIADO','EM_REVISAO','PUBLICADO',
                         'DEVOLVIDO','CANCELADO') NOT NULL DEFAULT 'RASCUNHO',
+    motivo_devolucao VARCHAR(255),
     id_revisor    INT UNSIGNED,
     publicado_em  DATETIME,
     UNIQUE (id_aluno, id_disciplina, id_bimestre),
@@ -127,7 +128,7 @@ CREATE TABLE acompanhamento_historico (
     status_anterior   VARCHAR(20),
     status_novo       VARCHAR(20) NOT NULL,
     data_hora         DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_acompanhamento) REFERENCES acompanhamento (id_acompanhamento),
+    FOREIGN KEY (id_acompanhamento) REFERENCES acompanhamento (id_acompanhamento) ON DELETE CASCADE,
     FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario)
 ) ENGINE=InnoDB;
 
@@ -138,7 +139,7 @@ CREATE TABLE ciencia_responsavel (
     observacao        TEXT,
     data_hora         DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id_acompanhamento, id_responsavel),
-    FOREIGN KEY (id_acompanhamento) REFERENCES acompanhamento (id_acompanhamento),
+    FOREIGN KEY (id_acompanhamento) REFERENCES acompanhamento (id_acompanhamento) ON DELETE CASCADE,
     FOREIGN KEY (id_responsavel) REFERENCES usuario (id_usuario)
 ) ENGINE=InnoDB;
 
@@ -170,3 +171,59 @@ LEFT JOIN tag tg ON tg.id_tag = at.id_tag
 WHERE a.status = 'PUBLICADO'
 GROUP BY a.id_acompanhamento, al.nome, t.nome, d.nome, u.nome,
          b.numero, ano.ano, a.media, a.descricao, a.publicado_em;
+
+-- =====================================================================
+-- Triggers: auditoria automatica (RF07) e validacao da escala da media
+-- =====================================================================
+DELIMITER $$
+
+-- Registra a criacao do acompanhamento no historico
+CREATE TRIGGER trg_acomp_ai AFTER INSERT ON acompanhamento
+FOR EACH ROW
+BEGIN
+    INSERT INTO acompanhamento_historico (id_acompanhamento, id_usuario, status_anterior, status_novo)
+    VALUES (NEW.id_acompanhamento, NEW.id_professor, NULL, NEW.status);
+END$$
+
+-- Registra toda mudanca de status (quem, quando, de qual estado para qual)
+-- Obs.: id_usuario usa o revisor quando existir; senao, o professor do registro.
+CREATE TRIGGER trg_acomp_au AFTER UPDATE ON acompanhamento
+FOR EACH ROW
+BEGIN
+    IF NEW.status <> OLD.status THEN
+        INSERT INTO acompanhamento_historico (id_acompanhamento, id_usuario, status_anterior, status_novo)
+        VALUES (NEW.id_acompanhamento,
+                IF(NEW.status IN ('EM_REVISAO','DEVOLVIDO','PUBLICADO'),
+                   COALESCE(NEW.id_revisor, NEW.id_professor), NEW.id_professor),
+                OLD.status, NEW.status);
+    END IF;
+END$$
+
+-- Media deve respeitar a escala do ano letivo (nota_minima / nota_maxima)
+CREATE TRIGGER trg_acomp_media_bi BEFORE INSERT ON acompanhamento
+FOR EACH ROW
+BEGIN
+    DECLARE v_min DECIMAL(5,2);
+    DECLARE v_max DECIMAL(5,2);
+    SELECT an.nota_minima, an.nota_maxima INTO v_min, v_max
+      FROM bimestre b JOIN ano_letivo an ON an.id_ano_letivo = b.id_ano_letivo
+     WHERE b.id_bimestre = NEW.id_bimestre;
+    IF NEW.media IS NOT NULL AND (NEW.media < v_min OR NEW.media > v_max) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Media fora da escala definida pela escola.';
+    END IF;
+END$$
+
+CREATE TRIGGER trg_acomp_media_bu BEFORE UPDATE ON acompanhamento
+FOR EACH ROW
+BEGIN
+    DECLARE v_min DECIMAL(5,2);
+    DECLARE v_max DECIMAL(5,2);
+    SELECT an.nota_minima, an.nota_maxima INTO v_min, v_max
+      FROM bimestre b JOIN ano_letivo an ON an.id_ano_letivo = b.id_ano_letivo
+     WHERE b.id_bimestre = NEW.id_bimestre;
+    IF NEW.media IS NOT NULL AND (NEW.media < v_min OR NEW.media > v_max) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Media fora da escala definida pela escola.';
+    END IF;
+END$$
+
+DELIMITER ;
