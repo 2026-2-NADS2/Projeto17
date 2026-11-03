@@ -1,0 +1,31 @@
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: var(--raio-badge);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* a bolinha antes do texto */
+.badge-status::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.badge-status--rascunho   { color: var(--status-rascunho);  background: var(--status-rascunho-bg); }
+.badge-status--enviado    { color: var(--status-enviado);   background: var(--status-enviado-bg); }
+.badge-status--em_revisao { color: var(--status-revisao);   background: var(--status-revisao-bg); }
+.badge-status--publicado  { color: var(--status-publicado); background: var(--status-publicado-bg); }
+.badge-status--devolvido  { color: var(--status-devolvido); background: var(--status-devolvido-bg); }
+.badge-status--cancelado  { color: var(--status-cancelado); background: var(--status-cancelado-bg); }
+
+.badge-status--em_revisao::before { background-color: var(--status-revisao-ponto); }
+.badge-status--publicado::before  { background-color: var(--status-publicado-ponto); }
+.badge-status--devolvido::before  { background-color: var(--status-devolvido-ponto); }
+.badge-status--cancelado::before  { background-color: var(--status-cancelado-ponto); }
