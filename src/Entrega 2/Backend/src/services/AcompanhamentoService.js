@@ -1,6 +1,7 @@
 const AcompanhamentoRepository = require("../repositories/AcompanhamentoRepository");
 const Acompanhamento = require("../models/Acompanhamento");
 const ErroApp = require("../errors/ErroApp");
+const CatalogoRepository = require("../repositories/CatalogoRepository");
 
 const STATUS_VALIDOS = ["RASCUNHO", "ENVIADO", "EM_REVISAO", "PUBLICADO", "DEVOLVIDO", "CANCELADO"];
 
@@ -48,6 +49,7 @@ class AcompanhamentoService {
       dados.descricao ?? null
     );
     acompanhamento.validar();
+    await this.#garantirPeriodoAberto(acompanhamento.idBimestre);
 
     const tags = await this.#validarTags(dados.tags);
 
@@ -65,6 +67,7 @@ class AcompanhamentoService {
   async atualizarAcompanhamento(id, dados, usuario) {
     const acompanhamento = await this.#buscarModelo(id);
     this.#garantirAutor(acompanhamento, usuario);
+    await this.#garantirPeriodoAberto(acompanhamento.idBimestre);
 
     acompanhamento.atualizarDados(dados.media ?? null, dados.descricao ?? null);
     const tags = await this.#validarTags(dados.tags);
@@ -78,6 +81,7 @@ class AcompanhamentoService {
   async enviarParaRevisao(id, usuario) {
     const acompanhamento = await this.#buscarModelo(id);
     this.#garantirAutor(acompanhamento, usuario);
+    await this.#garantirPeriodoAberto(acompanhamento.idBimestre);
 
     acompanhamento.enviarParaRevisao();
     await AcompanhamentoRepository.atualizarStatus(id, acompanhamento.status, acompanhamento.motivoDevolucao);
@@ -119,6 +123,16 @@ class AcompanhamentoService {
   #garantirAutor(acompanhamento, usuario) {
     if (acompanhamento.idProfessor !== usuario.id) {
       throw new ErroApp("Você só pode alterar seus próprios acompanhamentos.", 403);
+    }
+  }
+
+  async #garantirPeriodoAberto(idBimestre) {
+    const bimestre = await CatalogoRepository.buscarBimestre(idBimestre);
+    if (!bimestre) {
+      throw new ErroApp("Bimestre não encontrado.", 400);
+    }
+    if (!bimestre.aberto) {
+      throw new ErroApp("O período de digitação deste bimestre não está aberto.", 400);
     }
   }
 
