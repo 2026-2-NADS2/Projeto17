@@ -295,3 +295,48 @@ textarea.campo-entrada {
   0% { background-position: 100% 50%; }
   100% { background-position: 0 50%; }
 }
+
+/* ----- Linha do tempo (etapas / histórico) ----- */
+.linha-tempo { list-style: none; }
+
+.linha-tempo-item {
+  position: relative;
+  padding: 0 0 18px 24px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.linha-tempo-item:last-child { padding-bottom: 0; }
+
+/* a bolinha */
+.linha-tempo-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--cor-neutro-400);
+  border-radius: 50%;
+  background-color: var(--cor-branco);
+}
+
+/* o tracinho que liga uma bolinha à outra */
+.linha-tempo-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 18px;
+  bottom: 2px;
+  width: 2px;
+  background-color: var(--cor-neutro-200);
+}
+
+.linha-tempo-item--feita::before {
+  border-color: var(--status-publicado-ponto);
+  background-color: var(--status-publicado-ponto);
+}
+.linha-tempo-item--atual::before {
+  border-color: var(--cor-azul-600);
+  background-color: var(--cor-azul-600);
+}
+.linha-tempo-item--pendente { font-weight: 400; color: var(--cor-neutro-400); }

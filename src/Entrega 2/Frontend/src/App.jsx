@@ -15,6 +15,7 @@ import RotaProtegida from './components/RotaProtegida/RotaProtegida';
 import LayoutPainel from './components/LayoutPainel/LayoutPainel';
 import EmConstrucao from './components/EmConstrucao/EmConstrucao';
 import { menuProfessor } from './components/LayoutPainel/menus';
+import DetalheAcompanhamento from './pages/DetalheAcompanhamento/DetalheAcompanhamento';
 
 function App() {
   return (
@@ -33,7 +34,7 @@ function App() {
             <Route path="/professor/acompanhamentos" element={<AcompanhamentosAlunos />} />
             <Route path="/professor/criar-acompanhamento" element={<CriarAcompanhamento />} />
             <Route path="/professor/acompanhamentos/:id/editar" element={<CriarAcompanhamento />} />
-            <Route path="/professor/acompanhamentos/:id" element={<CriarAcompanhamento />} />
+            <Route path="/professor/acompanhamentos/:id" element={<DetalheAcompanhamento />} />
             <Route path="/professor/devolvidos" element={<RegistrosDevolvidos />} />
             <Route path="/professor/relatorios" element={<EmConstrucao titulo="Relatórios e retornos" />} />
             <Route path="/professor/perfil" element={<MeuPerfil />} />
