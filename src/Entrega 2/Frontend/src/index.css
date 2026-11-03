@@ -74,3 +74,98 @@ textarea {
   font-family: inherit;
   font-size: inherit;
 }
+
+/* =========================================================
+   Componentes globais (usados por todas as telas)
+   ========================================================= */
+.card {
+  padding: 20px 24px;
+  border: 1px solid var(--cor-neutro-200);
+  border-radius: var(--raio-card);
+  background-color: var(--cor-branco);
+  box-shadow: var(--sombra-card);
+}
+
+/* ----- Botões ----- */
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 18px;
+  border: 1px solid transparent;
+  border-radius: var(--raio-campo);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+.botao:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.botao--primario { background-color: var(--cor-azul-600); color: var(--cor-branco); }
+.botao--primario:hover:not(:disabled) { background-color: var(--cor-azul-700); }
+
+.botao--secundario {
+  background-color: var(--cor-branco);
+  border-color: var(--cor-neutro-200);
+  color: var(--cor-neutro-900);
+}
+.botao--secundario:hover:not(:disabled) { border-color: var(--cor-neutro-400); }
+
+.botao--link { padding: 0 8px; background: none; color: var(--cor-azul-600); }
+.botao--link:hover:not(:disabled) { text-decoration: underline; }
+
+/* ----- Campos de formulário ----- */
+.campo { display: flex; flex-direction: column; gap: 6px; }
+.campo-rotulo { font-size: 12px; font-weight: 600; color: var(--cor-neutro-900); }
+
+.campo-entrada {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--cor-neutro-200);
+  border-radius: var(--raio-campo);
+  background-color: var(--cor-branco);
+  color: var(--cor-neutro-900);
+  font-size: 14px;
+}
+textarea.campo-entrada {
+  height: auto;
+  min-height: 110px;
+  padding: 10px 12px;
+  line-height: 1.5;
+  resize: vertical;
+}
+.campo-entrada:focus {
+  outline: none;
+  border-color: var(--cor-azul-600);
+  box-shadow: 0 0 0 3px var(--cor-azul-50);
+}
+.campo-entrada:disabled {
+  background-color: var(--cor-neutro-100);
+  color: var(--cor-neutro-400);
+  cursor: not-allowed;
+}
+.campo-entrada--erro { border-color: var(--status-cancelado); }
+.campo-ajuda { font-size: 12px; color: var(--cor-neutro-600); }
+.campo-erro { font-size: 12px; color: var(--status-cancelado); }
+
+/* ----- Alertas ----- */
+.alerta {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid;
+  border-radius: var(--raio-card);
+  font-size: 13px;
+}
+.alerta svg { flex-shrink: 0; margin-top: 1px; }
+.alerta-titulo { font-weight: 600; }
+.alerta p + p { margin-top: 2px; color: var(--cor-neutro-700); }
+
+.alerta--erro    { background: var(--status-cancelado-bg); border-color: #f3c4c4; color: var(--status-cancelado); }
+.alerta--aviso   { background: var(--status-revisao-bg);   border-color: #f5dc9a; color: var(--status-revisao); }
+.alerta--sucesso { background: var(--status-publicado-bg); border-color: #b5e6cb; color: var(--status-publicado); }
+.alerta--info    { background: var(--cor-azul-50);         border-color: var(--cor-azul-100); color: var(--cor-azul-600); }
