@@ -6,8 +6,10 @@ export const CHAVE_USUARIO = 'classsync_usuario';
 
 // Instância única do axios: se a URL do backend mudar, muda só aqui.
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api',
-  timeout: 8000, // depois de 8s sem resposta, a requisição falha (e mostramos o erro)
+  // Em produção, vem do Vercel (VITE_API_URL). No computador, usa o backend local.
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/api',
+  // 60 s: no plano grátis, o Render leva cerca de 1 minuto para "acordar"
+  timeout: 60000,
 });
 
 // Antes de toda requisição: se houver token salvo, envia no cabeçalho
