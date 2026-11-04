@@ -31,8 +31,8 @@ app.use("/api", catalogoRoutes);
 // Rota de teste da conexão com o banco
 app.get("/api/teste-banco", async (req, res) => {
   try {
-    const [rows] = await pool.query("SELECT COUNT(*) AS total FROM aluno");
-    res.json({ mensagem: "Conexão com o banco funcionando!", total_alunos: rows[0].total });
+    await pool.query("SELECT 1");
+    res.json({ mensagem: "Conexão com o banco funcionando!" });
   } catch (error) {
     console.error(error); // o detalhe fica só no log do servidor
     res.status(500).json({ erro: "Erro ao conectar com o banco." });
