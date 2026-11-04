@@ -135,10 +135,19 @@ class AcompanhamentoRepository {
         WHERE atg.id_acompanhamento IN (?)`,
       [ids]
     );
+
+    // Agrupa as tags por acompanhamento: um único percurso sobre as linhas
+    const tagsPorAcompanhamento = new Map();
+    for (const r of rows) {
+      if (!tagsPorAcompanhamento.has(r.id_acompanhamento)) {
+        tagsPorAcompanhamento.set(r.id_acompanhamento, []);
+      }
+      tagsPorAcompanhamento.get(r.id_acompanhamento).push({ id: r.id_tag, nome: r.nome });
+    }
+
+    // Cada acompanhamento pega as suas tags direto pela chave
     for (const acompanhamento of lista) {
-      acompanhamento.tags = rows
-        .filter((r) => r.id_acompanhamento === acompanhamento.id)
-        .map((r) => ({ id: r.id_tag, nome: r.nome }));
+      acompanhamento.tags = tagsPorAcompanhamento.get(acompanhamento.id) || [];
     }
   }
 
