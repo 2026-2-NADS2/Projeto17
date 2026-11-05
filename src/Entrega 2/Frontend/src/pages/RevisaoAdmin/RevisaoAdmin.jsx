@@ -7,6 +7,7 @@ import { listarAcompanhamentos } from '../../services/acompanhamentoService';
 import { filaExemploAtual } from './dadosExemplo';
 import { nomeDe, formatarMedia } from './formatadores';
 import './RevisaoAdmin.css';
+import { exportarCsv } from '../../utils/exportarCsv';
 
 function RevisaoAdmin() {
   const navigate = useNavigate();
@@ -59,6 +60,25 @@ function RevisaoAdmin() {
 
   function abrirRevisao(item) {
     navigate(`/admin/revisao/${item.id}`, { state: { item, exemplo: modoExemplo } });
+  }
+
+  function exportar() {
+    const hoje = new Date().toLocaleDateString('sv-SE'); // "2026-11-05" (o formato sueco é ano-mês-dia)
+    exportarCsv(
+      `fila-revisao-${hoje}.csv`,
+      [
+        { titulo: 'ID', valor: (i) => i.id },
+        { titulo: 'Aluno', valor: (i) => nomeDe(i.aluno) },
+        { titulo: 'Disciplina', valor: (i) => nomeDe(i.disciplina) },
+        { titulo: 'Professor', valor: (i) => nomeDe(i.professor) },
+        { titulo: 'Bimestre', valor: (i) => `${i.bimestre}º` },
+        { titulo: 'Ano letivo', valor: (i) => i.anoLetivo },
+        { titulo: 'Média', valor: (i) => formatarMedia(i.media) },
+        { titulo: 'Descrição', valor: (i) => i.descricao },
+        { titulo: 'Tags', valor: (i) => (i.tags ?? []).map(nomeDe).join(', ') },
+      ],
+      fila
+    );
   }
 
   function renderizarConteudo() {
@@ -117,8 +137,16 @@ function RevisaoAdmin() {
 
       <main className="revisao-admin__conteudo">
         <header className="revisao-admin__topo">
-          <h1>Revisão e publicação</h1>
-          <p>Revise os acompanhamentos enviados pelos professores e publique ou devolva para ajustes.</p>
+          <div>
+            <h1>Revisão e publicação</h1>
+            <p>Revise os acompanhamentos enviados pelos professores e publique ou devolva para ajustes.</p>
+          </div>
+
+          {!carregando && !erro && fila.length > 0 && (
+            <button type="button" className="revisao-admin__botao-exportar" onClick={exportar}>
+              Exportar
+            </button>
+          )}
         </header>
 
         {aviso && <p className="revisao-admin__aviso" role="status">{aviso}</p>}
