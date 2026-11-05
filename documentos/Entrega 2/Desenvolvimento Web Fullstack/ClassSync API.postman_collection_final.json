@@ -1,0 +1,1425 @@
+{
+  "info": {
+    "_postman_id": "ec6811e3-816b-438f-b070-da25dd11001f",
+    "name": "ClassSync API",
+    "description": "### Testes ClassSync API.\n\nTestes da API do ClassSync (PI 2º semestre de 2026 · ADS · FECAP). Ambientes: **ClassSync Local** e **ClassSync Produção**. Variáveis: `baseUrl`, `tokenAdmin`, `tokenProfessor`, `tokenResponsavel`, `senhaAdmin`, `senhaProfessor`, `senhaResponsavel` (secretas), `idAcompanhamento` e `idAlunoTeste` (preenchidas pelos scripts). Rode os logins primeiro.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58473251",
+    "_collection_link": "https://go.postman.co/collection/58473251-ec6811e3-816b-438f-b070-da25dd11001f?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login Admin (200)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {\r\n  pm.environment.set(\"tokenAdmin\", pm.response.json().token);\r\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"admin@classsync.com\",\r\n  \"senha\": \"{{senhaAdmin}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Professor (200)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {\r\n  pm.environment.set(\"tokenProfessor\", pm.response.json().token);\r\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"ricardo.lima@escola.test\",\r\n  \"senha\": \"{{senhaProfessor}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login Responsável (200)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "  if (pm.response.code === 200) {\r\n    pm.environment.set(\"tokenResponsavel\", pm.response.json().token);\r\n  }"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"carla.souza@familia.test\",\r\n  \"senha\": \"{{senhaResponsavel}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login - senha errada (401)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"admin@classsync.com\",\r\n  \"senha\": \"SenhaErrada123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cadastrar Usuário (201)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "  { \"nome\": \"Responsável Demonstração\",\r\n    \"email\": \"responsavel{{$timestamp}}@familia.test\",\r\n    \"senha\": \"Demo2026x\",\r\n    \"perfil\": \"RESPONSAVEL\"\r\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cadastrar Usuário - sem token (401)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"Professor Demonstração\",\r\n  \"email\": \"professor{{$timestamp}}@escola.com.br\",\r\n  \"senha\": \"Classe2026x\",\r\n  \"perfil\": \"PROFESSOR\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cadastrar Usuário - professor (403)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenProfessor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"Professor Demonstração\",\r\n  \"email\": \"professor{{$timestamp}}@escola.com.br\",\r\n  \"senha\": \"Classe2026x\",\r\n  \"perfil\": \"PROFESSOR\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cadastrar Usuário - e-mail repetido (400)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"Professor Demonstração\",\r\n  \"email\": \"ricardo.lima@escola.test\",\r\n  \"senha\": \"Classe2026x\",\r\n  \"perfil\": \"PROFESSOR\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Usuários (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar só professores (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/usuarios?perfil=PROFESSOR",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "usuarios"
+              ],
+              "query": [
+                {
+                  "key": "perfil",
+                  "value": "PROFESSOR"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar perfil inválido (400)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/usuarios?perfil=XYZ",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "usuarios"
+              ],
+              "query": [
+                {
+                  "key": "perfil",
+                  "value": "XYZ"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Professor Listar Usuários (403)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenProfessor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Catálogo",
+      "item": [
+        {
+          "name": "Listar Tags (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tags",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tags"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Disciplinas (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/disciplinas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "disciplinas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Turmas (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/turmas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "turmas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Bimestres (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/bimestres",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "bimestres"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Aluno",
+      "item": [
+        {
+          "name": "Admin Listando Alunos (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/alunos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alunos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Professor Listar Alunos (200)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenProfessor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/alunos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alunos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Responsável Listar Alunos (200)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenResponsavel}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/alunos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alunos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Responsável Listar Alunos Por ID (200)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenResponsavel}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/alunos/5",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alunos",
+                "5"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Responsável Listar Aluno de outra fámilia (404)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenResponsavel}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/alunos/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alunos",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar Aluno por ID (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/alunos/3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alunos",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Alunos - sem token (401)",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/alunos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alunos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Aluno - professor (403)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenProfessor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"Aluno Teste\",\r\n  \"dataNascimento\": \"2015-04-12\",\r\n  \"idTurma\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/alunos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alunos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Aluno - admin (201)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "  if (pm.response.code === 201) {\r\n    pm.environment.set(\"idAlunoTeste\", pm.response.json().id);\r\n  }"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"Aluno Teste\",\r\n  \"dataNascimento\": \"2015-04-12\",\r\n  \"idTurma\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/alunos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alunos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar Aluno - PUT (200)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"Aluno Teste\",\r\n  \"dataNascimento\": \"2015-04-12\",\r\n  \"idTurma\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/alunos/{{idAlunoTeste}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alunos",
+                "{{idAlunoTeste}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Excluir Aluno (200)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/alunos/{{idAlunoTeste}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "alunos",
+                "{{idAlunoTeste}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Acompanhamento",
+      "item": [
+        {
+          "name": "Listar Acompanhamentos (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Bimestre Fechado (400)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenProfessor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "  { \"idAluno\": 17, \"idDisciplina\": 3, \"idBimestre\": 1, \"media\": 8.5, \"descricao\": \"Boa participação nas aulas e atividades entregues em dia.\", \"tags\": [1, 2] }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Tag que não existe (400)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenProfessor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"idAluno\": 17, \"idDisciplina\": 6, \"idBimestre\": 4, \"descricao\": \"Teste de tag inexistente\", \"tags\": [999] }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Criar - admin (403)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"idAluno\": 5,\r\n  \"idDisciplina\": 1,\r\n  \"idProfessor\": 1,\r\n  \"idBimestre\": 1,\r\n  \"media\": 8.5,\r\n  \"descricao\": \"Participativo e com bom desempenho nas atividades.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Criar - professor (201)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {\r\n  pm.environment.set(\"idAcompanhamento\", pm.response.json().id);\r\n}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenProfessor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "  { \"idAluno\": 17, \"idDisciplina\": 3, \"idBimestre\": 4, \"media\": 8.5, \"descricao\": \"Boa participação nas aulas e atividades entregues em dia.\", \"tags\": [1, 2] }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Criar duplicado (409)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenProfessor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "  { \"idAluno\": 17, \"idDisciplina\": 3, \"idBimestre\": 4, \"media\": 8.5, \"descricao\": \"Boa participação nas aulas e atividades entregues em dia.\", \"tags\": [1, 2] }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar por ID (200)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenProfessor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos/{{idAcompanhamento}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos",
+                "{{idAcompanhamento}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Editar Rascunho (200)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenProfessor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "  { \"media\": 9, \"descricao\": \"Melhorou muito no bimestre.\", \"tags\": [3] }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos/{{idAcompanhamento}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos",
+                "{{idAcompanhamento}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Enviar para revisão - professor (200)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenProfessor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos/{{idAcompanhamento}}/enviar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos",
+                "{{idAcompanhamento}}",
+                "enviar"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Editar Rascunho depois de enviado (400)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenProfessor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "  { \"media\": 9, \"descricao\": \"Melhorou muito no bimestre.\", \"tags\": [3] }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos/{{idAcompanhamento}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos",
+                "{{idAcompanhamento}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Professor Devolvendo (403)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenProfessor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"motivo\": \"Descrever melhor a evolução do aluno.\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos/{{idAcompanhamento}}/devolver",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos",
+                "{{idAcompanhamento}}",
+                "devolver"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin Devolvendo com motivo curto (400)",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"motivo\": \"curto\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos/{{idAcompanhamento}}/devolver",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos",
+                "{{idAcompanhamento}}",
+                "devolver"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin Devolvendo Certo (200)",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"motivo\": \"Descrever melhor a evolução do aluno.\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos/{{idAcompanhamento}}/devolver",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos",
+                "{{idAcompanhamento}}",
+                "devolver"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Professor Editando Devolvido (200)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenProfessor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"media\": 9, \"descricao\": \"Evoluiu em leitura e participação.\", \"tags\": [1, 3] }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos/{{idAcompanhamento}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos",
+                "{{idAcompanhamento}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Professor Reenviando (200)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenProfessor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos/{{idAcompanhamento}}/enviar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos",
+                "{{idAcompanhamento}}",
+                "enviar"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Responsável antes da publicação (200)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenResponsavel}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Publicar - professor (403)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenProfessor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos/{{idAcompanhamento}}/publicar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos",
+                "{{idAcompanhamento}}",
+                "publicar"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Publicar - admin (200)",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos/{{idAcompanhamento}}/publicar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos",
+                "{{idAcompanhamento}}",
+                "publicar"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Responsável depois da publicação (200)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenResponsavel}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filtro por Status (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos?status=PUBLICADO",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "PUBLICADO"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Status Inválido (400)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos?status=XYZ",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "XYZ"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Excluir - admin (200)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos/{{idAcompanhamento}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos",
+                "{{idAcompanhamento}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{tokenAdmin}}",
+        "type": "string"
+      }
+    ]
+  }
+}
