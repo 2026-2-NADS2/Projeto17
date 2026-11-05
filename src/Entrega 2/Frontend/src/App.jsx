@@ -16,6 +16,7 @@ import LayoutPainel from './components/LayoutPainel/LayoutPainel';
 import EmConstrucao from './components/EmConstrucao/EmConstrucao';
 import { menuProfessor } from './components/LayoutPainel/menus';
 import DetalheAcompanhamento from './pages/DetalheAcompanhamento/DetalheAcompanhamento';
+import RevisaoAdmin from './pages/RevisaoAdmin/RevisaoAdmin';
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
 
         <Route element={<RotaProtegida perfis={['ADMIN']} />}>
           <Route path="/admin" element={<DashboardAdmin />} />
+          <Route path="/admin/revisao" element={<RevisaoAdmin />} />
         </Route>
 
         <Route element={<RotaProtegida perfis={['RESPONSAVEL']} />}>
