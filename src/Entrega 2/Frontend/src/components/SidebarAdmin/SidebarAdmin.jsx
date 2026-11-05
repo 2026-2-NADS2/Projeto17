@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { sair, obterUsuario } from '../../services/authService';
 import './SidebarAdmin.css';
 
 // Itens do menu. Só "Visão geral" existe por enquanto; os outros aparecem como "em breve".
