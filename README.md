@@ -230,7 +230,7 @@ A coleção do Postman com os testes da API está em `documentos/Entrega 2/Desen
 Bibliotecas principais: React Router, Axios, Lucide (ícones), Express, mysql2, bcrypt, jsonwebtoken, dotenv e cors.
 
 ## 📋 Licença/License
-<a href="https://github.com/2026-2-NADS2/Projeto17">ClassSync</a> © 2026 by <a href="https://github.com/matheusggdev">Matheus Gajewski de Melo, Mel Oliva Motta, Rayna Guimarães Froes</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+<a href="https://github.com/2026-2-NADS2/Projeto17">ClassSync</a> © 2026 by <a href="https://github.com/matheusggdev">Matheus Gajewski de Melo</a>, <a href="https://github.com/melolivaa">Mel Oliva Motta</a> e <a href="https://github.com/Raynafroes">Rayna Guimarães Froes</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
 <br>
 <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;">
 
