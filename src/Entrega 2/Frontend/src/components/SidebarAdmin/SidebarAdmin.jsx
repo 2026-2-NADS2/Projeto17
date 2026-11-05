@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { sair, obterUsuario } from '../../services/authService';
 import './SidebarAdmin.css';
 
 // Itens do menu. Só "Visão geral" existe por enquanto; os outros aparecem como "em breve".
@@ -9,7 +10,23 @@ const itensMenu = [
   { rotulo: 'Professores', emBreve: true },
 ];
 
+// "Ana Ribeiro" → "AR" · "Mel" → "M"
+function obterIniciais(nome) {
+  const partes = nome.trim().split(/\s+/);
+  const primeira = partes[0][0];
+  const ultima = partes.length > 1 ? partes[partes.length - 1][0] : '';
+  return (primeira + ultima).toUpperCase();
+}
+
 function SidebarAdmin() {
+  const navigate = useNavigate();
+  const usuario = obterUsuario();
+  const nome = usuario?.nome ?? 'Administrador';
+
+  function handleSair() {
+    sair();              // 1. apaga token e usuário do localStorage
+    navigate('/entrar'); // 2. leva para a tela de login
+  }
   return (
     <aside className="sidebar-admin">
       <div className="sidebar-admin__topo">
@@ -32,7 +49,21 @@ function SidebarAdmin() {
         </ul>
       </nav>
 
-      <Link to="/" className="sidebar-admin__sair">Sair</Link>
+      <div className="sidebar-admin__rodape">
+        <div className="sidebar-admin__usuario">
+          <span className="sidebar-admin__avatar" aria-hidden="true">
+            {obterIniciais(nome)}
+          </span>
+          <div className="sidebar-admin__usuario-info">
+            <span className="sidebar-admin__usuario-nome">{nome}</span>
+            <span className="sidebar-admin__usuario-cargo">Administrador</span>
+          </div>
+        </div>
+
+        <button type="button" className="sidebar-admin__sair" onClick={handleSair}>
+          Sair
+        </button>
+      </div>
     </aside>
   );
 }
