@@ -58,11 +58,7 @@
 
 ### Desenvolvimento Web Fullstack
 
-<b>ALUNO 1- [Trabalho/Documento](https://github.com/fecaphub/Template_PI/blob/main/documentos/Entrega%201/Disciplina%201/Venha%20para%20a%20FECAP!.txt)</b>
-<br><br>
-<b>ALUNO 1- [Trabalho/Documento](https://github.com/fecaphub/Template_PI/blob/main/documentos/Entrega%201/Disciplina%201/Venha%20para%20a%20FECAP!.txt)</b>
-<br><br>
-<b>ALUNO 1- [Trabalho/Documento](https://github.com/fecaphub/Template_PI/blob/main/documentos/Entrega%201/Disciplina%201/Venha%20para%20a%20FECAP!.txt)</b>
+<b>Matheus Gajewski de Melo- [Testes Postman](https://github.com/2026-2-NADS2/Projeto17/blob/main/documentos/Entrega%202/Desenvolvimento%20Web%20Fullstack/ClassSync%20API.postman_collection_final.json)</b>
 <br><br>
 
 ### Design de Interface Digital
