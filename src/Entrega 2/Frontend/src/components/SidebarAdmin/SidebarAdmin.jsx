@@ -10,9 +10,18 @@ const itensMenu = [
   { rotulo: 'Professores', emBreve: true },
 ];
 
+// "Ana Ribeiro" → "AR" · "Mel" → "M"
+function obterIniciais(nome) {
+  const partes = nome.trim().split(/\s+/);
+  const primeira = partes[0][0];
+  const ultima = partes.length > 1 ? partes[partes.length - 1][0] : '';
+  return (primeira + ultima).toUpperCase();
+}
+
 function SidebarAdmin() {
   const navigate = useNavigate();
   const usuario = obterUsuario();
+  const nome = usuario?.nome ?? 'Administrador';
 
   function handleSair() {
     sair();              // 1. apaga token e usuário do localStorage
@@ -23,7 +32,6 @@ function SidebarAdmin() {
       <div className="sidebar-admin__topo">
         <span className="sidebar-admin__marca">ClassSync</span>
         <span className="sidebar-admin__perfil">Administração</span>
-        <span className="sidebar-admin__usuario">{usuario?.nome ?? 'Administrador'}</span>
       </div>
 
       <nav className="sidebar-admin__nav" aria-label="Menu do administrador">
@@ -41,9 +49,21 @@ function SidebarAdmin() {
         </ul>
       </nav>
 
-      <button type="button" className="sidebar-admin__sair" onClick={handleSair}>
-        Sair
-      </button>
+      <div className="sidebar-admin__rodape">
+        <div className="sidebar-admin__usuario">
+          <span className="sidebar-admin__avatar" aria-hidden="true">
+            {obterIniciais(nome)}
+          </span>
+          <div className="sidebar-admin__usuario-info">
+            <span className="sidebar-admin__usuario-nome">{nome}</span>
+            <span className="sidebar-admin__usuario-cargo">Administrador</span>
+          </div>
+        </div>
+
+        <button type="button" className="sidebar-admin__sair" onClick={handleSair}>
+          Sair
+        </button>
+      </div>
     </aside>
   );
 }
