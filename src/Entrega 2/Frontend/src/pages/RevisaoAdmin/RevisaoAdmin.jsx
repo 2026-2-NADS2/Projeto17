@@ -4,6 +4,7 @@ import EstadoCarregando from '../../components/EstadoCarregando/EstadoCarregando
 import EstadoErro from '../../components/EstadoErro/EstadoErro';
 import { listarAcompanhamentos } from '../../services/acompanhamentoService';
 import './RevisaoAdmin.css';
+import { filaExemplo } from './dadosExemplo';
 
 function RevisaoAdmin() {
   const [fila, setFila] = useState([]);
@@ -37,9 +38,14 @@ function RevisaoAdmin() {
     setTentativa((t) => t + 1);
   }
 
+  function usarDadosExemplo() {
+    setFila(filaExemplo);
+    setErro(null);
+  }
+
   function renderizarConteudo() {
     if (carregando) return <EstadoCarregando mensagem="Carregando fila de revisão..." />;
-    if (erro) return <EstadoErro mensagem={erro} onTentarNovamente={tentarNovamente} />;
+    if (erro) return <EstadoErro mensagem={erro} onTentarNovamente={tentarNovamente} onUsarExemplo={usarDadosExemplo} />;
     if (fila.length === 0) {
       return <p className="revisao-admin__vazio">Nenhum acompanhamento aguardando revisão. 🎉</p>;
     }
