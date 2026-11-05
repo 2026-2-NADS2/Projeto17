@@ -1,0 +1,149 @@
+.revisao-admin {
+    display: flex;               /* sidebar e conteúdo lado a lado */
+    min-height: 100vh;
+    background: #F7F9FC;
+  }
+  
+  .revisao-admin__conteudo {
+    flex: 1;                     /* o conteúdo ocupa todo o espaço que sobra */
+    min-width: 0;                /* deixa tabelas largas encolherem (o mesmo truque do "...") */
+    padding: 32px 40px;
+  }
+  
+  .revisao-admin__topo {
+    margin-bottom: 24px;
+  }
+  
+  .revisao-admin__topo h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    color: #111B4C;
+  }
+  
+  .revisao-admin__topo p {
+    margin: 4px 0 0;
+    color: #5A6B8C;
+  }
+  
+  /* Celular: sidebar vira barra no topo, conteúdo embaixo */
+  @media (max-width: 768px) {
+    .revisao-admin {
+      flex-direction: column;
+    }
+  
+    .revisao-admin__conteudo {
+      padding: 20px 16px;
+    }
+  }
+
+  /* Caixa branca em volta da tabela (o "card" do Figma) */
+.revisao-admin__tabela-caixa {
+    background: #FFFFFF;
+    border: 1px solid #E2E7F0;
+    border-radius: 12px;
+    overflow-x: auto;              /* no celular, a tabela rola pro lado */
+  }
+  
+  .revisao-admin__tabela {
+    width: 100%;
+    min-width: 640px;              /* abaixo disso, a caixa ativa a rolagem */
+    border-collapse: collapse;     /* junta as bordas das células numa linha só */
+    font-size: 0.9rem;
+    color: #0F1B33;
+  }
+  
+  /* Cabeçalho */
+  .revisao-admin__tabela th {
+    background: #F7F9FC;
+    color: #5A6B8C;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: left;
+    padding: 12px 16px;
+  }
+  
+  /* Células */
+  .revisao-admin__tabela td {
+    padding: 14px 16px;
+    border-top: 1px solid #E2E7F0; /* a linha fininha entre uma linha e outra */
+  }
+  
+  .revisao-admin__tabela tbody tr:hover {
+    background: #F7F9FC;           /* destaca a linha ao passar o mouse */
+  }
+  
+  .revisao-admin__id {
+    color: #5A6B8C;
+  }
+  
+  .revisao-admin__aluno {
+    font-weight: 600;
+  }
+  
+  .revisao-admin__acao {
+    text-align: right;
+  }
+  
+  /* Botão Revisar (azul escuro, como no Figma) */
+  .revisao-admin__botao-revisar {
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: #0247CB;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    cursor: pointer;
+  }
+  
+  .revisao-admin__botao-revisar:hover {
+    background: #023AA6;
+  }
+  
+  .revisao-admin__botao-revisar:focus-visible {
+    outline: 2px solid #2695FD;
+    outline-offset: 2px;
+  }
+  
+  /* Lista vazia */
+  .revisao-admin__vazio {
+    background: #FFFFFF;
+    border: 1px solid #E2E7F0;
+    border-radius: 12px;
+    padding: 40px 24px;
+    text-align: center;
+    color: #5A6B8C;
+  }
+  
+  /* Esconde da tela, mas o leitor de tela ainda lê */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* Mensagem de sucesso depois de publicar ou devolver */
+.revisao-admin__aviso {
+    margin: 0 0 16px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: #E8F6EE;
+    border: 1px solid #B7E2C8;
+    color: #1E7A46;
+    font-weight: 600;
+  }
+  
+  /* Aviso de modo exemplo */
+  .revisao-admin__aviso-exemplo {
+    margin: 0 0 16px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: #FFF6E0;
+    border: 1px solid #F5D98B;
+    color: #8A6100;
+    font-size: 0.9rem;
+  }

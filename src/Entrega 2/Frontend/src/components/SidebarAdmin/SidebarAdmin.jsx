@@ -1,11 +1,13 @@
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { sair, obterUsuario } from '../../services/authService';
 import './SidebarAdmin.css';
 
-// Itens do menu. Só "Visão geral" existe por enquanto; os outros aparecem como "em breve".
+// Itens com "para" viram links; os outros aparecem como "em breve" até a tela existir.
+// "exato": só destaca no endereço exato (senão "/admin" acenderia em todas as telas do admin).
 const itensMenu = [
-  { rotulo: 'Visão geral', ativo: true },
-  { rotulo: 'Acompanhamentos', emBreve: true },
+  { rotulo: 'Visão geral', para: '/admin', exato: true },
+  { rotulo: 'Revisão e publicação', para: '/admin/revisao' },
+  { rotulo: 'Usuários', emBreve: true },
   { rotulo: 'Alunos', emBreve: true },
   { rotulo: 'Professores', emBreve: true },
 ];
@@ -27,6 +29,7 @@ function SidebarAdmin() {
     sair();              // 1. apaga token e usuário do localStorage
     navigate('/entrar'); // 2. leva para a tela de login
   }
+
   return (
     <aside className="sidebar-admin">
       <div className="sidebar-admin__topo">
@@ -37,13 +40,23 @@ function SidebarAdmin() {
       <nav className="sidebar-admin__nav" aria-label="Menu do administrador">
         <ul className="sidebar-admin__menu">
           {itensMenu.map((item) => (
-            <li
-              key={item.rotulo}
-              className={`sidebar-admin__item ${item.ativo ? 'sidebar-admin__item--ativo' : ''}`}
-              aria-current={item.ativo ? 'page' : undefined}
-            >
-              {item.rotulo}
-              {item.emBreve && <span className="sidebar-admin__tag">em breve</span>}
+            <li key={item.rotulo}>
+              {item.para ? (
+                <NavLink
+                  to={item.para}
+                  end={item.exato}
+                  className={({ isActive }) =>
+                    `sidebar-admin__item ${isActive ? 'sidebar-admin__item--ativo' : ''}`
+                  }
+                >
+                  {item.rotulo}
+                </NavLink>
+              ) : (
+                <span className="sidebar-admin__item">
+                  {item.rotulo}
+                  <span className="sidebar-admin__tag">em breve</span>
+                </span>
+              )}
             </li>
           ))}
         </ul>
