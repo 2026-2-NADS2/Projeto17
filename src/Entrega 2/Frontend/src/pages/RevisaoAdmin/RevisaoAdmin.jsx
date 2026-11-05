@@ -1,30 +1,30 @@
 import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SidebarAdmin from '../../components/SidebarAdmin/SidebarAdmin';
 import EstadoCarregando from '../../components/EstadoCarregando/EstadoCarregando';
 import EstadoErro from '../../components/EstadoErro/EstadoErro';
 import { listarAcompanhamentos } from '../../services/acompanhamentoService';
+import { filaExemploAtual } from './dadosExemplo';
+import { nomeDe, formatarMedia } from './formatadores';
 import './RevisaoAdmin.css';
-import { filaExemplo } from './dadosExemplo';
-
-// Funciona se a API mandar "Lucas Ferreira" ou { id: 2, nome: "Lucas Ferreira" }
-function nomeDe(valor) {
-    if (valor && typeof valor === 'object') return valor.nome;
-    return valor ?? '—';
-  }
-  
-  // 5.5 → "5,5" (vírgula, como no Brasil) · null → "—"
-  function formatarMedia(media) {
-    if (media === null || media === undefined) return '—';
-    return Number(media).toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-  }
 
 function RevisaoAdmin() {
-  const [fila, setFila] = useState([]);
-  const [carregando, setCarregando] = useState(true);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Quando a página de detalhe publica ou devolve, ela volta pra cá com um aviso
+  const aviso = location.state?.aviso ?? null;
+  const voltouDoExemplo = location.state?.exemplo === true;
+
+  const [fila, setFila] = useState(voltouDoExemplo ? filaExemploAtual() : []);
+  const [carregando, setCarregando] = useState(!voltouDoExemplo);
   const [erro, setErro] = useState(null);
+  const [modoExemplo, setModoExemplo] = useState(voltouDoExemplo);
   const [tentativa, setTentativa] = useState(0);
 
   useEffect(() => {
+    if (modoExemplo) return; // dados de exemplo: não chama a API
+
     let ativo = true;
 
     async function buscarFila() {
@@ -42,26 +42,34 @@ function RevisaoAdmin() {
 
     buscarFila();
     return () => { ativo = false; };
-  }, [tentativa]);
+  }, [tentativa, modoExemplo]);
 
   function tentarNovamente() {
     setCarregando(true);
     setErro(null);
+    setModoExemplo(false);
     setTentativa((t) => t + 1);
   }
 
   function usarDadosExemplo() {
-    setFila(filaExemplo);
+    setFila(filaExemploAtual());
     setErro(null);
+    setModoExemplo(true);
+  }
+
+  function abrirRevisao(item) {
+    navigate(`/admin/revisao/${item.id}`, { state: { item, exemplo: modoExemplo } });
   }
 
   function renderizarConteudo() {
     if (carregando) return <EstadoCarregando mensagem="Carregando fila de revisão..." />;
-    if (erro) return <EstadoErro mensagem={erro} onTentarNovamente={tentarNovamente} onUsarExemplo={usarDadosExemplo} />;
+    if (erro) {
+      return <EstadoErro mensagem={erro} onTentarNovamente={tentarNovamente} onUsarExemplo={usarDadosExemplo} />;
+    }
     if (fila.length === 0) {
       return <p className="revisao-admin__vazio">Nenhum acompanhamento aguardando revisão. 🎉</p>;
     }
-  
+
     return (
       <div className="revisao-admin__tabela-caixa">
         <table className="revisao-admin__tabela">
@@ -86,7 +94,12 @@ function RevisaoAdmin() {
                 <td>{item.bimestre}º</td>
                 <td>{formatarMedia(item.media)}</td>
                 <td className="revisao-admin__acao">
-                  <button type="button" className="revisao-admin__botao-revisar">
+                  <button
+                    type="button"
+                    className="revisao-admin__botao-revisar"
+                    onClick={() => abrirRevisao(item)}
+                    aria-label={`Revisar acompanhamento de ${nomeDe(item.aluno)}`}
+                  >
                     Revisar
                   </button>
                 </td>
@@ -107,6 +120,14 @@ function RevisaoAdmin() {
           <h1>Revisão e publicação</h1>
           <p>Revise os acompanhamentos enviados pelos professores e publique ou devolva para ajustes.</p>
         </header>
+
+        {aviso && <p className="revisao-admin__aviso" role="status">{aviso}</p>}
+
+        {modoExemplo && !carregando && (
+          <p className="revisao-admin__aviso-exemplo" role="note">
+            Você está vendo dados de exemplo porque a API não respondeu.
+          </p>
+        )}
 
         {renderizarConteudo()}
       </main>

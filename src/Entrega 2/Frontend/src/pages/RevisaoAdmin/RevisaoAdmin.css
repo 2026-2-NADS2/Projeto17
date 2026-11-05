@@ -125,3 +125,25 @@
     clip: rect(0 0 0 0);
     white-space: nowrap;
   }
+
+  /* Mensagem de sucesso depois de publicar ou devolver */
+.revisao-admin__aviso {
+    margin: 0 0 16px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: #E8F6EE;
+    border: 1px solid #B7E2C8;
+    color: #1E7A46;
+    font-weight: 600;
+  }
+  
+  /* Aviso de modo exemplo */
+  .revisao-admin__aviso-exemplo {
+    margin: 0 0 16px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: #FFF6E0;
+    border: 1px solid #F5D98B;
+    color: #8A6100;
+    font-size: 0.9rem;
+  }
