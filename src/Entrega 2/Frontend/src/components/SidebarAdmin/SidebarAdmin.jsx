@@ -1,3 +1,4 @@
+{ rotulo: 'Usuários', para: '/admin/usuarios' },
 import { NavLink, useNavigate } from 'react-router-dom';
 import { sair, obterUsuario } from '../../services/authService';
 import './SidebarAdmin.css';
