@@ -1,0 +1,12 @@
+// Dados FICTÍCIOS no formato do contrato proposto. Nomes do Figma (Últimas ações).
+export const auditoriaExemplo = [
+  { id: 9, dataHora: '2026-11-06T10:12', usuario: 'Ana Ribeiro', acao: 'PUBLICAR', entidade: 'ACOMPANHAMENTO', idEntidade: 33, descricao: 'Publicou o acompanhamento de Ana Beatriz Costa (Matemática).', antes: { status: 'ENVIADO' }, depois: { status: 'PUBLICADO' } },
+  { id: 8, dataHora: '2026-11-06T10:05', usuario: 'Ana Ribeiro', acao: 'EDITAR', entidade: 'ACOMPANHAMENTO', idEntidade: 35, descricao: 'Alterou a média de Beatriz Oliveira (Matemática).', antes: { media: 7.0, justificativa: null }, depois: { media: 7.5, justificativa: 'Nota da recuperação não tinha sido somada.' } },
+  { id: 7, dataHora: '2026-11-05T16:40', usuario: 'Ana Ribeiro', acao: 'DEVOLVER', entidade: 'ACOMPANHAMENTO', idEntidade: 27, descricao: 'Devolveu o acompanhamento de Maria Souza (Português).', antes: { status: 'ENVIADO', motivoDevolucao: null }, depois: { status: 'DEVOLVIDO', motivoDevolucao: 'Descrição incompleta.' } },
+  { id: 6, dataHora: '2026-11-05T11:05', usuario: 'Ricardo Lima', acao: 'ENVIAR', entidade: 'ACOMPANHAMENTO', idEntidade: 41, descricao: 'Enviou o acompanhamento de Lucas Ferreira para revisão.', antes: { status: 'RASCUNHO' }, depois: { status: 'ENVIADO' } },
+  { id: 5, dataHora: '2026-11-05T10:41', usuario: 'Ricardo Lima', acao: 'ENVIAR', entidade: 'ACOMPANHAMENTO', idEntidade: 40, descricao: 'Enviou o acompanhamento de Gabriel Santos para revisão.', antes: { status: 'RASCUNHO' }, depois: { status: 'ENVIADO' } },
+  { id: 4, dataHora: '2026-11-04T15:20', usuario: 'Ana Ribeiro', acao: 'CANCELAR', entidade: 'ACOMPANHAMENTO', idEntidade: 26, descricao: 'Cancelou um acompanhamento lançado em duplicidade.', antes: { status: 'ENVIADO' }, depois: { status: 'CANCELADO' } },
+  { id: 3, dataHora: '2026-11-03T09:00', usuario: 'Ana Ribeiro', acao: 'CRIAR', entidade: 'USUARIO', idEntidade: 5, descricao: 'Criou a conta de Paulo Costa (Responsável).', antes: null, depois: { nome: 'Paulo Costa', perfil: 'RESPONSAVEL' } },
+  { id: 2, dataHora: '2026-10-30T14:10', usuario: 'Ana Ribeiro', acao: 'EDITAR', entidade: 'BIMESTRE', idEntidade: 3, descricao: 'Alterou as datas do 3º bimestre.', antes: { dataEncerramento: '2026-10-10' }, depois: { dataEncerramento: '2026-10-15' } },
+  { id: 1, dataHora: '2026-10-28T08:30', usuario: 'Ana Ribeiro', acao: 'EXCLUIR', entidade: 'TAG', idEntidade: 9, descricao: 'Excluiu a tag "Agitado".', antes: { nome: 'Agitado' }, depois: null },
+];

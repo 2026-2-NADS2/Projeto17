@@ -1,0 +1,26 @@
+.tags-admin__pilula {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #EAF2FF;
+  color: #0247CB;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tags-admin__descricao {
+  color: #5A6B8C;
+}
+
+.tags-admin__uso {
+  font-weight: 600;
+}
+
+.tags-admin__contador {
+  display: block;
+  text-align: right;
+  font-size: 0.75rem;
+  color: #5A6B8C;
+  margin-top: -10px;
+}

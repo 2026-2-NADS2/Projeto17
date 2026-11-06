@@ -1,0 +1,128 @@
+.historico-admin__filtros {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.historico-admin__filtros input,
+.historico-admin__filtros select {
+  font: inherit;
+  font-size: 0.9rem;
+  color: #0F1B33;
+  background: #FFFFFF;
+  border: 1px solid #E2E7F0;
+  border-radius: 8px;
+  padding: 9px 12px;
+}
+
+.historico-admin__filtros input:focus,
+.historico-admin__filtros select:focus {
+  outline: 2px solid #2695FD;
+  outline-offset: 0;
+  border-color: #2695FD;
+}
+
+.historico-admin__data {
+  white-space: nowrap;
+  color: #5A6B8C;
+}
+
+.historico-admin__registro {
+  white-space: nowrap;
+  color: #5A6B8C;
+  font-size: 0.85rem;
+}
+
+.historico-admin__pilula {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+  background: #EEF1F6;
+  color: #5A6B8C;
+}
+
+.historico-admin__pilula--publicar { background: #E8F6EE; color: #1E7A46; }
+.historico-admin__pilula--enviar { background: #EAF2FF; color: #2F6FED; }
+.historico-admin__pilula--editar { background: #FFF6E0; color: #B07A00; }
+.historico-admin__pilula--devolver { background: #FEEFE5; color: #C2561A; }
+.historico-admin__pilula--cancelar,
+.historico-admin__pilula--excluir { background: #FDECEC; color: #C62828; }
+.historico-admin__pilula--criar { background: #E6EBF8; color: #111B4C; }
+
+.historico-admin__link {
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0247CB;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.historico-admin__link:hover {
+  text-decoration: underline;
+}
+
+/* Janela de detalhe */
+.historico-admin__modal {
+  max-width: 560px;
+}
+
+.historico-admin__resumo {
+  margin: 0 0 16px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 16px;
+  font-size: 0.9rem;
+}
+
+.historico-admin__resumo dt {
+  color: #5A6B8C;
+}
+
+.historico-admin__resumo dd {
+  margin: 0;
+  color: #0F1B33;
+  font-weight: 600;
+}
+
+.historico-admin__diff {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+}
+
+.historico-admin__diff th {
+  text-align: left;
+  color: #5A6B8C;
+  font-weight: 600;
+  padding: 8px 10px;
+  background: #F7F9FC;
+}
+
+.historico-admin__diff td {
+  padding: 8px 10px;
+  border-top: 1px solid #E2E7F0;
+  vertical-align: top;
+  word-break: break-word;
+}
+
+/* Campos que mudaram ficam destacados */
+.historico-admin__diff tr.historico-admin__mudou td {
+  background: #FFFBEB;
+}
+
+.historico-admin__antes {
+  color: #C62828;
+}
+
+.historico-admin__depois {
+  color: #1E7A46;
+  font-weight: 600;
+}

@@ -1,0 +1,9 @@
+// Dados FICTÍCIOS no formato do contrato proposto. Usados só quando a API não responde.
+export const retornosExemplo = [
+  { id: 6, tipo: 'OBSERVACAO', mensagem: 'Vamos reforçar a tabuada em casa. Obrigada pelo retorno!', lido: false, criadoEm: '2026-11-05T20:14', responsavel: 'Carla Mendes', aluno: 'Maria Souza', disciplina: 'Matemática', bimestre: 3, anoLetivo: 2026, idAcompanhamento: 28 },
+  { id: 5, tipo: 'CIENCIA', mensagem: null, lido: false, criadoEm: '2026-11-05T18:02', responsavel: 'Fernanda Santos', aluno: 'Gabriel Santos', disciplina: 'Matemática', bimestre: 3, anoLetivo: 2026, idAcompanhamento: 40 },
+  { id: 4, tipo: 'OBSERVACAO', mensagem: 'Ele tem tido dificuldade para dormir, pode estar afetando as aulas.', lido: false, criadoEm: '2026-11-04T09:30', responsavel: 'Paulo Costa', aluno: 'Ana Beatriz Costa', disciplina: 'Português', bimestre: 3, anoLetivo: 2026, idAcompanhamento: 33 },
+  { id: 3, tipo: 'CIENCIA', mensagem: null, lido: true, criadoEm: '2026-11-03T21:40', responsavel: 'Carla Mendes', aluno: 'João Silva', disciplina: 'Ciências', bimestre: 3, anoLetivo: 2026, idAcompanhamento: 31 },
+  { id: 2, tipo: 'CIENCIA', mensagem: null, lido: true, criadoEm: '2026-10-30T12:05', responsavel: 'Paulo Costa', aluno: 'Ana Beatriz Costa', disciplina: 'Matemática', bimestre: 3, anoLetivo: 2026, idAcompanhamento: 32 },
+  { id: 1, tipo: 'OBSERVACAO', mensagem: 'Ficamos muito felizes com a evolução!', lido: true, criadoEm: '2026-10-28T19:47', responsavel: 'Fernanda Santos', aluno: 'Gabriel Santos', disciplina: 'Ciências', bimestre: 3, anoLetivo: 2026, idAcompanhamento: 30 },
+];
