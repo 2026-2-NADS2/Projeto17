@@ -2,15 +2,15 @@
   display: flex;
   min-height: 100vh;
   background: #F7F9FC;
-  color: #0F1B33;
 }
 
 .dashboard-admin__conteudo {
   flex: 1;
-  min-width: 0; /* deixa a tabela rolar dentro dela em vez de esticar a página */
-  max-width: 1200px;
-  padding: 36px 40px;
-  box-sizing: border-box;
+  min-width: 0;
+  padding: 32px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .dashboard-admin__topo {
@@ -19,56 +19,282 @@
   align-items: flex-end;
   flex-wrap: wrap;
   gap: 16px;
-  margin-bottom: 28px;
+  margin-bottom: 8px;
 }
 
 .dashboard-admin__topo h1 {
-  margin: 0 0 6px;
-  font-size: 1.8rem;
-  font-weight: 700;
+  margin: 0;
+  font-size: 1.75rem;
+  color: #111B4C;
 }
 
 .dashboard-admin__topo p {
-  margin: 0;
+  margin: 4px 0 0;
   color: #5A6B8C;
-  font-weight: 400;
 }
 
+/* Botão Atualizar (azul claro, como no Figma) */
 .dashboard-admin__botao-atualizar {
-  font-family: inherit;
-  font-size: 0.95rem;
+  font: inherit;
+  font-size: 0.9rem;
   font-weight: 600;
-  background: #2695FD;
   color: #FFFFFF;
+  background: #2695FD;
   border: none;
   border-radius: 8px;
-  padding: 10px 20px;
+  padding: 10px 18px;
   cursor: pointer;
 }
 
 .dashboard-admin__botao-atualizar:hover {
-  background: #1580E6;
+  background: #0F82EE;
 }
 
-.dashboard-admin__botao-atualizar:focus-visible {
-  outline: 2px solid #0247CB;
+.dashboard-admin__botao-atualizar:focus-visible,
+.dashboard-admin__botao-revisar:focus-visible,
+.dashboard-admin__link:focus-visible {
+  outline: 2px solid #2695FD;
   outline-offset: 2px;
 }
 
 .dashboard-admin__aviso-exemplo {
-  margin: 0 0 24px;
-  padding: 12px 16px;
+  margin: 0;
+  padding: 10px 16px;
   border-radius: 8px;
-  background: #FFF4D6;
-  border: 1px solid #F2D38A;
-  color: #6B4700;
+  background: #FFF6E0;
+  border: 1px solid #F5D98B;
+  color: #8A6100;
   font-size: 0.9rem;
 }
 
-.dashboard-admin__secao h2 {
-  margin: 0 0 14px;
-  font-size: 1.1rem;
+.dashboard-admin__vazio {
+  margin: 0;
+  background: #FFFFFF;
+  border: 1px solid #E2E7F0;
+  border-radius: 12px;
+  padding: 40px 24px;
+  text-align: center;
+  color: #5A6B8C;
+}
+
+/* Cards */
+.dashboard-admin__card {
+  background: #FFFFFF;
+  border: 1px solid #E2E7F0;
+  border-radius: 12px;
+  padding: 20px;
+  min-width: 0;
+}
+
+.dashboard-admin__card-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.dashboard-admin__card-topo h2 {
+  margin: 0;
+  font-size: 1rem;
+  color: #0F1B33;
+}
+
+.dashboard-admin__total {
+  font-size: 0.8rem;
+  color: #5A6B8C;
+}
+
+.dashboard-admin__link {
+  font-size: 0.85rem;
   font-weight: 600;
+  color: #0247CB;
+  text-decoration: none;
+}
+
+.dashboard-admin__link:hover {
+  text-decoration: underline;
+}
+
+.dashboard-admin__texto-suave {
+  margin: 0;
+  color: #5A6B8C;
+  font-size: 0.9rem;
+}
+
+/* Barra empilhada */
+.dashboard-admin__barra {
+  display: flex;
+  gap: 2px;
+  height: 8px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #EEF1F6;
+  margin-bottom: 16px;
+}
+
+.dashboard-admin__segmento {
+  height: 100%;
+}
+
+/* Cores por status: barra e pílulas usam a mesma família */
+.dashboard-admin__segmento--rascunho { background: #8A94A6; }
+.dashboard-admin__segmento--enviado { background: #2F6FED; }
+.dashboard-admin__segmento--em_revisao { background: #F2A626; }
+.dashboard-admin__segmento--publicado { background: #1FA45A; }
+.dashboard-admin__segmento--devolvido { background: #EE7A30; }
+.dashboard-admin__segmento--cancelado { background: #E04848; }
+
+.dashboard-admin__legenda {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+
+.dashboard-admin__legenda li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #0F1B33;
+}
+
+.dashboard-admin__pilula {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* A bolinha colorida antes do texto */
+.dashboard-admin__pilula::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.dashboard-admin__pilula--rascunho { background: #EEF1F6; color: #5A6B8C; }
+.dashboard-admin__pilula--enviado { background: #EAF2FF; color: #2F6FED; }
+.dashboard-admin__pilula--em_revisao { background: #FFF6E0; color: #B07A00; }
+.dashboard-admin__pilula--publicado { background: #E8F6EE; color: #1E7A46; }
+.dashboard-admin__pilula--devolvido { background: #FEEFE5; color: #C2561A; }
+.dashboard-admin__pilula--cancelado { background: #FDECEC; color: #C62828; }
+
+/* Linha com 2 colunas: fila (maior) + professores */
+.dashboard-admin__linha {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+/* Mini tabela da fila */
+.dashboard-admin__tabela-caixa {
+  border: 1px solid #E2E7F0;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+.dashboard-admin__tabela {
+  width: 100%;
+  min-width: 460px;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  color: #0F1B33;
+}
+
+.dashboard-admin__tabela th {
+  background: #F7F9FC;
+  color: #5A6B8C;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-align: left;
+  padding: 10px 14px;
+}
+
+.dashboard-admin__tabela td {
+  padding: 12px 14px;
+  border-top: 1px solid #E2E7F0;
+}
+
+.dashboard-admin__aluno {
+  font-weight: 600;
+}
+
+.dashboard-admin__acao {
+  text-align: right;
+}
+
+.dashboard-admin__botao-revisar {
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  background: #0247CB;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 14px;
+  cursor: pointer;
+}
+
+.dashboard-admin__botao-revisar:hover {
+  background: #023AA6;
+}
+
+/* Professores */
+.dashboard-admin__professores {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dashboard-admin__professor-topo {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.875rem;
+  margin-bottom: 6px;
+}
+
+.dashboard-admin__professor-topo strong {
+  color: #0F1B33;
+}
+
+.dashboard-admin__professor-topo span {
+  color: #5A6B8C;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.dashboard-admin__progresso {
+  height: 6px;
+  border-radius: 999px;
+  background: #EEF1F6;
+  overflow: hidden;
+}
+
+.dashboard-admin__progresso span {
+  display: block;
+  height: 100%;
+  background: #0247CB;
+  border-radius: 999px;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-admin__linha {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {
@@ -77,10 +303,6 @@
   }
 
   .dashboard-admin__conteudo {
-    padding: 24px 16px;
-  }
-
-  .dashboard-admin__topo h1 {
-    font-size: 1.5rem;
+    padding: 20px 16px;
   }
 }

@@ -1,10 +1,16 @@
 import './EstadoErro.css';
 
-function EstadoErro({ mensagem, onTentarNovamente, onUsarExemplo }) {
+// "titulo" é opcional: quem não passar continua vendo o texto de antes
+function EstadoErro({
+  titulo = 'Não foi possível carregar os acompanhamentos',
+  mensagem,
+  onTentarNovamente,
+  onUsarExemplo,
+}) {
   return (
     <div className="estado-erro" role="alert">
       <span className="estado-erro__icone" aria-hidden="true">!</span>
-      <h2>Não foi possível carregar os acompanhamentos</h2>
+      <h2>{titulo}</h2>
       <p>{mensagem}</p>
 
       <div className="estado-erro__acoes">

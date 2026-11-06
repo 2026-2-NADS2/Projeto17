@@ -5,6 +5,17 @@ import NotFound from './pages/NotFound/NotFound';
 import Login from './pages/Login/Login';
 import DashboardProfessor from './pages/DashboardProfessor/DashboardProfessor';
 import DashboardAdmin from './pages/DashboardAdmin/DashboardAdmin';
+import RevisaoAdmin from './pages/RevisaoAdmin/RevisaoAdmin';
+import DetalheRevisao from './pages/DetalheRevisao/DetalheRevisao';
+import UsuariosAdmin from './pages/UsuariosAdmin/UsuariosAdmin';
+import NovoUsuario from './pages/NovoUsuario/NovoUsuario';
+import AlunosAdmin from './pages/AlunosAdmin/AlunosAdmin';
+import TurmasAdmin from './pages/TurmasAdmin/TurmasAdmin';
+import DisciplinasAdmin from './pages/DisciplinasAdmin/DisciplinasAdmin';
+import VinculosAdmin from './pages/VinculosAdmin/VinculosAdmin';
+import BimestresAdmin from './pages/BimestresAdmin/BimestresAdmin';
+import RelatoriosAdmin from './pages/RelatoriosAdmin/RelatoriosAdmin';
+import PerfilAdmin from './pages/PerfilAdmin/PerfilAdmin';
 import DashboardResponsavel from './pages/DashboardResponsavel/DashboardResponsavel';
 import TelaTurmas from './pages/TelaTurmas/TelaTurmas';
 import AcompanhamentosAlunos from './pages/AcompanhamentosAlunos/AcompanhamentosAlunos';
@@ -16,8 +27,6 @@ import LayoutPainel from './components/LayoutPainel/LayoutPainel';
 import EmConstrucao from './components/EmConstrucao/EmConstrucao';
 import { menuProfessor } from './components/LayoutPainel/menus';
 import DetalheAcompanhamento from './pages/DetalheAcompanhamento/DetalheAcompanhamento';
-import RevisaoAdmin from './pages/RevisaoAdmin/RevisaoAdmin';
-import DetalheRevisao from './pages/DetalheRevisao/DetalheRevisao';
 import Servicos from './pages/Servicos/Servicos';
 import Institucional from './pages/Institucional/Institucional';
 import Privacidade from './pages/Privacidade/Privacidade';
@@ -37,6 +46,7 @@ function App() {
         </Route>
 
         <Route path="/entrar" element={<Login />} />
+
         <Route element={<RotaProtegida perfis={['PROFESSOR']} />}>
           <Route element={<LayoutPainel itens={menuProfessor} />}>
             <Route path="/professor" element={<DashboardProfessor />} />
@@ -55,12 +65,42 @@ function App() {
           <Route path="/admin" element={<DashboardAdmin />} />
           <Route path="/admin/revisao" element={<RevisaoAdmin />} />
           <Route path="/admin/revisao/:id" element={<DetalheRevisao />} />
+          <Route path="/admin/usuarios" element={<UsuariosAdmin />} />
+          <Route path="/admin/usuarios/novo" element={<NovoUsuario />} />
+          <Route path="/admin/alunos" element={<AlunosAdmin />} />
+          <Route path="/admin/turmas" element={<TurmasAdmin />} />
+          <Route path="/admin/disciplinas" element={<DisciplinasAdmin />} />
+          <Route path="/admin/vinculos" element={<VinculosAdmin />} />
+          <Route path="/admin/bimestres" element={<BimestresAdmin />} />
+          <Route path="/admin/relatorios" element={<RelatoriosAdmin />} />
+          <Route path="/admin/perfil" element={<PerfilAdmin />} />
+          <Route
+            path="/admin/professores"
+            element={
+              <UsuariosAdmin
+                perfilFixo="PROFESSOR"
+                titulo="Professores"
+                subtitulo="Professores com acesso à plataforma."
+                textoNovo="Novo professor"
+              />
+            }
+          />
+          <Route
+            path="/admin/responsaveis"
+            element={
+              <UsuariosAdmin
+                perfilFixo="RESPONSAVEL"
+                titulo="Responsáveis"
+                subtitulo="Pais e responsáveis com acesso à plataforma."
+                textoNovo="Novo responsável"
+              />
+            }
+          />
         </Route>
 
         <Route element={<RotaProtegida perfis={['RESPONSAVEL']} />}>
           <Route path="/responsavel" element={<DashboardResponsavel />} />
         </Route>
-        
       </Routes>
     </BrowserRouter>
   );
