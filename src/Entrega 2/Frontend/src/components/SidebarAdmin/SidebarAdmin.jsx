@@ -57,7 +57,7 @@ const grupos = [
     itens: [
       { rotulo: 'Relatórios gerenciais', para: '/admin/relatorios', Icone: ChartColumn },
       { rotulo: 'Histórico e auditoria', Icone: History },
-      { rotulo: 'Meu perfil', Icone: CircleUser },
+      { rotulo: 'Meu perfil', para: '/admin/perfil', Icone: CircleUser },
     ],
   },
 ];
