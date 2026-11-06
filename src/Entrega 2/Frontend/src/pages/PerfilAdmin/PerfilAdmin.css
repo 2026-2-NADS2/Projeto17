@@ -1,0 +1,174 @@
+.perfil-admin {
+    display: flex;
+    min-height: 100vh;
+    background: #F7F9FC;
+  }
+  
+  .perfil-admin__conteudo {
+    flex: 1;
+    min-width: 0;
+    padding: 32px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .perfil-admin__topo {
+    margin-bottom: 8px;
+  }
+  
+  .perfil-admin__topo h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    color: #111B4C;
+  }
+  
+  .perfil-admin__topo p {
+    margin: 4px 0 0;
+    color: #5A6B8C;
+  }
+  
+  .perfil-admin__card {
+    background: #FFFFFF;
+    border: 1px solid #E2E7F0;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  
+  /* Cartão de identificação */
+  .perfil-admin__identidade {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .perfil-admin__identidade h2 {
+    margin: 0 0 6px;
+    font-size: 1.25rem;
+    color: #111B4C;
+  }
+  
+  .perfil-admin__avatar {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #111B4C;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+  
+  .perfil-admin__badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: #E6EBF8;
+    color: #111B4C;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  
+  /* Duas colunas */
+  .perfil-admin__grade {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+    align-items: start;
+  }
+  
+  .perfil-admin__titulo-card {
+    margin: 0 0 16px;
+    font-size: 1rem;
+    color: #0F1B33;
+  }
+  
+  /* Lista de dados */
+  .perfil-admin__dados {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  
+  .perfil-admin__dados dt {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: #5A6B8C;
+    margin-bottom: 2px;
+  }
+  
+  .perfil-admin__dados dd {
+    margin: 0;
+    font-weight: 600;
+    color: #0F1B33;
+    word-break: break-word;
+  }
+  
+  .perfil-admin__nota {
+    margin: 16px 0 0;
+    padding-top: 12px;
+    border-top: 1px solid #E2E7F0;
+    font-size: 0.85rem;
+    color: #5A6B8C;
+  }
+  
+  /* Segurança */
+  .perfil-admin__bloco + .perfil-admin__bloco {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #E2E7F0;
+  }
+  
+  .perfil-admin__bloco strong {
+    display: block;
+    color: #0F1B33;
+    margin-bottom: 4px;
+  }
+  
+  .perfil-admin__bloco p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #5A6B8C;
+    line-height: 1.5;
+  }
+  
+  .perfil-admin__botao-sair {
+    margin-top: 12px;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #C62828;
+    background: #FFFFFF;
+    border: 1px solid #F2B8B8;
+    border-radius: 8px;
+    padding: 9px 16px;
+    cursor: pointer;
+  }
+  
+  .perfil-admin__botao-sair:hover {
+    background: #FDECEC;
+  }
+  
+  .perfil-admin__botao-sair:focus-visible {
+    outline: 2px solid #2695FD;
+    outline-offset: 2px;
+  }
+  
+  @media (max-width: 768px) {
+    .perfil-admin {
+      flex-direction: column;
+    }
+  
+    .perfil-admin__conteudo {
+      padding: 20px 16px;
+    }
+  }
