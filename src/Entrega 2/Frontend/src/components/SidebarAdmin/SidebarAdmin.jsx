@@ -41,7 +41,7 @@ const grupos = [
       { rotulo: 'Responsáveis', para: '/admin/responsaveis', Icone: Users },
       { rotulo: 'Professores', para: '/admin/professores', Icone: BookOpen },
       { rotulo: 'Áreas e disciplinas', Icone: Layers },
-      { rotulo: 'Turmas', Icone: Layers },
+      { rotulo: 'Turmas', para: '/admin/turmas', Icone: Layers },
       { rotulo: 'Tags', Icone: Tag },
     ],
   },
