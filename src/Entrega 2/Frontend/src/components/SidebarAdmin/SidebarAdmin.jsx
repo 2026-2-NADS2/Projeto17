@@ -1,15 +1,65 @@
 import { NavLink, useNavigate } from 'react-router-dom';
+import {
+  House,
+  ClipboardCheck,
+  MessageSquare,
+  User,
+  GraduationCap,
+  Users,
+  BookOpen,
+  Layers,
+  Tag,
+  Link as IconeVinculo,
+  Calendar,
+  ChartColumn,
+  History,
+  CircleUser,
+  LogOut,
+} from 'lucide-react';
 import { sair, obterUsuario } from '../../services/authService';
 import './SidebarAdmin.css';
 
-// Itens com "para" viram links; os outros aparecem como "em breve" até a tela existir.
+// Menu igual ao Figma (A01). Itens com "para" são links; os outros aparecem apagados até a tela existir.
 // "exato": só destaca no endereço exato (senão "/admin" acenderia em todas as telas do admin).
-const itensMenu = [
-  { rotulo: 'Visão geral', para: '/admin', exato: true },
-  { rotulo: 'Revisão e publicação', para: '/admin/revisao' },
-  { rotulo: 'Usuários', para: '/admin/usuarios' },
-  { rotulo: 'Alunos', emBreve: true },
-  { rotulo: 'Professores', emBreve: true },
+const grupos = [
+  {
+    titulo: null,
+    itens: [{ rotulo: 'Visão geral', para: '/admin', exato: true, Icone: House }],
+  },
+  {
+    titulo: 'Acompanhamentos',
+    itens: [
+      { rotulo: 'Revisão e publicação', para: '/admin/revisao', Icone: ClipboardCheck },
+      { rotulo: 'Retornos das famílias', Icone: MessageSquare },
+    ],
+  },
+  {
+    titulo: 'Cadastros',
+    itens: [
+      { rotulo: 'Usuários', para: '/admin/usuarios', Icone: User },
+      { rotulo: 'Alunos', Icone: GraduationCap },
+      { rotulo: 'Responsáveis', Icone: Users },
+      { rotulo: 'Professores', Icone: BookOpen },
+      { rotulo: 'Áreas e disciplinas', Icone: Layers },
+      { rotulo: 'Turmas', Icone: Layers },
+      { rotulo: 'Tags', Icone: Tag },
+    ],
+  },
+  {
+    titulo: 'Estrutura acadêmica',
+    itens: [
+      { rotulo: 'Vínculos acadêmicos', Icone: IconeVinculo },
+      { rotulo: 'Períodos bimestrais', Icone: Calendar },
+    ],
+  },
+  {
+    titulo: 'Análise',
+    itens: [
+      { rotulo: 'Relatórios gerenciais', Icone: ChartColumn },
+      { rotulo: 'Histórico e auditoria', Icone: History },
+      { rotulo: 'Meu perfil', Icone: CircleUser },
+    ],
+  },
 ];
 
 // "Ana Ribeiro" → "AR" · "Mel" → "M"
@@ -38,28 +88,39 @@ function SidebarAdmin() {
       </div>
 
       <nav className="sidebar-admin__nav" aria-label="Menu do administrador">
-        <ul className="sidebar-admin__menu">
-          {itensMenu.map((item) => (
-            <li key={item.rotulo}>
-              {item.para ? (
-                <NavLink
-                  to={item.para}
-                  end={item.exato}
-                  className={({ isActive }) =>
-                    `sidebar-admin__item ${isActive ? 'sidebar-admin__item--ativo' : ''}`
-                  }
-                >
-                  {item.rotulo}
-                </NavLink>
-              ) : (
-                <span className="sidebar-admin__item">
-                  {item.rotulo}
-                  <span className="sidebar-admin__tag">em breve</span>
-                </span>
-              )}
-            </li>
-          ))}
-        </ul>
+        {grupos.map((grupo) => (
+          <div key={grupo.titulo ?? 'inicio'} className="sidebar-admin__grupo">
+            {grupo.titulo && <span className="sidebar-admin__grupo-titulo">{grupo.titulo}</span>}
+
+            <ul className="sidebar-admin__menu">
+              {grupo.itens.map((item) => (
+                <li key={item.rotulo}>
+                  {item.para ? (
+                    <NavLink
+                      to={item.para}
+                      end={item.exato}
+                      className={({ isActive }) =>
+                        `sidebar-admin__item ${isActive ? 'sidebar-admin__item--ativo' : ''}`
+                      }
+                    >
+                      <item.Icone size={18} aria-hidden="true" />
+                      <span>{item.rotulo}</span>
+                    </NavLink>
+                  ) : (
+                    <span
+                      className="sidebar-admin__item sidebar-admin__item--desativado"
+                      aria-disabled="true"
+                      title="Em breve"
+                    >
+                      <item.Icone size={18} aria-hidden="true" />
+                      <span>{item.rotulo}</span>
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </nav>
 
       <div className="sidebar-admin__rodape">
@@ -74,6 +135,7 @@ function SidebarAdmin() {
         </div>
 
         <button type="button" className="sidebar-admin__sair" onClick={handleSair}>
+          <LogOut size={16} aria-hidden="true" />
           Sair
         </button>
       </div>
