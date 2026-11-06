@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { estaLogado, obterUsuario, rotaDoPerfil } from '../../services/authService';
+import { estaLogado, obterUsuario } from '../../services/authService';
 
 function RotaProtegida({ perfis }) {
   if (!estaLogado()) {
@@ -9,7 +9,7 @@ function RotaProtegida({ perfis }) {
   const usuario = obterUsuario();
 
   if (perfis && !perfis.includes(usuario?.perfil)) {
-    return <Navigate to={rotaDoPerfil(usuario?.perfil)} replace />;
+    return <Navigate to="/acesso-negado" replace />;
   }
 
   return <Outlet />;

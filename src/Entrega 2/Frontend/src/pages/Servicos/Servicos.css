@@ -1,0 +1,54 @@
+.servicos {
+    padding: 40px 40px 56px;
+  }
+  
+  .servicos-grade {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  @media (max-width: 1000px) {
+    .servicos-grade { grid-template-columns: 1fr; }
+  }
+  
+  .servicos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style: none;
+  }
+  
+  .servicos-lista li {
+    display: flex;
+    gap: 8px;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--cor-neutro-700);
+  }
+  
+  .servicos-lista svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: var(--status-publicado-ponto);
+  }
+  
+  /* Faixa "Acessar plataforma" */
+  .servicos-chamada {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 16px;
+    padding: 20px 24px;
+    border-radius: var(--raio-card);
+    background-color: var(--cor-navy-800);
+    color: var(--cor-branco);
+    font-size: 15px;
+    font-weight: 600;
+  }
+  
+  .servicos-chamada-botao {
+    background-color: var(--cor-azul-500);
+    color: var(--cor-branco);
+  }
+  .servicos-chamada-botao:hover { opacity: 0.9; }

@@ -19,8 +19,8 @@ function Footer() {
 
         <div className="footer-coluna">
           <h4>LEGAL</h4>
-          <Link to="/politica-privacidade">Política de privacidade</Link>
-          <Link to="/lgpd">Dados protegidos (LGPD)</Link>
+          <Link to="/privacidade">Política de privacidade</Link>
+          <Link to="/privacidade#direitos">Dados protegidos (LGPD)</Link>
         </div>
       </div>
 

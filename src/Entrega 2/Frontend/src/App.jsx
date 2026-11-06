@@ -27,6 +27,10 @@ import LayoutPainel from './components/LayoutPainel/LayoutPainel';
 import EmConstrucao from './components/EmConstrucao/EmConstrucao';
 import { menuProfessor } from './components/LayoutPainel/menus';
 import DetalheAcompanhamento from './pages/DetalheAcompanhamento/DetalheAcompanhamento';
+import Servicos from './pages/Servicos/Servicos';
+import Institucional from './pages/Institucional/Institucional';
+import Privacidade from './pages/Privacidade/Privacidade';
+import AcessoNegado from './pages/AcessoNegado/AcessoNegado';
 
 function App() {
   return (
@@ -34,6 +38,10 @@ function App() {
       <Routes>
         <Route element={<LayoutPublico />}>
           <Route path="/" element={<Home />} />
+          <Route path="/servicos" element={<Servicos />} />
+          <Route path="/institucional" element={<Institucional />} />
+          <Route path="/privacidade" element={<Privacidade />} />
+          <Route path="/acesso-negado" element={<AcessoNegado />} />
           <Route path="*" element={<NotFound />} />
         </Route>
 
