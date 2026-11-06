@@ -40,7 +40,7 @@ const grupos = [
       { rotulo: 'Alunos', para: '/admin/alunos', Icone: GraduationCap },
       { rotulo: 'Responsáveis', para: '/admin/responsaveis', Icone: Users },
       { rotulo: 'Professores', para: '/admin/professores', Icone: BookOpen },
-      { rotulo: 'Áreas e disciplinas', Icone: Layers },
+      { rotulo: 'Áreas e disciplinas', para: '/admin/disciplinas', Icone: Layers },
       { rotulo: 'Turmas', para: '/admin/turmas', Icone: Layers },
       { rotulo: 'Tags', Icone: Tag },
     ],
