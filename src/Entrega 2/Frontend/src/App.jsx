@@ -5,6 +5,10 @@ import NotFound from './pages/NotFound/NotFound';
 import Login from './pages/Login/Login';
 import DashboardProfessor from './pages/DashboardProfessor/DashboardProfessor';
 import DashboardAdmin from './pages/DashboardAdmin/DashboardAdmin';
+import RevisaoAdmin from './pages/RevisaoAdmin/RevisaoAdmin';
+import DetalheRevisao from './pages/DetalheRevisao/DetalheRevisao';
+import UsuariosAdmin from './pages/UsuariosAdmin/UsuariosAdmin';
+import NovoUsuario from './pages/NovoUsuario/NovoUsuario';
 import DashboardResponsavel from './pages/DashboardResponsavel/DashboardResponsavel';
 import TelaTurmas from './pages/TelaTurmas/TelaTurmas';
 import AcompanhamentosAlunos from './pages/AcompanhamentosAlunos/AcompanhamentosAlunos';
@@ -16,10 +20,6 @@ import LayoutPainel from './components/LayoutPainel/LayoutPainel';
 import EmConstrucao from './components/EmConstrucao/EmConstrucao';
 import { menuProfessor } from './components/LayoutPainel/menus';
 import DetalheAcompanhamento from './pages/DetalheAcompanhamento/DetalheAcompanhamento';
-import RevisaoAdmin from './pages/RevisaoAdmin/RevisaoAdmin';
-import DetalheRevisao from './pages/DetalheRevisao/DetalheRevisao';
-import UsuariosAdmin from './pages/UsuariosAdmin/UsuariosAdmin';
-import NovoUsuario from './pages/NovoUsuario/NovoUsuario';
 
 function App() {
   return (
@@ -31,6 +31,7 @@ function App() {
         </Route>
 
         <Route path="/entrar" element={<Login />} />
+
         <Route element={<RotaProtegida perfis={['PROFESSOR']} />}>
           <Route element={<LayoutPainel itens={menuProfessor} />}>
             <Route path="/professor" element={<DashboardProfessor />} />
@@ -51,12 +52,33 @@ function App() {
           <Route path="/admin/revisao/:id" element={<DetalheRevisao />} />
           <Route path="/admin/usuarios" element={<UsuariosAdmin />} />
           <Route path="/admin/usuarios/novo" element={<NovoUsuario />} />
+          <Route
+            path="/admin/professores"
+            element={
+              <UsuariosAdmin
+                perfilFixo="PROFESSOR"
+                titulo="Professores"
+                subtitulo="Professores com acesso à plataforma."
+                textoNovo="Novo professor"
+              />
+            }
+          />
+          <Route
+            path="/admin/responsaveis"
+            element={
+              <UsuariosAdmin
+                perfilFixo="RESPONSAVEL"
+                titulo="Responsáveis"
+                subtitulo="Pais e responsáveis com acesso à plataforma."
+                textoNovo="Novo responsável"
+              />
+            }
+          />
         </Route>
 
         <Route element={<RotaProtegida perfis={['RESPONSAVEL']} />}>
           <Route path="/responsavel" element={<DashboardResponsavel />} />
         </Route>
-        
       </Routes>
     </BrowserRouter>
   );

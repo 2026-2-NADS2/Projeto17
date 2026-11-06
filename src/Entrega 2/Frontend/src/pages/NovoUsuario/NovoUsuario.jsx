@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import SidebarAdmin from '../../components/SidebarAdmin/SidebarAdmin';
 import CampoFormulario from '../../components/CampoFormulario/CampoFormulario';
 import { cadastrarUsuario } from '../../services/usuarioService';
-import { OPCOES_PERFIL } from '../UsuariosAdmin/perfis';
+import { NOMES_PERFIL, OPCOES_PERFIL } from '../UsuariosAdmin/perfis';
 import './NovoUsuario.css';
 
 const estadoInicial = {
@@ -12,6 +12,13 @@ const estadoInicial = {
   perfil: '',
   senha: '',
   confirmarSenha: '',
+};
+
+// Para o breadcrumb e o botão Cancelar mostrarem o nome certo da tela de origem
+const NOMES_ORIGEM = {
+  '/admin/usuarios': 'Usuários',
+  '/admin/professores': 'Professores',
+  '/admin/responsaveis': 'Responsáveis',
 };
 
 // Função pura (mesma ideia do Cadastro.jsx): devolve só os campos com erro
@@ -53,11 +60,20 @@ function validar(dados) {
 }
 
 function NovoUsuario() {
-  const [dados, setDados] = useState(estadoInicial);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Vindo de Professores ou Responsáveis, o perfil já chega marcado e o "voltar" leva pra lá
+  const voltarPara = location.state?.voltarPara ?? '/admin/usuarios';
+  const nomeOrigem = NOMES_ORIGEM[voltarPara] ?? 'Usuários';
+  const perfilInicial = location.state?.perfil ?? '';
+
+  const [dados, setDados] = useState({ ...estadoInicial, perfil: perfilInicial });
   const [erros, setErros] = useState({});
   const [enviando, setEnviando] = useState(false);
   const [erroServidor, setErroServidor] = useState('');
-  const navigate = useNavigate();
+
+  const titulo = perfilInicial ? `Novo ${NOMES_PERFIL[perfilInicial].toLowerCase()}` : 'Novo usuário';
 
   function handleChange(evento) {
     const { name, value } = evento.target;
@@ -84,8 +100,8 @@ function NovoUsuario() {
         senha: dados.senha,
         perfil: dados.perfil,
       });
-      navigate('/admin/usuarios', {
-        state: { aviso: `Usuário ${nome} criado. Ele já pode entrar com o e-mail e a senha cadastrados.` },
+      navigate(voltarPara, {
+        state: { aviso: `${nome} foi cadastrado(a). Já pode entrar com o e-mail e a senha cadastrados.` },
       });
     } catch (erro) {
       // Contrato do grupo: error.response.data.erro (o "mensagem" fica de reserva)
@@ -104,13 +120,13 @@ function NovoUsuario() {
 
       <main className="novo-usuario__conteudo">
         <nav className="novo-usuario__breadcrumb" aria-label="Você está em">
-          <Link to="/admin/usuarios">Usuários</Link>
+          <Link to={voltarPara}>{nomeOrigem}</Link>
           <span aria-hidden="true">›</span>
           <span>Novo</span>
         </nav>
 
         <header className="novo-usuario__topo">
-          <h1>Novo usuário</h1>
+          <h1>{titulo}</h1>
           <p>Crie a conta de acesso de um administrador, professor ou responsável.</p>
         </header>
 
@@ -192,11 +208,11 @@ function NovoUsuario() {
           </section>
 
           <div className="novo-usuario__acoes">
-            <Link to="/admin/usuarios" className="novo-usuario__botao novo-usuario__botao--secundario">
+            <Link to={voltarPara} className="novo-usuario__botao novo-usuario__botao--secundario">
               Cancelar
             </Link>
             <button type="submit" className="novo-usuario__botao novo-usuario__botao--primario" disabled={enviando}>
-              {enviando ? 'Criando...' : 'Criar usuário'}
+              {enviando ? 'Criando...' : 'Criar cadastro'}
             </button>
           </div>
         </form>

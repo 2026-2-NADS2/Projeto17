@@ -38,8 +38,8 @@ const grupos = [
     itens: [
       { rotulo: 'Usuários', para: '/admin/usuarios', Icone: User },
       { rotulo: 'Alunos', Icone: GraduationCap },
-      { rotulo: 'Responsáveis', Icone: Users },
-      { rotulo: 'Professores', Icone: BookOpen },
+      { rotulo: 'Responsáveis', para: '/admin/responsaveis', Icone: Users },
+      { rotulo: 'Professores', para: '/admin/professores', Icone: BookOpen },
       { rotulo: 'Áreas e disciplinas', Icone: Layers },
       { rotulo: 'Turmas', Icone: Layers },
       { rotulo: 'Tags', Icone: Tag },
