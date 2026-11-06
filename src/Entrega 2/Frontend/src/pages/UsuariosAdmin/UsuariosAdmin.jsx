@@ -8,7 +8,16 @@ import { usuariosExemplo } from './dadosExemplo';
 import { NOMES_PERFIL, OPCOES_PERFIL, estaAtivo } from './perfis';
 import './UsuariosAdmin.css';
 
-function UsuariosAdmin() {
+// Uma tela, três usos:
+//   /admin/usuarios      → todos os perfis, com filtro
+//   /admin/professores   → perfilFixo="PROFESSOR"
+//   /admin/responsaveis  → perfilFixo="RESPONSAVEL"
+function UsuariosAdmin({
+  perfilFixo = null,
+  titulo = 'Usuários',
+  subtitulo = 'Contas de acesso de todos os perfis.',
+  textoNovo = 'Novo usuário',
+}) {
   const location = useLocation();
   const aviso = location.state?.aviso ?? null; // vem do formulário depois de criar
 
@@ -18,7 +27,7 @@ function UsuariosAdmin() {
   const [modoExemplo, setModoExemplo] = useState(false);
   const [tentativa, setTentativa] = useState(0);
 
-  const [filtroPerfil, setFiltroPerfil] = useState(''); // '' = todos
+  const [filtroPerfil, setFiltroPerfil] = useState(perfilFixo ?? ''); // '' = todos
   const [busca, setBusca] = useState('');
 
   // Busca na API sempre que abrir a tela, tentar de novo ou trocar o perfil
@@ -34,7 +43,7 @@ function UsuariosAdmin() {
         if (ativo) setUsuarios(lista);
       } catch (e) {
         if (ativo) {
-          setErro(e.response?.data?.erro ?? e.response?.data?.mensagem ?? 'Não foi possível carregar os usuários.');
+          setErro(e.response?.data?.erro ?? e.response?.data?.mensagem ?? `Não foi possível carregar a lista de ${titulo.toLowerCase()}.`);
         }
       } finally {
         if (ativo) setCarregando(false);
@@ -43,7 +52,7 @@ function UsuariosAdmin() {
 
     buscar();
     return () => { ativo = false; };
-  }, [tentativa, modoExemplo, filtroPerfil]);
+  }, [tentativa, modoExemplo, filtroPerfil, titulo]);
 
   function tentarNovamente() {
     setCarregando(true);
@@ -71,13 +80,23 @@ function UsuariosAdmin() {
     return u.nome?.toLowerCase().includes(termo) || u.email?.toLowerCase().includes(termo);
   });
 
+  // De onde veio: o formulário volta pra cá depois de criar
+  const voltarPara = location.pathname;
+
   function renderizarConteudo() {
-    if (carregando) return <EstadoCarregando mensagem="Carregando usuários..." />;
+    if (carregando) return <EstadoCarregando mensagem={`Carregando ${titulo.toLowerCase()}...`} />;
     if (erro) {
-        return <EstadoErro titulo="Não foi possível carregar os usuários" mensagem={erro} onTentarNovamente={tentarNovamente} onUsarExemplo={usarDadosExemplo} />;
+      return (
+        <EstadoErro
+          titulo={`Não foi possível carregar: ${titulo}`}
+          mensagem={erro}
+          onTentarNovamente={tentarNovamente}
+          onUsarExemplo={usarDadosExemplo}
+        />
+      );
     }
     if (visiveis.length === 0) {
-      return <p className="usuarios-admin__vazio">Nenhum usuário encontrado com esses filtros.</p>;
+      return <p className="usuarios-admin__vazio">Nenhum cadastro encontrado com esses filtros.</p>;
     }
 
     return (
@@ -87,7 +106,7 @@ function UsuariosAdmin() {
             <tr>
               <th>Nome</th>
               <th>E-mail</th>
-              <th>Perfil</th>
+              {!perfilFixo && <th>Perfil</th>}
               <th>Acesso</th>
             </tr>
           </thead>
@@ -98,11 +117,13 @@ function UsuariosAdmin() {
                 <tr key={u.id}>
                   <td className="usuarios-admin__nome">{u.nome}</td>
                   <td>{u.email}</td>
-                  <td>
-                    <span className={`usuarios-admin__badge usuarios-admin__badge--${(u.perfil ?? '').toLowerCase()}`}>
-                      {NOMES_PERFIL[u.perfil] ?? u.perfil}
-                    </span>
-                  </td>
+                  {!perfilFixo && (
+                    <td>
+                      <span className={`usuarios-admin__badge usuarios-admin__badge--${(u.perfil ?? '').toLowerCase()}`}>
+                        {NOMES_PERFIL[u.perfil] ?? u.perfil}
+                      </span>
+                    </td>
+                  )}
                   <td>
                     <span className={`usuarios-admin__badge ${ativo ? 'usuarios-admin__badge--ativo' : 'usuarios-admin__badge--inativo'}`}>
                       {ativo ? 'Ativo' : 'Inativo'}
@@ -124,11 +145,15 @@ function UsuariosAdmin() {
       <main className="usuarios-admin__conteudo">
         <header className="usuarios-admin__topo">
           <div>
-            <h1>Usuários</h1>
-            <p>Contas de acesso de todos os perfis.</p>
+            <h1>{titulo}</h1>
+            <p>{subtitulo}</p>
           </div>
-          <Link to="/admin/usuarios/novo" className="usuarios-admin__botao-novo">
-            + Novo usuário
+          <Link
+            to="/admin/usuarios/novo"
+            state={{ perfil: perfilFixo, voltarPara }}
+            className="usuarios-admin__botao-novo"
+          >
+            + {textoNovo}
           </Link>
         </header>
 
@@ -151,15 +176,17 @@ function UsuariosAdmin() {
             />
           </label>
 
-          <label className="usuarios-admin__filtro">
-            <span>Perfil</span>
-            <select value={filtroPerfil} onChange={trocarPerfil}>
-              <option value="">Todos</option>
-              {OPCOES_PERFIL.map((op) => (
-                <option key={op.valor} value={op.valor}>{op.rotulo}</option>
-              ))}
-            </select>
-          </label>
+          {!perfilFixo && (
+            <label className="usuarios-admin__filtro">
+              <span>Perfil</span>
+              <select value={filtroPerfil} onChange={trocarPerfil}>
+                <option value="">Todos</option>
+                {OPCOES_PERFIL.map((op) => (
+                  <option key={op.valor} value={op.valor}>{op.rotulo}</option>
+                ))}
+              </select>
+            </label>
+          )}
         </div>
 
         {renderizarConteudo()}
