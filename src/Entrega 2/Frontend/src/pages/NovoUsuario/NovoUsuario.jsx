@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import SidebarAdmin from '../../components/SidebarAdmin/SidebarAdmin';
 import CampoFormulario from '../../components/CampoFormulario/CampoFormulario';
-import { criarUsuario } from '../../services/usuarioService';
+import { cadastrarUsuario } from '../../services/usuarioService';
 import { OPCOES_PERFIL } from '../UsuariosAdmin/perfis';
 import './NovoUsuario.css';
 
@@ -78,7 +78,7 @@ function NovoUsuario() {
     setEnviando(true);
     try {
       const nome = dados.nome.trim();
-      await criarUsuario({
+      await cadastrarUsuario({
         nome,
         email: dados.email.trim().toLowerCase(),
         senha: dados.senha,

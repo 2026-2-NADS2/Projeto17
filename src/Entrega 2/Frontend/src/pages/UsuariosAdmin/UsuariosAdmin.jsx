@@ -74,7 +74,7 @@ function UsuariosAdmin() {
   function renderizarConteudo() {
     if (carregando) return <EstadoCarregando mensagem="Carregando usuários..." />;
     if (erro) {
-      return <EstadoErro mensagem={erro} onTentarNovamente={tentarNovamente} onUsarExemplo={usarDadosExemplo} />;
+        return <EstadoErro titulo="Não foi possível carregar os usuários" mensagem={erro} onTentarNovamente={tentarNovamente} onUsarExemplo={usarDadosExemplo} />;
     }
     if (visiveis.length === 0) {
       return <p className="usuarios-admin__vazio">Nenhum usuário encontrado com esses filtros.</p>;
