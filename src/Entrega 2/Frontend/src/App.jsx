@@ -18,6 +18,7 @@ import { menuProfessor } from './components/LayoutPainel/menus';
 import DetalheAcompanhamento from './pages/DetalheAcompanhamento/DetalheAcompanhamento';
 import RevisaoAdmin from './pages/RevisaoAdmin/RevisaoAdmin';
 import DetalheRevisao from './pages/DetalheRevisao/DetalheRevisao';
+import Servicos from './pages/Servicos/Servicos';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
       <Routes>
         <Route element={<LayoutPublico />}>
           <Route path="/" element={<Home />} />
+          <Route path="/servicos" element={<Servicos />} />
           <Route path="*" element={<NotFound />} />
         </Route>
 

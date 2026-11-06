@@ -1,0 +1,27 @@
+.card-icone {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .card-icone-simbolo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background-color: var(--cor-azul-50);
+    color: var(--cor-azul-600);
+  }
+  
+  .card-icone-titulo {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .card-icone p {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--cor-neutro-600);
+  }
