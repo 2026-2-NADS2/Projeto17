@@ -1,0 +1,12 @@
+.institucional {
+    padding: 40px 40px 56px;
+  }
+  
+  .institucional-grade {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  @media (max-width: 1000px) {
+    .institucional-grade { grid-template-columns: 1fr; }
+  }

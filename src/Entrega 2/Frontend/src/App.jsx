@@ -19,6 +19,7 @@ import DetalheAcompanhamento from './pages/DetalheAcompanhamento/DetalheAcompanh
 import RevisaoAdmin from './pages/RevisaoAdmin/RevisaoAdmin';
 import DetalheRevisao from './pages/DetalheRevisao/DetalheRevisao';
 import Servicos from './pages/Servicos/Servicos';
+import Institucional from './pages/Institucional/Institucional';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route element={<LayoutPublico />}>
           <Route path="/" element={<Home />} />
           <Route path="/servicos" element={<Servicos />} />
+          <Route path="/institucional" element={<Institucional />} />
           <Route path="*" element={<NotFound />} />
         </Route>
 
