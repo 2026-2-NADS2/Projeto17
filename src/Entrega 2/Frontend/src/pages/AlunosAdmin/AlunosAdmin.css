@@ -1,0 +1,280 @@
+.alunos-admin {
+    display: flex;
+    min-height: 100vh;
+    background: #F7F9FC;
+  }
+  
+  .alunos-admin__conteudo {
+    flex: 1;
+    min-width: 0;
+    padding: 32px 40px;
+  }
+  
+  .alunos-admin__topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .alunos-admin__topo h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    color: #111B4C;
+  }
+  
+  .alunos-admin__topo p {
+    margin: 4px 0 0;
+    color: #5A6B8C;
+  }
+  
+  .alunos-admin__botoes-topo {
+    display: flex;
+    gap: 8px;
+  }
+  
+  /* Botões */
+  .alunos-admin__botao {
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+  
+  .alunos-admin__botao:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  .alunos-admin__botao:focus-visible,
+  .alunos-admin__icone-botao:focus-visible {
+    outline: 2px solid #2695FD;
+    outline-offset: 2px;
+  }
+  
+  .alunos-admin__botao--primario {
+    background: #0247CB;
+    color: #FFFFFF;
+  }
+  
+  .alunos-admin__botao--primario:hover:not(:disabled) {
+    background: #023AA6;
+  }
+  
+  .alunos-admin__botao--secundario {
+    background: #FFFFFF;
+    color: #0247CB;
+    border-color: #E2E7F0;
+  }
+  
+  .alunos-admin__botao--secundario:hover:not(:disabled) {
+    background: #F7F9FC;
+    border-color: #2695FD;
+  }
+  
+  .alunos-admin__botao--perigo {
+    background: #C62828;
+    color: #FFFFFF;
+  }
+  
+  .alunos-admin__botao--perigo:hover:not(:disabled) {
+    background: #A61F1F;
+  }
+  
+  /* Avisos */
+  .alunos-admin__aviso {
+    margin: 0 0 16px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: #E8F6EE;
+    border: 1px solid #B7E2C8;
+    color: #1E7A46;
+    font-weight: 600;
+  }
+  
+  .alunos-admin__aviso-exemplo {
+    margin: 0 0 16px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: #FFF6E0;
+    border: 1px solid #F5D98B;
+    color: #8A6100;
+    font-size: 0.9rem;
+  }
+  
+  /* Busca */
+  .alunos-admin__filtros {
+    margin-bottom: 16px;
+  }
+  
+  .alunos-admin__filtro {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 320px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #5A6B8C;
+  }
+  
+  .alunos-admin__filtro input {
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #0F1B33;
+    background: #FFFFFF;
+    border: 1px solid #E2E7F0;
+    border-radius: 8px;
+    padding: 9px 12px;
+  }
+  
+  .alunos-admin__filtro input:focus {
+    outline: 2px solid #2695FD;
+    outline-offset: 0;
+    border-color: #2695FD;
+  }
+  
+  /* Tabela */
+  .alunos-admin__tabela-caixa {
+    background: #FFFFFF;
+    border: 1px solid #E2E7F0;
+    border-radius: 12px;
+    overflow-x: auto;
+  }
+  
+  .alunos-admin__tabela {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    color: #0F1B33;
+  }
+  
+  .alunos-admin__tabela th {
+    background: #F7F9FC;
+    color: #5A6B8C;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: left;
+    padding: 12px 16px;
+  }
+  
+  .alunos-admin__tabela td {
+    padding: 12px 16px;
+    border-top: 1px solid #E2E7F0;
+  }
+  
+  .alunos-admin__tabela tbody tr:hover {
+    background: #F7F9FC;
+  }
+  
+  .alunos-admin__nome {
+    font-weight: 600;
+  }
+  
+  .alunos-admin__acoes {
+    text-align: right;
+    white-space: nowrap;
+  }
+  
+  /* Botões de ícone (editar / excluir), como no Figma */
+  .alunos-admin__icone-botao {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 4px;
+    border-radius: 8px;
+    border: 1px solid #E2E7F0;
+    background: #FFFFFF;
+    color: #5A6B8C;
+    cursor: pointer;
+  }
+  
+  .alunos-admin__icone-botao:hover {
+    color: #0247CB;
+    border-color: #2695FD;
+  }
+  
+  .alunos-admin__icone-botao--perigo:hover {
+    color: #C62828;
+    border-color: #F2B8B8;
+    background: #FDECEC;
+  }
+  
+  .alunos-admin__vazio {
+    background: #FFFFFF;
+    border: 1px solid #E2E7F0;
+    border-radius: 12px;
+    padding: 40px 24px;
+    text-align: center;
+    color: #5A6B8C;
+  }
+  
+  /* Janelas */
+  .alunos-admin__overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 27, 51, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    z-index: 100;
+  }
+  
+  .alunos-admin__modal {
+    width: 100%;
+    max-width: 480px;
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 20px 40px rgba(15, 27, 51, 0.2);
+  }
+  
+  .alunos-admin__modal h2 {
+    margin: 0 0 16px;
+    font-size: 1.15rem;
+    color: #111B4C;
+  }
+  
+  .alunos-admin__campos {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .alunos-admin__texto-modal {
+    margin: 0 0 16px;
+    color: #5A6B8C;
+    line-height: 1.5;
+  }
+  
+  .alunos-admin__erro-modal {
+    margin: 0 0 12px;
+    color: #C62828;
+    font-weight: 600;
+  }
+  
+  .alunos-admin__acoes-modal {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  
+  @media (max-width: 768px) {
+    .alunos-admin {
+      flex-direction: column;
+    }
+  
+    .alunos-admin__conteudo {
+      padding: 20px 16px;
+    }
+  }

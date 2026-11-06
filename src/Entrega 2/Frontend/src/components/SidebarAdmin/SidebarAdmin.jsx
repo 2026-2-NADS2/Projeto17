@@ -37,7 +37,7 @@ const grupos = [
     titulo: 'Cadastros',
     itens: [
       { rotulo: 'Usuários', para: '/admin/usuarios', Icone: User },
-      { rotulo: 'Alunos', Icone: GraduationCap },
+      { rotulo: 'Alunos', para: '/admin/alunos', Icone: GraduationCap },
       { rotulo: 'Responsáveis', para: '/admin/responsaveis', Icone: Users },
       { rotulo: 'Professores', para: '/admin/professores', Icone: BookOpen },
       { rotulo: 'Áreas e disciplinas', Icone: Layers },
