@@ -1,4 +1,3 @@
-{ rotulo: 'Usuários', para: '/admin/usuarios' },
 import { NavLink, useNavigate } from 'react-router-dom';
 import { sair, obterUsuario } from '../../services/authService';
 import './SidebarAdmin.css';
@@ -8,7 +7,7 @@ import './SidebarAdmin.css';
 const itensMenu = [
   { rotulo: 'Visão geral', para: '/admin', exato: true },
   { rotulo: 'Revisão e publicação', para: '/admin/revisao' },
-  { rotulo: 'Usuários', emBreve: true },
+  { rotulo: 'Usuários', para: '/admin/usuarios' },
   { rotulo: 'Alunos', emBreve: true },
   { rotulo: 'Professores', emBreve: true },
 ];
