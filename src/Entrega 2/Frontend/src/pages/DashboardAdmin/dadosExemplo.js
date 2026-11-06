@@ -1,21 +1,17 @@
-// Dados FICTÍCIOS, usados só quando a API não responde e o usuário
-// clica em "Ver com dados de exemplo". O formato imita o que o backend devolve.
-
-export const alunosExemplo = [
-  { idAluno: 1, nome: 'Ana Beatriz Souza', dataNascimento: '2012-03-14', idTurma: 1 },
-  { idAluno: 2, nome: 'Lucas Ferreira', dataNascimento: '2012-07-22', idTurma: 1 },
-  { idAluno: 3, nome: 'Marina Oliveira', dataNascimento: '2011-11-05', idTurma: 2 },
-  { idAluno: 4, nome: 'Pedro Henrique Lima', dataNascimento: '2011-09-30', idTurma: 2 },
-  { idAluno: 5, nome: 'Júlia Santos', dataNascimento: '2012-01-18', idTurma: 1 },
-];
-
+// Dados FICTÍCIOS no formato do contrato da API. Nomes do Figma (A01).
+// Usados só quando a API não responde e o usuário clica em "Ver com dados de exemplo".
 export const acompanhamentosExemplo = [
-  { idAcompanhamento: 1, idAluno: 1, idDisciplina: 1, idProfessor: 1, idBimestre: 1, media: 8.5, descricao: 'Participa bem das aulas e entrega as atividades no prazo.', status: 'PUBLICADO' },
-  { idAcompanhamento: 2, idAluno: 2, idDisciplina: 1, idProfessor: 1, idBimestre: 1, media: 6.0, descricao: 'Precisa reforçar frações e porcentagem.', status: 'EM_REVISAO' },
-  { idAcompanhamento: 3, idAluno: 3, idDisciplina: 2, idProfessor: 2, idBimestre: 1, media: 9.2, descricao: 'Excelente produção de texto.', status: 'PUBLICADO' },
-  { idAcompanhamento: 4, idAluno: 4, idDisciplina: 2, idProfessor: 2, idBimestre: 1, media: 5.5, descricao: 'Faltou a duas avaliações; combinar recuperação.', status: 'ENVIADO' },
-  { idAcompanhamento: 5, idAluno: 5, idDisciplina: 3, idProfessor: 3, idBimestre: 1, media: 7.8, descricao: '', status: 'RASCUNHO' },
-  { idAcompanhamento: 6, idAluno: 1, idDisciplina: 3, idProfessor: 3, idBimestre: 1, media: 7.0, descricao: 'Descrição incompleta, devolvido ao professor.', status: 'DEVOLVIDO' },
-  { idAcompanhamento: 7, idAluno: 2, idDisciplina: 2, idProfessor: 2, idBimestre: 1, media: null, descricao: 'Lançado em duplicidade.', status: 'CANCELADO' },
-  { idAcompanhamento: 8, idAluno: 3, idDisciplina: 1, idProfessor: 1, idBimestre: 1, media: 8.0, descricao: 'Evoluiu bastante em relação ao diagnóstico inicial.', status: 'ENVIADO' },
+  { id: 41, status: 'ENVIADO', media: 5.5, descricao: 'Precisa reforçar operações básicas.', aluno: 'Lucas Ferreira', disciplina: 'Matemática', professor: 'Ricardo Lima', bimestre: 3, anoLetivo: 2026, tags: [] },
+  { id: 40, status: 'ENVIADO', media: 6.0, descricao: 'Evoluiu em frações.', aluno: 'Gabriel Santos', disciplina: 'Matemática', professor: 'Ricardo Lima', bimestre: 3, anoLetivo: 2026, tags: [] },
+  { id: 38, status: 'ENVIADO', media: 9.0, descricao: 'Excelente nos experimentos.', aluno: 'Rafael Lima', disciplina: 'Ciências', professor: 'Juliana Prado', bimestre: 3, anoLetivo: 2026, tags: [] },
+  { id: 37, status: 'ENVIADO', media: 7.0, descricao: 'Boa leitura.', aluno: 'Sofia Martins', disciplina: 'Português', professor: 'Marcos Dias', bimestre: 3, anoLetivo: 2026, tags: [] },
+  { id: 35, status: 'EM_REVISAO', media: 7.5, descricao: 'Participativa.', aluno: 'Beatriz Oliveira', disciplina: 'Matemática', professor: 'Ricardo Lima', bimestre: 3, anoLetivo: 2026, tags: [] },
+  { id: 33, status: 'PUBLICADO', media: 8.5, descricao: 'Entrega tudo no prazo.', aluno: 'Ana Beatriz Costa', disciplina: 'Matemática', professor: 'Ricardo Lima', bimestre: 3, anoLetivo: 2026, tags: [] },
+  { id: 32, status: 'PUBLICADO', media: 9.2, descricao: 'Ótima produção de texto.', aluno: 'Marina Oliveira', disciplina: 'Português', professor: 'Marcos Dias', bimestre: 3, anoLetivo: 2026, tags: [] },
+  { id: 31, status: 'PUBLICADO', media: 8.0, descricao: 'Evoluiu bastante.', aluno: 'Pedro Henrique Lima', disciplina: 'Ciências', professor: 'Juliana Prado', bimestre: 3, anoLetivo: 2026, tags: [] },
+  { id: 30, status: 'PUBLICADO', media: 7.8, descricao: 'Bom desempenho geral.', aluno: 'Júlia Santos', disciplina: 'Português', professor: 'Marcos Dias', bimestre: 3, anoLetivo: 2026, tags: [] },
+  { id: 29, status: 'RASCUNHO', media: null, descricao: '', aluno: 'João Silva', disciplina: 'Ciências', professor: 'Juliana Prado', bimestre: 3, anoLetivo: 2026, tags: [] },
+  { id: 28, status: 'RASCUNHO', media: null, descricao: '', aluno: 'Maria Souza', disciplina: 'Matemática', professor: 'Ricardo Lima', bimestre: 3, anoLetivo: 2026, tags: [] },
+  { id: 27, status: 'DEVOLVIDO', media: 6.5, descricao: 'Descrição incompleta.', aluno: 'Maria Souza', disciplina: 'Português', professor: 'Marcos Dias', bimestre: 3, anoLetivo: 2026, tags: [] },
+  { id: 26, status: 'CANCELADO', media: null, descricao: 'Lançado em duplicidade.', aluno: 'Lucas Ferreira', disciplina: 'Ciências', professor: 'Juliana Prado', bimestre: 3, anoLetivo: 2026, tags: [] },
 ];
