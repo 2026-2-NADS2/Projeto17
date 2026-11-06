@@ -278,3 +278,22 @@
       padding: 20px 16px;
     }
   }
+
+  /* Select dos filtros (usado em Disciplinas e nas próximas telas) */
+.alunos-admin__select {
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #0F1B33;
+    background: #FFFFFF;
+    border: 1px solid #E2E7F0;
+    border-radius: 8px;
+    padding: 9px 12px;
+    min-width: 200px;
+  }
+  
+  .alunos-admin__select:focus {
+    outline: 2px solid #2695FD;
+    outline-offset: 0;
+    border-color: #2695FD;
+  }

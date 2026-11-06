@@ -40,7 +40,7 @@ const grupos = [
       { rotulo: 'Alunos', para: '/admin/alunos', Icone: GraduationCap },
       { rotulo: 'Responsáveis', para: '/admin/responsaveis', Icone: Users },
       { rotulo: 'Professores', para: '/admin/professores', Icone: BookOpen },
-      { rotulo: 'Áreas e disciplinas', Icone: Layers },
+      { rotulo: 'Áreas e disciplinas', para: '/admin/disciplinas', Icone: Layers },
       { rotulo: 'Turmas', para: '/admin/turmas', Icone: Layers },
       { rotulo: 'Tags', Icone: Tag },
     ],
@@ -48,8 +48,8 @@ const grupos = [
   {
     titulo: 'Estrutura acadêmica',
     itens: [
-      { rotulo: 'Vínculos acadêmicos', Icone: IconeVinculo },
-      { rotulo: 'Períodos bimestrais', Icone: Calendar },
+      { rotulo: 'Vínculos acadêmicos', para: '/admin/vinculos', Icone: IconeVinculo },
+      { rotulo: 'Períodos bimestrais', para: '/admin/bimestres', Icone: Calendar },
     ],
   },
   {
