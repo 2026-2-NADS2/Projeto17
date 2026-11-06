@@ -48,7 +48,7 @@ const grupos = [
   {
     titulo: 'Estrutura acadêmica',
     itens: [
-      { rotulo: 'Vínculos acadêmicos', Icone: IconeVinculo },
+      { rotulo: 'Vínculos acadêmicos', para: '/admin/vinculos', Icone: IconeVinculo },
       { rotulo: 'Períodos bimestrais', para: '/admin/bimestres', Icone: Calendar },
     ],
   },
