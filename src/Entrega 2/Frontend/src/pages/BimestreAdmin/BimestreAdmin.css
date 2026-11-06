@@ -1,0 +1,107 @@
+/* Destaque do bimestre aberto (como o card do Figma) */
+.bimestres-admin__destaque {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    background: #EAF2FF;
+    border: 1px solid #CFE0FF;
+    color: #0247CB;
+  }
+  
+  .bimestres-admin__destaque strong {
+    display: block;
+    color: #0F1B33;
+  }
+  
+  .bimestres-admin__destaque span {
+    font-size: 0.85rem;
+    color: #5A6B8C;
+  }
+  
+  .bimestres-admin__destaque--neutro {
+    background: #FFFFFF;
+    border-color: #E2E7F0;
+    color: #5A6B8C;
+  }
+  
+  /* Grade com os 4 bimestres */
+  .bimestres-admin__grade {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  
+  .bimestres-admin__card {
+    background: #FFFFFF;
+    border: 1px solid #E2E7F0;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  /* O bimestre aberto ganha uma borda azul */
+  .bimestres-admin__card--aberto {
+    border-color: #2695FD;
+    box-shadow: 0 0 0 1px #2695FD;
+  }
+  
+  .bimestres-admin__card-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .bimestres-admin__card-topo h2 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: #111B4C;
+  }
+  
+  .bimestres-admin__pilula {
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  
+  .bimestres-admin__pilula--aberto { background: #E8F6EE; color: #1E7A46; }
+  .bimestres-admin__pilula--agendado { background: #EAF2FF; color: #2F6FED; }
+  .bimestres-admin__pilula--encerrado { background: #EEF1F6; color: #5A6B8C; }
+  .bimestres-admin__pilula--sem-data { background: #FFF6E0; color: #8A6100; }
+  
+  .bimestres-admin__datas {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .bimestres-admin__datas dt {
+    font-size: 0.78rem;
+    color: #5A6B8C;
+  }
+  
+  .bimestres-admin__datas dd {
+    margin: 2px 0 0;
+    font-weight: 600;
+    color: #0F1B33;
+  }
+  
+  .bimestres-admin__botao-editar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: auto;
+  }
