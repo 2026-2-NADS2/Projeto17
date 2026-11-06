@@ -10,6 +10,7 @@ import DetalheRevisao from './pages/DetalheRevisao/DetalheRevisao';
 import UsuariosAdmin from './pages/UsuariosAdmin/UsuariosAdmin';
 import NovoUsuario from './pages/NovoUsuario/NovoUsuario';
 import AlunosAdmin from './pages/AlunosAdmin/AlunosAdmin';
+import RelatoriosAdmin from './pages/RelatoriosAdmin/RelatoriosAdmin';
 import DashboardResponsavel from './pages/DashboardResponsavel/DashboardResponsavel';
 import TelaTurmas from './pages/TelaTurmas/TelaTurmas';
 import AcompanhamentosAlunos from './pages/AcompanhamentosAlunos/AcompanhamentosAlunos';
@@ -54,6 +55,7 @@ function App() {
           <Route path="/admin/usuarios" element={<UsuariosAdmin />} />
           <Route path="/admin/usuarios/novo" element={<NovoUsuario />} />
           <Route path="/admin/alunos" element={<AlunosAdmin />} />
+          <Route path="/admin/relatorios" element={<RelatoriosAdmin />} />
           <Route
             path="/admin/professores"
             element={
