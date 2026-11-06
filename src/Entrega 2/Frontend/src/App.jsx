@@ -21,6 +21,7 @@ import DetalheRevisao from './pages/DetalheRevisao/DetalheRevisao';
 import Servicos from './pages/Servicos/Servicos';
 import Institucional from './pages/Institucional/Institucional';
 import Privacidade from './pages/Privacidade/Privacidade';
+import AcessoNegado from './pages/AcessoNegado/AcessoNegado';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/servicos" element={<Servicos />} />
           <Route path="/institucional" element={<Institucional />} />
           <Route path="/privacidade" element={<Privacidade />} />
+          <Route path="/acesso-negado" element={<AcessoNegado />} />
           <Route path="*" element={<NotFound />} />
         </Route>
 

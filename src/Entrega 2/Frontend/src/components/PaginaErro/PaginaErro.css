@@ -1,0 +1,32 @@
+.pagina-erro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    /* ocupa a tela entre o topo (64px) e o rodapé, para o rodapé não "subir" */
+    min-height: calc(100vh - 64px - 240px);
+    padding: 48px 24px;
+    text-align: center;
+    background: var(--cor-branco);
+  }
+  
+  .pagina-erro-codigo {
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .pagina-erro-codigo--info { color: var(--cor-azul-600); }
+  .pagina-erro-codigo--erro { color: var(--status-cancelado-ponto); }
+  
+  .pagina-erro h1 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--cor-neutro-900);
+  }
+  
+  .pagina-erro-texto {
+    max-width: 560px;
+    font-size: 13px;
+    color: var(--cor-neutro-600);
+  }
