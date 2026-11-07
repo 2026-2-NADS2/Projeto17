@@ -14,6 +14,5 @@ function criarHandler(buscar, mensagemErro) {
 
 module.exports = {
   listarTags: criarHandler(() => CatalogoRepository.listarTags(), "Erro ao buscar tags."),
-  listarDisciplinas: criarHandler(() => CatalogoRepository.listarDisciplinas(), "Erro ao buscar disciplinas."),
   listarBimestres: criarHandler(() => CatalogoRepository.listarBimestres(), "Erro ao buscar bimestres."),
 };

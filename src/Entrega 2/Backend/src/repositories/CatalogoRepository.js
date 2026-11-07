@@ -6,11 +6,6 @@ class CatalogoRepository {
     return rows;
   }
 
-  async listarDisciplinas() {
-    const [rows] = await pool.query("SELECT id_disciplina AS id, nome FROM disciplina ORDER BY nome");
-    return rows;
-  }
-
   async listarBimestres() {
     const [rows] = await pool.query(
       `SELECT b.id_bimestre AS id, b.numero, b.dt_abertura AS dataAbertura,
