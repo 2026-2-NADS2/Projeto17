@@ -3,6 +3,7 @@ import { CircleCheck, TriangleAlert } from 'lucide-react';
 import { obterUsuario, alterarSenha } from '../../services/authService';
 import { listarVinculos } from '../../services/vinculoService';
 import { mensagemDeErro } from '../../services/api';
+import EntradaSenha from '../../components/EntradaSenha/EntradaSenha';
 import './MeuPerfil.css';
 
 const PERFIS = { ADMIN: 'Administração', PROFESSOR: 'Professor', RESPONSAVEL: 'Responsável' };
@@ -75,10 +76,9 @@ function MeuPerfil() {
     return (
       <div className="campo">
         <label htmlFor={`mp-${nome}`} className="campo-rotulo">{rotulo}</label>
-        <input
+        <EntradaSenha
           id={`mp-${nome}`}
           name={nome}
-          type="password"
           autoComplete={autocompletar}
           className={`campo-entrada ${errosSenha[nome] ? 'campo-entrada--erro' : ''}`}
           value={senhas[nome]}
