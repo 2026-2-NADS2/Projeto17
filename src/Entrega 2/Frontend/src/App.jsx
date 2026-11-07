@@ -32,6 +32,7 @@ import Institucional from './pages/Institucional/Institucional';
 import Privacidade from './pages/Privacidade/Privacidade';
 import AcessoNegado from './pages/AcessoNegado/AcessoNegado';
 import TurmaAlunos from './pages/TurmaAlunos/TurmaAlunos';
+import HistoricoAluno from './pages/HistoricoAluno/HistoricoAluno';
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
             <Route path="/professor" element={<DashboardProfessor />} />
             <Route path="/professor/turmas" element={<TelaTurmas />} />
             <Route path="/professor/turmas/:idTurma" element={<TurmaAlunos />} />
+            <Route path="/professor/turmas/:idTurma/alunos/:idAluno" element={<HistoricoAluno />} />
             <Route path="/professor/acompanhamentos" element={<AcompanhamentosAlunos />} />
             <Route path="/professor/criar-acompanhamento" element={<CriarAcompanhamento />} />
             <Route path="/professor/acompanhamentos/:id/editar" element={<CriarAcompanhamento />} />

@@ -300,7 +300,14 @@ function TurmaAlunos() {
                 const { aluno, registro } = linha;
                 return (
                   <tr key={aluno.id} className={registro?.status === 'DEVOLVIDO' ? 'tabela-destaque' : ''}>
-                    <td className="tabela-forte">{aluno.nome}</td>
+                    <td className="tabela-forte">
+                      <Link
+                        to={`/professor/turmas/${idTurma}/alunos/${aluno.id}?disciplina=${vinculo.idDisciplina}`}
+                        className="ta-aluno-link"
+                      >
+                        {aluno.nome}
+                      </Link>
+                    </td>
                     <td>{formatarMedia(registro?.media)}</td>
                     <td>
                       {registro?.tags?.length ? (

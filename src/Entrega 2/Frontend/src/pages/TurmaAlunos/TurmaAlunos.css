@@ -78,3 +78,6 @@
 }
 
 .tabela th.tabela-acoes { text-align: right; }
+
+.ta-aluno-link { color: inherit; }
+.ta-aluno-link:hover { color: var(--cor-azul-600); text-decoration: underline; }
