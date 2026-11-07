@@ -1,0 +1,95 @@
+.mt { max-width: 1112px; }
+
+.mt-cabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.mt-titulo { font-size: 28px; font-weight: 700; }
+.mt-subtitulo { margin-top: 4px; font-size: 14px; color: var(--cor-neutro-600); }
+.mt-filtro { width: 160px; flex-shrink: 0; }
+
+/* ----- Grupos e grade ----- */
+.mt-grupo + .mt-grupo { margin-top: 28px; }
+.mt-grupo-titulo {
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cor-neutro-900);
+}
+
+.mt-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+/* ----- Card ----- */
+.mt-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mt-card-topo {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.mt-card-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--raio-campo);
+  background-color: var(--cor-azul-50);
+  color: var(--cor-azul-600);
+}
+.mt-card-topo h2 { font-size: 18px; font-weight: 600; color: var(--cor-neutro-900); }
+.mt-card-topo p { margin-top: 2px; font-size: 13px; color: var(--cor-neutro-600); }
+
+.mt-progresso-texto { font-size: 13px; color: var(--cor-neutro-700); }
+.mt-progresso {
+  height: 4px;
+  margin-top: -6px;
+  border-radius: 2px;
+  background-color: var(--cor-neutro-100);
+  overflow: hidden;
+}
+.mt-progresso span {
+  display: block;
+  height: 100%;
+  background-color: var(--cor-azul-600);
+}
+
+.mt-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 24px;
+}
+.mt-chip {
+  padding: 3px 8px;
+  border-radius: var(--raio-badge);
+  font-size: 12px;
+  font-weight: 600;
+}
+.mt-chip--rascunho { background-color: var(--status-rascunho-bg); color: var(--status-rascunho); }
+.mt-chip--devolvido { background-color: var(--status-revisao-bg); color: var(--status-revisao); }
+.mt-chip--pendente  { background-color: var(--cor-azul-50); color: var(--cor-azul-600); }
+.mt-chip--completo  { background-color: var(--status-publicado-bg); color: var(--status-publicado); }
+
+.mt-card-botao {
+  align-self: flex-end;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 700px) {
+  .mt-cabecalho { flex-direction: column; }
+}
