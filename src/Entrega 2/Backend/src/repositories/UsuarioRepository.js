@@ -34,6 +34,10 @@ class UsuarioRepository {
     return rows.map((row) => this.#mapearParaObjeto(row));
   }
 
+  async atualizarSenha(id, senhaHash) {
+    await pool.query("UPDATE usuario SET senha_hash = ? WHERE id_usuario = ?", [senhaHash, id]);
+  }
+
   #mapearParaObjeto(row) {
     return new Usuario(
       row.nome,
