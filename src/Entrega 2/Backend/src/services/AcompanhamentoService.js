@@ -1,7 +1,7 @@
 const AcompanhamentoRepository = require("../repositories/AcompanhamentoRepository");
 const Acompanhamento = require("../models/Acompanhamento");
 const ErroApp = require("../errors/ErroApp");
-const CatalogoRepository = require("../repositories/CatalogoRepository");
+const BimestreRepository = require("../repositories/BimestreRepository");
 
 const STATUS_VALIDOS = ["RASCUNHO", "ENVIADO", "EM_REVISAO", "PUBLICADO", "DEVOLVIDO", "CANCELADO"];
 
@@ -127,7 +127,7 @@ class AcompanhamentoService {
   }
 
   async #garantirPeriodoAberto(idBimestre) {
-    const bimestre = await CatalogoRepository.buscarBimestre(idBimestre);
+    const bimestre = await BimestreRepository.buscarPorId(idBimestre);
     if (!bimestre) {
       throw new ErroApp("Bimestre não encontrado.", 400);
     }
