@@ -9,7 +9,7 @@
 }
 .mt-titulo { font-size: 28px; font-weight: 700; }
 .mt-subtitulo { margin-top: 4px; font-size: 14px; color: var(--cor-neutro-600); }
-.mt-filtro { width: 160px; flex-shrink: 0; }
+.mt-filtro { width: 210px; flex-shrink: 0; }
 
 /* ----- Grupos e grade ----- */
 .mt-grupo + .mt-grupo { margin-top: 28px; }
