@@ -815,6 +815,42 @@
             "header": [],
             "body": {
               "mode": "raw",
+              "raw": "{ \"idAluno\": 17, \"idDisciplina\": 3, \"idBimestre\": 4, \"descricao\": \"Teste de tag inexistente\", \"tags\": [999] }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Criar sem vínculo (403)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenProfessor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
               "raw": "{ \"idAluno\": 17, \"idDisciplina\": 6, \"idBimestre\": 4, \"descricao\": \"Teste de tag inexistente\", \"tags\": [999] }",
               "options": {
                 "raw": {

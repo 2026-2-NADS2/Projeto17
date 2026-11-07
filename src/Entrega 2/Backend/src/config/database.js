@@ -27,4 +27,10 @@ const pool = mysql.createPool({
   connectionLimit: 10,
 });
 
+// Horário de Brasília em todas as conexões: NOW() e CURRENT_TIMESTAMP passam a usar -03:00.
+// (O banco do Aiven roda em UTC; sem isso, períodos e históricos ficariam 3h adiantados.)
+pool.on("connection", (conexao) => {
+  conexao.query("SET time_zone = '-03:00'");
+});
+
 module.exports = pool;
