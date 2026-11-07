@@ -2,6 +2,7 @@ const AcompanhamentoRepository = require("../repositories/AcompanhamentoReposito
 const Acompanhamento = require("../models/Acompanhamento");
 const ErroApp = require("../errors/ErroApp");
 const BimestreRepository = require("../repositories/BimestreRepository");
+const VinculoRepository = require("../repositories/VinculoRepository");
 
 const STATUS_VALIDOS = ["RASCUNHO", "ENVIADO", "EM_REVISAO", "PUBLICADO", "DEVOLVIDO", "CANCELADO"];
 
@@ -49,6 +50,7 @@ class AcompanhamentoService {
       dados.descricao ?? null
     );
     acompanhamento.validar();
+    await this.#garantirVinculo(usuario.id, acompanhamento.idAluno, acompanhamento.idDisciplina);
     await this.#garantirPeriodoAberto(acompanhamento.idBimestre);
 
     const tags = await this.#validarTags(dados.tags);
@@ -67,6 +69,7 @@ class AcompanhamentoService {
   async atualizarAcompanhamento(id, dados, usuario) {
     const acompanhamento = await this.#buscarModelo(id);
     this.#garantirAutor(acompanhamento, usuario);
+    await this.#garantirVinculo(usuario.id, acompanhamento.idAluno, acompanhamento.idDisciplina);
     await this.#garantirPeriodoAberto(acompanhamento.idBimestre);
 
     acompanhamento.atualizarDados(dados.media ?? null, dados.descricao ?? null);
@@ -81,6 +84,7 @@ class AcompanhamentoService {
   async enviarParaRevisao(id, usuario) {
     const acompanhamento = await this.#buscarModelo(id);
     this.#garantirAutor(acompanhamento, usuario);
+    await this.#garantirVinculo(usuario.id, acompanhamento.idAluno, acompanhamento.idDisciplina);
     await this.#garantirPeriodoAberto(acompanhamento.idBimestre);
 
     acompanhamento.enviarParaRevisao();
@@ -123,6 +127,14 @@ class AcompanhamentoService {
   #garantirAutor(acompanhamento, usuario) {
     if (acompanhamento.idProfessor !== usuario.id) {
       throw new ErroApp("Você só pode alterar seus próprios acompanhamentos.", 403);
+    }
+  }
+
+    // Regra do edital: o professor só registra/edita em turmas e disciplinas às quais está vinculado
+  async #garantirVinculo(idProfessor, idAluno, idDisciplina) {
+    const leciona = await VinculoRepository.professorLeciona(idProfessor, idAluno, idDisciplina);
+    if (!leciona) {
+      throw new ErroApp("Você não está vinculado a esta disciplina na turma deste aluno.", 403);
     }
   }
 
