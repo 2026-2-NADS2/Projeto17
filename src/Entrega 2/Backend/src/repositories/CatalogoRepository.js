@@ -11,16 +11,6 @@ class CatalogoRepository {
     return rows;
   }
 
-  async listarTurmas() {
-    const [rows] = await pool.query(
-      `SELECT t.id_turma AS id, t.nome, t.serie, an.ano AS anoLetivo
-         FROM turma t
-         JOIN ano_letivo an ON an.id_ano_letivo = t.id_ano_letivo
-        ORDER BY an.ano DESC, t.nome`
-    );
-    return rows;
-  }
-
   async listarBimestres() {
     const [rows] = await pool.query(
       `SELECT b.id_bimestre AS id, b.numero, b.dt_abertura AS dataAbertura,
