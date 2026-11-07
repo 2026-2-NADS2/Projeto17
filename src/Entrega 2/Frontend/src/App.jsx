@@ -31,6 +31,7 @@ import Servicos from './pages/Servicos/Servicos';
 import Institucional from './pages/Institucional/Institucional';
 import Privacidade from './pages/Privacidade/Privacidade';
 import AcessoNegado from './pages/AcessoNegado/AcessoNegado';
+import TurmaAlunos from './pages/TurmaAlunos/TurmaAlunos';
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
           <Route element={<LayoutPainel itens={menuProfessor} />}>
             <Route path="/professor" element={<DashboardProfessor />} />
             <Route path="/professor/turmas" element={<TelaTurmas />} />
+            <Route path="/professor/turmas/:idTurma" element={<TurmaAlunos />} />
             <Route path="/professor/acompanhamentos" element={<AcompanhamentosAlunos />} />
             <Route path="/professor/criar-acompanhamento" element={<CriarAcompanhamento />} />
             <Route path="/professor/acompanhamentos/:id/editar" element={<CriarAcompanhamento />} />

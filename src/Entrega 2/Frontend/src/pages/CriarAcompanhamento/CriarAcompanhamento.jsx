@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { ChevronRight, Info, TriangleAlert, CircleCheck, CircleX, X, Send, Undo2 } from 'lucide-react';
 import BadgeStatus from '../../components/BadgeStatus/BadgeStatus';
 import Modal from '../../components/Modal/Modal';
@@ -39,7 +39,7 @@ function mediaParaTexto(valor) {
   return valor === null || valor === undefined ? '' : String(valor).replace('.', ',');
 }
 
-function FormularioAcompanhamento({ idEdicao }) {
+function FormularioAcompanhamento({ idEdicao, inicial = {} }) {
   const navigate = useNavigate();
 
   // Listas que vêm do backend
@@ -52,9 +52,9 @@ function FormularioAcompanhamento({ idEdicao }) {
   const [erroCarregamento, setErroCarregamento] = useState('');
 
   // Campos do formulário
-  const [idTurma, setIdTurma] = useState('');
-  const [idAluno, setIdAluno] = useState('');
-  const [idDisciplina, setIdDisciplina] = useState('');
+  const [idTurma, setIdTurma] = useState(inicial.idTurma ?? '');
+  const [idAluno, setIdAluno] = useState(inicial.idAluno ?? '');
+  const [idDisciplina, setIdDisciplina] = useState(inicial.idDisciplina ?? '');
   const [descricao, setDescricao] = useState('');
   const [media, setMedia] = useState('');
   const [tagsSelecionadas, setTagsSelecionadas] = useState([]);
@@ -563,9 +563,16 @@ function FormularioAcompanhamento({ idEdicao }) {
 
 // O "key" força o React a criar um formulário novo (estado limpo)
 // sempre que mudamos de "novo" para "editar" ou de um registro para outro.
+// ?turma=&aluno=&disciplina= (vindos da tela da turma) já deixam o formulário preenchido.
 function CriarAcompanhamento() {
   const { id } = useParams();
-  return <FormularioAcompanhamento key={id || 'novo'} idEdicao={id} />;
+  const [parametros] = useSearchParams();
+  const inicial = {
+    idTurma: parametros.get('turma') ?? '',
+    idAluno: parametros.get('aluno') ?? '',
+    idDisciplina: parametros.get('disciplina') ?? '',
+  };
+  return <FormularioAcompanhamento key={id || 'novo'} idEdicao={id} inicial={inicial} />;
 }
 
 export default CriarAcompanhamento;

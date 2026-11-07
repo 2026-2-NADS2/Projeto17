@@ -1,0 +1,80 @@
+.ta { max-width: 1112px; }
+
+/* ----- Trilha (Minhas turmas > 6º ano A) ----- */
+.ta-trilha {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: var(--cor-neutro-600);
+}
+.ta-trilha a { color: var(--cor-azul-600); }
+.ta-trilha a:hover { text-decoration: underline; }
+
+.ta-cabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.ta-titulo { font-size: 28px; font-weight: 700; }
+.ta-subtitulo { margin-top: 4px; font-size: 14px; color: var(--cor-neutro-600); }
+
+/* ----- Filtros ----- */
+.ta-filtros {
+  display: grid;
+  grid-template-columns: 200px 210px 180px minmax(200px, 1fr);
+  align-items: end;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.ta-busca { position: relative; }
+.ta-busca svg {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: var(--cor-neutro-400);
+  pointer-events: none;
+}
+.ta-busca .campo-entrada { width: 100%; padding-left: 36px; }
+
+.ta-aviso { margin-bottom: 16px; }
+
+/* ----- Tabela ----- */
+.ta-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.ta-tag {
+  padding: 3px 10px;
+  border: 1px solid var(--cor-neutro-200);
+  border-radius: var(--raio-badge);
+  font-size: 12px;
+  color: var(--cor-neutro-700);
+  white-space: nowrap;
+}
+
+.ta-sem-registro {
+  padding: 3px 10px;
+  border-radius: var(--raio-badge);
+  background-color: var(--cor-neutro-100);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cor-neutro-700);
+  white-space: nowrap;
+}
+.ta-sem-acao { color: var(--cor-neutro-400); }
+
+.ta-botao {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .ta-cabecalho { flex-direction: column; }
+  .ta-filtros { grid-template-columns: 1fr 1fr; }
+}
+
+.tabela th.tabela-acoes { text-align: right; }
