@@ -1,0 +1,79 @@
+.rp { max-width: 1112px; }
+
+.rp-cabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.rp-titulo { font-size: 28px; font-weight: 700; }
+.rp-subtitulo { margin-top: 4px; font-size: 14px; color: var(--cor-neutro-600); }
+.rp-filtro { width: 210px; flex-shrink: 0; }
+
+/* ----- Indicadores ----- */
+.rp-indicadores {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.rp-indicador { display: flex; flex-direction: column; gap: 4px; }
+.rp-indicador strong { font-size: 30px; font-weight: 700; line-height: 1.1; color: var(--cor-azul-600); }
+.rp-indicador span { font-size: 13px; color: var(--cor-neutro-600); }
+
+/* ----- Tabela ----- */
+.rp-tabela { margin-bottom: 24px; }
+.rp-link { color: inherit; }
+.rp-link:hover { color: var(--cor-azul-600); text-decoration: underline; }
+.rp-tag {
+  padding: 3px 10px;
+  border: 1px solid var(--cor-neutro-200);
+  border-radius: var(--raio-badge);
+  font-size: 12px;
+  color: var(--cor-neutro-700);
+  white-space: nowrap;
+}
+
+/* ----- Retornos ----- */
+.rp-recentes { display: flex; flex-direction: column; gap: 8px; }
+.rp-recentes-topo { display: flex; align-items: center; justify-content: space-between; }
+.rp-recentes h2 { font-size: 16px; font-weight: 600; color: var(--cor-neutro-900); }
+.rp-vazio { font-size: 14px; color: var(--cor-neutro-600); }
+
+.rp-retornos { list-style: none; }
+.rp-retornos li + li { border-top: 1px solid var(--cor-neutro-100); }
+
+.rp-retorno {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 4px;
+  color: inherit;
+}
+.rp-retorno:hover { background-color: var(--cor-neutro-50); }
+
+.rp-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--cor-azul-50);
+  color: var(--cor-azul-600);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.rp-retorno-texto { display: flex; flex: 1; flex-direction: column; gap: 2px; min-width: 0; }
+.rp-retorno-texto strong { font-size: 14px; color: var(--cor-neutro-900); }
+.rp-retorno-contexto { font-size: 12px; color: var(--cor-neutro-600); }
+.rp-retorno-texto p { font-size: 14px; color: var(--cor-neutro-700); }
+.rp-retorno-data { flex-shrink: 0; font-size: 12px; color: var(--cor-neutro-400); }
+
+@media (max-width: 900px) {
+  .rp-cabecalho { flex-direction: column; }
+  .rp-indicadores { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
