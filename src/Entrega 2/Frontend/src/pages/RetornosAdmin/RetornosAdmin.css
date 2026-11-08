@@ -1,0 +1,119 @@
+.retornos-admin__indicadores {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.retornos-admin__indicador {
+  background: #FFFFFF;
+  border: 1px solid #E2E7F0;
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.retornos-admin__indicador span {
+  font-size: 0.8rem;
+  color: #5A6B8C;
+}
+
+.retornos-admin__indicador strong {
+  font-size: 1.5rem;
+  color: #111B4C;
+}
+
+.retornos-admin__filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.retornos-admin__check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #0F1B33;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.retornos-admin__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.retornos-admin__card {
+  background: #FFFFFF;
+  border: 1px solid #E2E7F0;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Retornos novos ficam destacados (como no Figma) */
+.retornos-admin__card--novo {
+  border-color: #2695FD;
+  box-shadow: inset 4px 0 0 #2695FD;
+}
+
+.retornos-admin__card-topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.retornos-admin__pilula {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.retornos-admin__pilula--ciencia { background: #E8F6EE; color: #1E7A46; }
+.retornos-admin__pilula--observacao { background: #EAF2FF; color: #0247CB; }
+.retornos-admin__pilula--novo { background: #FFF6E0; color: #8A6100; }
+
+.retornos-admin__data {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: #5A6B8C;
+}
+
+.retornos-admin__quem {
+  margin: 0;
+  color: #0F1B33;
+}
+
+.retornos-admin__contexto {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #5A6B8C;
+}
+
+.retornos-admin__mensagem {
+  margin: 0;
+  padding: 12px 14px;
+  background: #F7F9FC;
+  border: 1px solid #E2E7F0;
+  border-radius: 8px;
+  color: #0F1B33;
+  line-height: 1.5;
+}
+
+.retornos-admin__acoes {
+  display: flex;
+  justify-content: flex-end;
+}

@@ -7,14 +7,17 @@ import DashboardProfessor from './pages/DashboardProfessor/DashboardProfessor';
 import DashboardAdmin from './pages/DashboardAdmin/DashboardAdmin';
 import RevisaoAdmin from './pages/RevisaoAdmin/RevisaoAdmin';
 import DetalheRevisao from './pages/DetalheRevisao/DetalheRevisao';
+import RetornosAdmin from './pages/RetornosAdmin/RetornosAdmin';
 import UsuariosAdmin from './pages/UsuariosAdmin/UsuariosAdmin';
 import NovoUsuario from './pages/NovoUsuario/NovoUsuario';
 import AlunosAdmin from './pages/AlunosAdmin/AlunosAdmin';
 import TurmasAdmin from './pages/TurmasAdmin/TurmasAdmin';
 import DisciplinasAdmin from './pages/DisciplinasAdmin/DisciplinasAdmin';
+import TagsAdmin from './pages/TagsAdmin/TagsAdmin';
 import VinculosAdmin from './pages/VinculosAdmin/VinculosAdmin';
 import BimestresAdmin from './pages/BimestresAdmin/BimestresAdmin';
 import RelatoriosAdmin from './pages/RelatoriosAdmin/RelatoriosAdmin';
+import HistoricoAdmin from './pages/HistoricoAdmin/HistoricoAdmin';
 import PerfilAdmin from './pages/PerfilAdmin/PerfilAdmin';
 import DashboardResponsavel from './pages/DashboardResponsavel/DashboardResponsavel';
 import TelaTurmas from './pages/TelaTurmas/TelaTurmas';
@@ -26,6 +29,8 @@ import RotaProtegida from './components/RotaProtegida/RotaProtegida';
 import LayoutPainel from './components/LayoutPainel/LayoutPainel';
 import { menuProfessor } from './components/LayoutPainel/menus';
 import DetalheAcompanhamento from './pages/DetalheAcompanhamento/DetalheAcompanhamento';
+<<<<<<< HEAD
+=======
 import Servicos from './pages/Servicos/Servicos';
 import Institucional from './pages/Institucional/Institucional';
 import Privacidade from './pages/Privacidade/Privacidade';
@@ -33,6 +38,7 @@ import AcessoNegado from './pages/AcessoNegado/AcessoNegado';
 import TurmaAlunos from './pages/TurmaAlunos/TurmaAlunos';
 import HistoricoAluno from './pages/HistoricoAluno/HistoricoAluno';
 import RelatoriosProfessor from './pages/RelatoriosProfessor/RelatoriosProfessor';
+>>>>>>> main
 
 function App() {
   return (
@@ -40,10 +46,6 @@ function App() {
       <Routes>
         <Route element={<LayoutPublico />}>
           <Route path="/" element={<Home />} />
-          <Route path="/servicos" element={<Servicos />} />
-          <Route path="/institucional" element={<Institucional />} />
-          <Route path="/privacidade" element={<Privacidade />} />
-          <Route path="/acesso-negado" element={<AcessoNegado />} />
           <Route path="*" element={<NotFound />} />
         </Route>
 
@@ -69,14 +71,17 @@ function App() {
           <Route path="/admin" element={<DashboardAdmin />} />
           <Route path="/admin/revisao" element={<RevisaoAdmin />} />
           <Route path="/admin/revisao/:id" element={<DetalheRevisao />} />
+          <Route path="/admin/retornos" element={<RetornosAdmin />} />
           <Route path="/admin/usuarios" element={<UsuariosAdmin />} />
           <Route path="/admin/usuarios/novo" element={<NovoUsuario />} />
           <Route path="/admin/alunos" element={<AlunosAdmin />} />
           <Route path="/admin/turmas" element={<TurmasAdmin />} />
           <Route path="/admin/disciplinas" element={<DisciplinasAdmin />} />
+          <Route path="/admin/tags" element={<TagsAdmin />} />
           <Route path="/admin/vinculos" element={<VinculosAdmin />} />
           <Route path="/admin/bimestres" element={<BimestresAdmin />} />
           <Route path="/admin/relatorios" element={<RelatoriosAdmin />} />
+          <Route path="/admin/auditoria" element={<HistoricoAdmin />} />
           <Route path="/admin/perfil" element={<PerfilAdmin />} />
           <Route
             path="/admin/professores"

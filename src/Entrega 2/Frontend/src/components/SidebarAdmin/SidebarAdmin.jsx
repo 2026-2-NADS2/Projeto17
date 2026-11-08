@@ -30,7 +30,7 @@ const grupos = [
     titulo: 'Acompanhamentos',
     itens: [
       { rotulo: 'Revisão e publicação', para: '/admin/revisao', Icone: ClipboardCheck },
-      { rotulo: 'Retornos das famílias', Icone: MessageSquare },
+      { rotulo: 'Retornos das famílias', para: '/admin/retornos', Icone: MessageSquare },
     ],
   },
   {
@@ -42,7 +42,7 @@ const grupos = [
       { rotulo: 'Professores', para: '/admin/professores', Icone: BookOpen },
       { rotulo: 'Áreas e disciplinas', para: '/admin/disciplinas', Icone: Layers },
       { rotulo: 'Turmas', para: '/admin/turmas', Icone: Layers },
-      { rotulo: 'Tags', Icone: Tag },
+      { rotulo: 'Tags', para: '/admin/tags', Icone: Tag },
     ],
   },
   {
@@ -56,7 +56,7 @@ const grupos = [
     titulo: 'Análise',
     itens: [
       { rotulo: 'Relatórios gerenciais', para: '/admin/relatorios', Icone: ChartColumn },
-      { rotulo: 'Histórico e auditoria', Icone: History },
+      { rotulo: 'Histórico e auditoria', para: '/admin/auditoria', Icone: History },
       { rotulo: 'Meu perfil', para: '/admin/perfil', Icone: CircleUser },
     ],
   },
