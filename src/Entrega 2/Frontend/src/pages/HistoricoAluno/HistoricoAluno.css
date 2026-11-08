@@ -52,14 +52,41 @@
 
 /* ----- Tabela ----- */
 .ha-descricao {
-  max-width: 420px;
+  width: 100%;      /* a descrição fica com o espaço que sobrar na tabela... */
+  max-width: 0;     /* ...sem empurrar as outras colunas (truque para o "..." funcionar em tabela) */
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis; /* corta com "..." — o texto inteiro aparece ao passar o mouse */
 }
 .tabela th.tabela-acoes { text-align: right; }
 
+/* ----- Tabela + painel de retornos lado a lado ----- */
+.ha-conteudo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  align-items: start;
+  gap: 24px;
+}
+
+.ha-retornos { display: flex; flex-direction: column; gap: 12px; }
+.ha-retornos h2 { font-size: 16px; font-weight: 600; color: var(--cor-neutro-900); }
+.ha-retornos ul { display: flex; flex-direction: column; gap: 10px; list-style: none; }
+.ha-retornos-vazio { font-size: 13px; color: var(--cor-neutro-600); }
+
+.ha-retorno {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  border-radius: var(--raio-campo);
+  background-color: var(--cor-neutro-50);
+}
+.ha-retorno strong { font-size: 14px; color: var(--cor-neutro-900); }
+.ha-retorno p { font-size: 13px; line-height: 1.5; color: var(--cor-neutro-700); }
+.ha-retorno .ha-retorno-ciencia { color: var(--status-publicado); }
+
 @media (max-width: 900px) {
   .ha-cabecalho { flex-direction: column; }
   .ha-bimestres { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ha-conteudo { grid-template-columns: 1fr; }
 }
