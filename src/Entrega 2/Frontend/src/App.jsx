@@ -29,8 +29,6 @@ import RotaProtegida from './components/RotaProtegida/RotaProtegida';
 import LayoutPainel from './components/LayoutPainel/LayoutPainel';
 import { menuProfessor } from './components/LayoutPainel/menus';
 import DetalheAcompanhamento from './pages/DetalheAcompanhamento/DetalheAcompanhamento';
-<<<<<<< HEAD
-=======
 import Servicos from './pages/Servicos/Servicos';
 import Institucional from './pages/Institucional/Institucional';
 import Privacidade from './pages/Privacidade/Privacidade';
@@ -38,7 +36,6 @@ import AcessoNegado from './pages/AcessoNegado/AcessoNegado';
 import TurmaAlunos from './pages/TurmaAlunos/TurmaAlunos';
 import HistoricoAluno from './pages/HistoricoAluno/HistoricoAluno';
 import RelatoriosProfessor from './pages/RelatoriosProfessor/RelatoriosProfessor';
->>>>>>> main
 
 function App() {
   return (
