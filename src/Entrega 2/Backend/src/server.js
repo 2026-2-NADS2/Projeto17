@@ -5,12 +5,12 @@ const cors = require("cors");
 const alunoRoutes = require("./routes/alunoRoutes");
 const acompanhamentoRoutes = require("./routes/acompanhamentoRoutes");
 const authRoutes = require("./routes/authRoutes");
-const catalogoRoutes = require("./routes/catalogoRoutes");
 const turmaRoutes = require("./routes/turmaRoutes");
 const disciplinaRoutes = require("./routes/disciplinaRoutes");
 const bimestreRoutes = require("./routes/bimestreRoutes");
 const vinculoRoutes = require("./routes/vinculoRoutes");
 const cienciaRoutes = require("./routes/cienciaRoutes");
+const tagRoutes = require("./routes/tagRoutes");
 const pool = require("./config/database");
 
 const app = express();
@@ -31,11 +31,11 @@ app.use(express.json());
 app.use("/api/alunos", alunoRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/acompanhamentos", acompanhamentoRoutes);
-app.use("/api", catalogoRoutes);
 app.use("/api/turmas", turmaRoutes);
 app.use("/api", disciplinaRoutes);
 app.use("/api/bimestres", bimestreRoutes);
 app.use("/api/vinculos", vinculoRoutes);
+app.use("/api/tags", tagRoutes);
 app.use("/api", cienciaRoutes);
 
 // Rota de teste da conexão com o banco

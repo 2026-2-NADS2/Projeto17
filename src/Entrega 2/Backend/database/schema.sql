@@ -88,8 +88,9 @@ CREATE TABLE vinculo_docente (
 ) ENGINE=InnoDB;
 
 CREATE TABLE tag (
-    id_tag INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    nome   VARCHAR(60) NOT NULL UNIQUE
+    id_tag    INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nome      VARCHAR(60) NOT NULL UNIQUE,
+    descricao VARCHAR(200)
 ) ENGINE=InnoDB;
 
 -- Nucleo do sistema: um registro por aluno + disciplina + bimestre
