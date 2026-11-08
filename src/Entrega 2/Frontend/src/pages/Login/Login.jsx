@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import banner from '../../assets/BANNER - ClassSync.png';
 import { login, rotaDoPerfil } from '../../services/authService';
+import EntradaSenha from '../../components/EntradaSenha/EntradaSenha';
 import './Login.css';
 
 function Login() {
@@ -69,12 +70,12 @@ function Login() {
             />
 
             <label htmlFor="senha">Senha</label>
-            <input
+            <EntradaSenha
               id="senha"
-              type="password"
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
               placeholder="••••••••"
+              autoComplete="current-password"
             />
 
             <Link to="/recuperar-senha" className="login-esqueci">

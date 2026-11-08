@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const UsuarioRepository = require("../repositories/UsuarioRepository");
 const Usuario = require("../models/Usuario");
+const ErroApp = require("../errors/ErroApp");
 
 const SENHAS_COMUNS = [
   // Sequências numéricas e teclado (com letras para passar na regra)
@@ -86,6 +87,37 @@ class AuthService {
     }
     const usuarios = await UsuarioRepository.listar(perfil || null);
     return usuarios.map((usuario) => usuario.paraResposta()); // nunca devolve o hash da senha
+  }
+
+  // Qualquer perfil troca a PRÓPRIA senha: o id vem do token, nunca do corpo da requisição
+  async alterarSenha(idUsuario, senhaAtual, novaSenha) {
+    if (!senhaAtual || !novaSenha) {
+      throw new ErroApp("Informe a senha atual e a nova senha.");
+    }
+
+    const usuario = await UsuarioRepository.buscarPorId(idUsuario);
+    if (!usuario || !usuario.ativo) {
+      throw new ErroApp("Usuário não encontrado.", 404);
+    }
+
+    // 400, e não 401: um 401 faria o frontend encerrar a sessão (interceptor do api.js)
+    const senhaConfere = await bcrypt.compare(senhaAtual, usuario.senhaHash);
+    if (!senhaConfere) {
+      throw new ErroApp("A senha atual está incorreta.");
+    }
+    if (novaSenha === senhaAtual) {
+      throw new ErroApp("A nova senha precisa ser diferente da atual.");
+    }
+
+    // Reaproveita as regras do cadastro (8+ caracteres, letras e números, não ser senha comum)
+    try {
+      this.#validarSenha(novaSenha);
+    } catch (error) {
+      throw new ErroApp(error.message);
+    }
+
+    const senhaHash = await bcrypt.hash(novaSenha, 10);
+    await UsuarioRepository.atualizarSenha(usuario.id, senhaHash);
   }
 }
 

@@ -9,7 +9,10 @@ const SQL_DETALHADO = `
          a.id_disciplina, d.nome  AS nome_disciplina,
          a.id_professor,  u.nome  AS nome_professor,
          a.id_bimestre,   b.numero AS numero_bimestre,
-         an.ano AS ano_letivo
+         an.ano AS ano_letivo,
+         (SELECT DATE_FORMAT(MAX(h.data_hora), '%Y-%m-%dT%H:%i')
+            FROM acompanhamento_historico h
+           WHERE h.id_acompanhamento = a.id_acompanhamento) AS atualizado_em
   FROM acompanhamento a
   JOIN aluno al      ON al.id_aluno = a.id_aluno
   JOIN turma t       ON t.id_turma = al.id_turma
@@ -183,6 +186,7 @@ class AcompanhamentoRepository {
       professor: { id: row.id_professor, nome: row.nome_professor },
       bimestre: { id: row.id_bimestre, numero: row.numero_bimestre },
       anoLetivo: row.ano_letivo,
+      atualizadoEm: row.atualizado_em,
       tags: [],
     };
   }

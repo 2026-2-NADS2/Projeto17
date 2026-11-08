@@ -1,0 +1,54 @@
+.mp { max-width: 1112px; }
+.mp-titulo { font-size: 28px; font-weight: 700; }
+.mp-subtitulo { margin: 4px 0 24px; font-size: 14px; color: var(--cor-neutro-600); }
+
+.mp-grade {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 24px;
+}
+.mp-coluna { display: flex; flex-direction: column; gap: 16px; }
+
+.mp-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.mp-card h2 { font-size: 16px; font-weight: 600; color: var(--cor-neutro-900); }
+
+/* ----- Identidade (avatar + nome) ----- */
+.mp-identidade { display: flex; align-items: center; gap: 14px; }
+.mp-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--cor-azul-50);
+  color: var(--cor-azul-600);
+  font-size: 18px;
+  font-weight: 700;
+}
+.mp-identidade div { display: flex; flex-direction: column; gap: 2px; }
+.mp-identidade strong { font-size: 15px; color: var(--cor-neutro-900); }
+.mp-identidade span { font-size: 13px; color: var(--cor-neutro-600); }
+
+/* ----- Senha ----- */
+.mp-form { display: flex; flex-direction: column; gap: 14px; }
+.mp-botao { align-self: flex-end; }
+
+/* ----- Vínculos ----- */
+.mp-vinculos {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+  font-size: 14px;
+  color: var(--cor-neutro-700);
+}
+
+@media (max-width: 900px) {
+  .mp-grade { grid-template-columns: 1fr; }
+}

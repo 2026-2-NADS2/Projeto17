@@ -1,4 +1,5 @@
 import './CampoFormulario.css';
+import EntradaSenha from '../EntradaSenha/EntradaSenha';
 
 function CampoFormulario({
   label,
@@ -10,13 +11,15 @@ function CampoFormulario({
   placeholder,
   autoComplete,
 }) {
+  // Senha ganha o botão de mostrar/esconder; o resto continua um <input> comum
+  const Entrada = type === 'password' ? EntradaSenha : 'input';
   return (
     <div className="campo-formulario">
       <label htmlFor={id} className="campo-label">
         {label}
       </label>
 
-      <input
+      <Entrada
         id={id}
         name={id}
         type={type}

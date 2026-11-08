@@ -24,13 +24,15 @@ import RegistrosDevolvidos from './pages/RegistrosDevolvidos/RegistrosDevolvidos
 import MeuPerfil from './pages/MeuPerfil/MeuPerfil';
 import RotaProtegida from './components/RotaProtegida/RotaProtegida';
 import LayoutPainel from './components/LayoutPainel/LayoutPainel';
-import EmConstrucao from './components/EmConstrucao/EmConstrucao';
 import { menuProfessor } from './components/LayoutPainel/menus';
 import DetalheAcompanhamento from './pages/DetalheAcompanhamento/DetalheAcompanhamento';
 import Servicos from './pages/Servicos/Servicos';
 import Institucional from './pages/Institucional/Institucional';
 import Privacidade from './pages/Privacidade/Privacidade';
 import AcessoNegado from './pages/AcessoNegado/AcessoNegado';
+import TurmaAlunos from './pages/TurmaAlunos/TurmaAlunos';
+import HistoricoAluno from './pages/HistoricoAluno/HistoricoAluno';
+import RelatoriosProfessor from './pages/RelatoriosProfessor/RelatoriosProfessor';
 
 function App() {
   return (
@@ -51,12 +53,14 @@ function App() {
           <Route element={<LayoutPainel itens={menuProfessor} />}>
             <Route path="/professor" element={<DashboardProfessor />} />
             <Route path="/professor/turmas" element={<TelaTurmas />} />
+            <Route path="/professor/turmas/:idTurma" element={<TurmaAlunos />} />
+            <Route path="/professor/turmas/:idTurma/alunos/:idAluno" element={<HistoricoAluno />} />
             <Route path="/professor/acompanhamentos" element={<AcompanhamentosAlunos />} />
             <Route path="/professor/criar-acompanhamento" element={<CriarAcompanhamento />} />
             <Route path="/professor/acompanhamentos/:id/editar" element={<CriarAcompanhamento />} />
             <Route path="/professor/acompanhamentos/:id" element={<DetalheAcompanhamento />} />
             <Route path="/professor/devolvidos" element={<RegistrosDevolvidos />} />
-            <Route path="/professor/relatorios" element={<EmConstrucao titulo="Relatórios e retornos" />} />
+            <Route path="/professor/relatorios" element={<RelatoriosProfessor />} />
             <Route path="/professor/perfil" element={<MeuPerfil />} />
           </Route>
         </Route>

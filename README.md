@@ -87,7 +87,7 @@ O backend é organizado em camadas: **routes → controllers → services → re
 |  &emsp;|-->Entrega 1 (versão anterior, mantida como histórico)<br>
 |  &emsp;|-->Entrega 2<br>
 |  &emsp; &emsp;|-->Backend<br>
-|  &emsp; &emsp;&emsp;|-->database (scripts SQL)<br>
+|  &emsp; &emsp;&emsp;|-->database (schema.sql e migrações)<br>
 |  &emsp; &emsp;&emsp;|-->src<br>
 |  &emsp; &emsp;&emsp;&emsp;|-->config (conexão com o banco)<br>
 |  &emsp; &emsp;&emsp;&emsp;|-->controllers<br>
@@ -96,7 +96,7 @@ O backend é organizado em camadas: **routes → controllers → services → re
 |  &emsp; &emsp;&emsp;&emsp;|-->models<br>
 |  &emsp; &emsp;&emsp;&emsp;|-->repositories<br>
 |  &emsp; &emsp;&emsp;&emsp;|-->routes<br>
-|  &emsp; &emsp;&emsp;&emsp;|-->scripts (criação do administrador)<br>
+|  &emsp; &emsp;&emsp;&emsp;|-->scripts (criação do administrador e carga de demonstração)<br>
 |  &emsp; &emsp;&emsp;&emsp;|-->services<br>
 |  &emsp; &emsp;&emsp;&emsp;|-->server.js<br>
 |  &emsp; &emsp;&emsp;|-->.env.example<br>
@@ -130,7 +130,9 @@ cd Projeto17
 ### 2. Configurar o Banco de Dados
 
 1. Abra o MySQL Workbench (ou outro cliente de sua preferência).
-2. Execute o script `src/Entrega 2/Backend/database/schema.sql` para criar o banco `classsync`, suas tabelas, índices e views.
+2. Execute o script `src/Entrega 2/Backend/database/schema.sql` para criar o banco `classsync`, suas tabelas, índices, views e triggers.
+
+> O `schema.sql` já cria o banco na versão mais recente. Os arquivos da pasta `database/migracoes` servem **apenas** para atualizar um banco criado antes de cada mudança; quem cria o banco agora não precisa executá-los.
 
 ### 3. Configurar o Backend
 
@@ -149,6 +151,7 @@ Crie um arquivo `.env` dentro da pasta `Backend`, copiando o modelo `.env.exampl
 | `FRONTEND_URL` | Endereço(s) do frontend liberados no CORS, separados por vírgula. Vazio = `http://localhost:5173` |
 | `JWT_SECRET` | Chave secreta para assinar os tokens (use um texto longo e aleatório) |
 | `ADMIN_EMAIL`, `ADMIN_SENHA` | Dados do administrador inicial |
+| `DEMO_SENHA_PROFESSOR`, `DEMO_SENHA_RESPONSAVEL` | Senhas das contas de demonstração criadas pela carga (8 a 72 caracteres, com letras e números; as duas devem ser diferentes) |
 
 > O arquivo `.env` contém senhas e **nunca** deve ser enviado ao repositório.
 
@@ -157,6 +160,14 @@ Crie o administrador inicial:
 ```bash
 node src/scripts/criarAdmin.js
 ```
+
+Opcional, mas recomendado para testar: carregue os dados de demonstração (uma escola fictícia com turmas, alunos, professores, responsáveis e acompanhamentos). A carga **apaga todos os dados do banco, menos o administrador**:
+
+```bash
+node src/scripts/cargaDemonstracao.js --confirmar
+```
+
+Ao final, o terminal lista os e-mails das contas de demonstração. As senhas são as definidas no `.env`.
 
 ### 4. Rodar o Backend
 
@@ -198,7 +209,18 @@ Todas as rotas, exceto o login, exigem o cabeçalho `Authorization: Bearer <toke
 | GET | `/api/alunos` | todos | Lista alunos (o responsável vê só os vinculados) |
 | GET | `/api/tags`, `/api/disciplinas`, `/api/turmas`, `/api/bimestres` | todos | Listas de apoio aos formulários |
 
-A coleção do Postman com os testes da API está em `documentos/Entrega 2/Desenvolvimento Web Fullstack`.
+## 🧪 Testando a API com o Postman
+
+Os testes rodam no **ambiente local**, com as senhas que você mesmo define no `.env` (nenhuma senha fica no repositório).
+
+1. Siga a seção **Configuração para Desenvolvimento** até o backend estar no ar (`npm run dev`), incluindo o `criarAdmin.js` e a carga de demonstração.
+2. No Postman, clique em **Import** e importe os dois arquivos da pasta `documentos/Entrega 2/Desenvolvimento Web Fullstack`:
+   - `ClassSync API.postman_collection_final.json` — as rotas e os testes automáticos
+   - `ClassSync.postman_environment.json` — as variáveis
+3. No canto superior direito, selecione o environment **ClassSync** e preencha `senhaAdmin`, `senhaProfessor` e `senhaResponsavel` com as mesmas senhas do `.env` (`ADMIN_SENHA`, `DEMO_SENHA_PROFESSOR` e `DEMO_SENHA_RESPONSAVEL`).
+4. Clique com o botão direito na coleção → **Run collection** → **Run**.
+
+A coleção faz login com os três perfis, testa as regras de cada rota, cria registros de teste e os apaga ao final. Pode ser executada várias vezes seguidas; se algum teste indicar falta de dados, basta rodar a carga de demonstração de novo.
 
 ## 🚀 Deploy
 
