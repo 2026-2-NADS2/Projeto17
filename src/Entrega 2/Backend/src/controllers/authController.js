@@ -1,4 +1,5 @@
 const AuthService = require("../services/AuthService");
+const responderErro = require("../utils/responderErro");
 
 async function login(req, res) {
   try {
@@ -27,4 +28,13 @@ async function listarUsuarios(req, res) {
   }
 }
 
-module.exports = { login, cadastrarUsuario, listarUsuarios };
+async function alterarSenha(req, res) {
+  try {
+    await AuthService.alterarSenha(req.usuario.id, req.body.senhaAtual, req.body.novaSenha);
+    res.status(204).send();
+  } catch (error) {
+    responderErro(res, error);
+  }
+}
+
+module.exports = { login, cadastrarUsuario, listarUsuarios, alterarSenha };

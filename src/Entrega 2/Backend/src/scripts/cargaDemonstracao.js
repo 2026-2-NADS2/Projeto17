@@ -40,18 +40,18 @@ const BIMESTRES = [
 const AREAS = ["Linguagens", "Matemática", "Ciências da Natureza", "Ciências Humanas"];
 
 const DISCIPLINAS = [
-  { nome: "Língua Portuguesa", area: "Linguagens" },
-  { nome: "Inglês", area: "Linguagens" },
-  { nome: "Matemática", area: "Matemática" },
-  { nome: "Ciências", area: "Ciências da Natureza" },
-  { nome: "História", area: "Ciências Humanas" },
-  { nome: "Geografia", area: "Ciências Humanas" },
+  { nome: "Língua Portuguesa", codigo: "POR", area: "Linguagens" },
+  { nome: "Inglês", codigo: "ING", area: "Linguagens" },
+  { nome: "Matemática", codigo: "MAT", area: "Matemática" },
+  { nome: "Ciências", codigo: "CIE", area: "Ciências da Natureza" },
+  { nome: "História", codigo: "HIS", area: "Ciências Humanas" },
+  { nome: "Geografia", codigo: "GEO", area: "Ciências Humanas" },
 ];
 
 const TURMAS = [
-  { nome: "6º ano A", serie: "6º ano" },
-  { nome: "6º ano B", serie: "6º ano" },
-  { nome: "7º ano A", serie: "7º ano" },
+  { nome: "6º ano A", serie: "6º ano", turno: "MANHA" },
+  { nome: "6º ano B", serie: "6º ano", turno: "TARDE" },
+  { nome: "7º ano A", serie: "7º ano", turno: "MANHA" },
 ];
 
 const TAGS = [
@@ -257,13 +257,15 @@ async function inserirEstrutura(conexao) {
   }
   for (const d of DISCIPLINAS) {
     const [r] = await conexao.query(
-      "INSERT INTO disciplina (id_area, nome) VALUES (?, ?)", [ids.areas[d.area], d.nome]
+      "INSERT INTO disciplina (id_area, nome, codigo) VALUES (?, ?, ?)",
+      [ids.areas[d.area], d.nome, d.codigo]
     );
     ids.disciplinas[d.nome] = r.insertId;
   }
   for (const t of TURMAS) {
     const [r] = await conexao.query(
-      "INSERT INTO turma (id_ano_letivo, nome, serie) VALUES (?, ?, ?)", [ids.anoLetivo, t.nome, t.serie]
+      "INSERT INTO turma (id_ano_letivo, nome, serie, turno) VALUES (?, ?, ?, ?)",
+      [ids.anoLetivo, t.nome, t.serie, t.turno]
     );
     ids.turmas[t.nome] = r.insertId;
   }

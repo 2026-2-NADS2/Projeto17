@@ -748,15 +748,26 @@
         {
           "name": "Listar Acompanhamentos (200)",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenProfessor}}",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/acompanhamentos",
+              "raw": "{{baseUrl}}/acompanhamentos/1",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "acompanhamentos"
+                "acompanhamentos",
+                "1"
               ]
             }
           },
@@ -800,6 +811,42 @@
         },
         {
           "name": "Tag que não existe (400)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenProfessor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"idAluno\": 17, \"idDisciplina\": 3, \"idBimestre\": 4, \"descricao\": \"Teste de tag inexistente\", \"tags\": [999] }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Criar sem vínculo (403)",
           "request": {
             "auth": {
               "type": "bearer",
@@ -1404,6 +1451,239 @@
               "path": [
                 "acompanhamentos",
                 "{{idAcompanhamento}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Ciência",
+      "item": [
+        {
+          "name": "Retornos da família (200)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));\r\n\r\n// Guarda os relatórios que a Carla já confirmou\r\nconst jaConfirmados = pm.response.json().map((r) => r.idAcompanhamento);\r\npm.environment.set(\"idsComCiencia\", JSON.stringify(jaConfirmados));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenResponsavel}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/retornos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "retornos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Relatórios publicados da família (200)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));\r\n\r\n// Escolhe o primeiro relatório publicado que ainda NÃO tem ciência\r\nconst jaConfirmados = JSON.parse(pm.environment.get(\"idsComCiencia\") || \"[]\");\r\nconst livre = pm.response.json().find((r) => !jaConfirmados.includes(r.id));\r\n\r\npm.test(\"Existe relatório sem ciência para testar\", () => pm.expect(livre).to.exist);\r\nif (livre) pm.environment.set(\"idCiencia\", livre.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenResponsavel}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Registar Ciência (201)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenResponsavel}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"observacao\": \"Vamos reforçar em casa.\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos/{{idCiencia}}/ciencia",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos",
+                "{{idCiencia}}",
+                "ciencia"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Registar Ciência Duplicada (409)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenResponsavel}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"observacao\": \"Vamos reforçar em casa.\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos/{{idCiencia}}/ciencia",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos",
+                "{{idCiencia}}",
+                "ciencia"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Registar Ciência - Professor (403)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenProfessor}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"observacao\": \"Vamos reforçar em casa.\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos/{{idCiencia}}/ciencia",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos",
+                "{{idCiencia}}",
+                "ciencia"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Registar Ciência de outra família (404)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{tokenResponsavel}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"observacao\": \"Vamos reforçar em casa.\" }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/acompanhamentos/1/ciencia",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "acompanhamentos",
+                "1",
+                "ciencia"
               ]
             }
           },

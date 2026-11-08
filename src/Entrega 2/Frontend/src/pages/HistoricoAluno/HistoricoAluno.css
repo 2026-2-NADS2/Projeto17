@@ -1,0 +1,92 @@
+.ha { max-width: 1112px; }
+
+.ha-trilha {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: var(--cor-neutro-600);
+}
+.ha-trilha a { color: var(--cor-azul-600); }
+.ha-trilha a:hover { text-decoration: underline; }
+
+.ha-cabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.ha-titulo { font-size: 28px; font-weight: 700; }
+.ha-subtitulo { margin-top: 4px; font-size: 14px; color: var(--cor-neutro-600); }
+.ha-botao { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+
+/* ----- Cards dos bimestres ----- */
+.ha-bimestres {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.ha-bimestre {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+.ha-bimestre-nome { font-size: 13px; color: var(--cor-neutro-600); }
+.ha-bimestre-media { font-size: 30px; font-weight: 700; line-height: 1.1; color: var(--cor-azul-600); }
+.ha-bimestre-media--vazia { color: var(--cor-neutro-400); }
+
+.ha-selo {
+  padding: 3px 10px;
+  border-radius: var(--raio-badge);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.ha-selo--agendado { background-color: var(--cor-azul-50); color: var(--cor-azul-600); }
+.ha-selo--aberto { background-color: var(--status-revisao-bg); color: var(--status-revisao); }
+.ha-selo--vazio { background-color: var(--cor-neutro-100); color: var(--cor-neutro-700); }
+
+/* ----- Tabela ----- */
+.ha-descricao {
+  width: 100%;      /* a descrição fica com o espaço que sobrar na tabela... */
+  max-width: 0;     /* ...sem empurrar as outras colunas (truque para o "..." funcionar em tabela) */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; /* corta com "..." — o texto inteiro aparece ao passar o mouse */
+}
+.tabela th.tabela-acoes { text-align: right; }
+
+/* ----- Tabela + painel de retornos lado a lado ----- */
+.ha-conteudo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  align-items: start;
+  gap: 24px;
+}
+
+.ha-retornos { display: flex; flex-direction: column; gap: 12px; }
+.ha-retornos h2 { font-size: 16px; font-weight: 600; color: var(--cor-neutro-900); }
+.ha-retornos ul { display: flex; flex-direction: column; gap: 10px; list-style: none; }
+.ha-retornos-vazio { font-size: 13px; color: var(--cor-neutro-600); }
+
+.ha-retorno {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  border-radius: var(--raio-campo);
+  background-color: var(--cor-neutro-50);
+}
+.ha-retorno strong { font-size: 14px; color: var(--cor-neutro-900); }
+.ha-retorno p { font-size: 13px; line-height: 1.5; color: var(--cor-neutro-700); }
+.ha-retorno .ha-retorno-ciencia { color: var(--status-publicado); }
+
+@media (max-width: 900px) {
+  .ha-cabecalho { flex-direction: column; }
+  .ha-bimestres { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ha-conteudo { grid-template-columns: 1fr; }
+}

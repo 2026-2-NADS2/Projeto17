@@ -43,6 +43,7 @@ CREATE TABLE disciplina (
     id_disciplina INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     id_area       INT UNSIGNED NOT NULL,
     nome          VARCHAR(80) NOT NULL UNIQUE,
+    codigo        VARCHAR(10) UNIQUE,
     FOREIGN KEY (id_area) REFERENCES area (id_area)
 ) ENGINE=InnoDB;
 
@@ -51,6 +52,7 @@ CREATE TABLE turma (
     id_ano_letivo INT UNSIGNED NOT NULL,
     nome          VARCHAR(40) NOT NULL,
     serie         VARCHAR(20) NOT NULL,
+    turno         ENUM('MANHA','TARDE','NOITE') NOT NULL DEFAULT 'MANHA',
     UNIQUE (id_ano_letivo, nome),
     FOREIGN KEY (id_ano_letivo) REFERENCES ano_letivo (id_ano_letivo)
 ) ENGINE=InnoDB;

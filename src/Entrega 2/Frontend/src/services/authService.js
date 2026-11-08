@@ -36,3 +36,8 @@ export function rotaDoPerfil(perfil) {
   };
   return rotas[perfil] || '/entrar';
 }
+
+// Troca a senha do usuário logado (qualquer perfil)
+export async function alterarSenha(senhaAtual, novaSenha) {
+  await api.patch('/auth/senha', { senhaAtual, novaSenha });
+}
