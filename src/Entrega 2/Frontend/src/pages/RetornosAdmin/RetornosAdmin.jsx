@@ -1,22 +1,33 @@
 import { useEffect, useState } from 'react';
-import { CheckCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import SidebarAdmin from '../../components/SidebarAdmin/SidebarAdmin';
 import EstadoCarregando from '../../components/EstadoCarregando/EstadoCarregando';
 import EstadoErro from '../../components/EstadoErro/EstadoErro';
-import { listarRetornos, marcarRetornoComoLido } from '../../services/retornoService';
+import { listarRetornos } from '../../services/retornoService';
 import { nomeDe } from '../RevisaoAdmin/formatadores';
+import { exportarCsv } from '../../utils/exportarCsv';
 import { formatarDataHora, tempoDe } from '../../utils/datas';
 import { retornosExemplo } from './dadosExemplo';
 import '../AlunosAdmin/AlunosAdmin.css';
 import './RetornosAdmin.css';
 
-const NOMES_TIPO = {
-  CIENCIA: 'Ciência',
-  OBSERVACAO: 'Observação',
-};
+const SETE_DIAS = 7 * 24 * 60 * 60 * 1000;
 
 function mensagemDoErro(e, padrao) {
   return e.response?.data?.erro ?? e.response?.data?.mensagem ?? padrao;
+}
+
+// Cada responsável dá ciência uma vez por acompanhamento, então os dois juntos identificam o retorno
+function chaveDe(r) {
+  return `${r.idAcompanhamento}-${r.responsavel?.id ?? nomeDe(r.responsavel)}`;
+}
+
+function temObservacao(r) {
+  return Boolean(r.observacao && String(r.observacao).trim());
+}
+
+function numeroBimestre(r) {
+  return r.bimestre && typeof r.bimestre === 'object' ? r.bimestre.numero : r.bimestre;
 }
 
 function RetornosAdmin() {
@@ -27,10 +38,8 @@ function RetornosAdmin() {
   const [tentativa, setTentativa] = useState(0);
 
   const [filtroTipo, setFiltroTipo] = useState('');
-  const [soNovos, setSoNovos] = useState(false);
-
-  const [marcando, setMarcando] = useState(null); // id do retorno sendo marcado
-  const [erroAcao, setErroAcao] = useState(null);
+  const [filtroTurma, setFiltroTurma] = useState('');
+  const [filtroBimestre, setFiltroBimestre] = useState('');
 
   useEffect(() => {
     if (modoExemplo) return;
@@ -65,29 +74,37 @@ function RetornosAdmin() {
     setModoExemplo(true);
   }
 
-  async function marcarComoLido(retorno) {
-    setMarcando(retorno.id);
-    setErroAcao(null);
-
-    try {
-      if (!modoExemplo) await marcarRetornoComoLido(retorno.id);
-      setRetornos((lista) => lista.map((r) => (r.id === retorno.id ? { ...r, lido: true } : r)));
-    } catch (e) {
-      setErroAcao(mensagemDoErro(e, 'Não foi possível marcar como lido. Tente novamente.'));
-    } finally {
-      setMarcando(null);
-    }
-  }
-
   // Indicadores
-  const novos = retornos.filter((r) => !r.lido).length;
-  const ciencias = retornos.filter((r) => r.tipo === 'CIENCIA').length;
-  const observacoes = retornos.filter((r) => r.tipo === 'OBSERVACAO').length;
+  const comObservacao = retornos.filter(temObservacao).length;
+  const recentes = retornos.filter((r) => Date.now() - tempoDe(r.dataHora) <= SETE_DIAS).length;
+
+  // Opções dos filtros, tiradas dos próprios dados
+  const turmas = [...new Set(retornos.map((r) => nomeDe(r.turma)).filter((t) => t && t !== '—'))]
+    .sort((a, b) => a.localeCompare(b, 'pt-BR', { numeric: true }));
+  const bimestres = [...new Set(retornos.map(numeroBimestre).filter(Boolean))].sort((a, b) => a - b);
 
   const visiveis = retornos
-    .filter((r) => !filtroTipo || r.tipo === filtroTipo)
-    .filter((r) => !soNovos || !r.lido)
-    .sort((a, b) => tempoDe(b.criadoEm) - tempoDe(a.criadoEm)); // mais recentes primeiro
+    .filter((r) => !filtroTipo || (filtroTipo === 'OBSERVACAO' ? temObservacao(r) : !temObservacao(r)))
+    .filter((r) => !filtroTurma || nomeDe(r.turma) === filtroTurma)
+    .filter((r) => !filtroBimestre || String(numeroBimestre(r)) === filtroBimestre)
+    .sort((a, b) => tempoDe(b.dataHora) - tempoDe(a.dataHora)); // mais recentes primeiro
+
+  function exportar() {
+    const hoje = new Date().toLocaleDateString('sv-SE');
+    exportarCsv(
+      `retornos-familias-${hoje}.csv`,
+      [
+        { titulo: 'Data e hora', valor: (r) => formatarDataHora(r.dataHora) },
+        { titulo: 'Responsável', valor: (r) => nomeDe(r.responsavel) },
+        { titulo: 'Aluno', valor: (r) => nomeDe(r.aluno) },
+        { titulo: 'Turma', valor: (r) => nomeDe(r.turma) },
+        { titulo: 'Disciplina', valor: (r) => nomeDe(r.disciplina) },
+        { titulo: 'Bimestre', valor: (r) => `${numeroBimestre(r)}º` },
+        { titulo: 'Observação', valor: (r) => r.observacao ?? '' },
+      ],
+      visiveis
+    );
+  }
 
   function renderizarConteudo() {
     if (carregando) return <EstadoCarregando mensagem="Carregando retornos..." />;
@@ -104,7 +121,7 @@ function RetornosAdmin() {
     if (retornos.length === 0) {
       return (
         <p className="alunos-admin__vazio">
-          Nenhuma família respondeu ainda. Os retornos aparecem aqui quando os responsáveis confirmam ciência ou deixam uma observação.
+          Nenhuma família respondeu ainda. Os retornos aparecem aqui quando os responsáveis confirmam ciência de um relatório publicado.
         </p>
       );
     }
@@ -113,16 +130,16 @@ function RetornosAdmin() {
       <>
         <div className="retornos-admin__indicadores">
           <div className="retornos-admin__indicador">
-            <span>Novos</span>
-            <strong>{novos}</strong>
-          </div>
-          <div className="retornos-admin__indicador">
             <span>Ciências registradas</span>
-            <strong>{ciencias}</strong>
+            <strong>{retornos.length}</strong>
           </div>
           <div className="retornos-admin__indicador">
-            <span>Observações</span>
-            <strong>{observacoes}</strong>
+            <span>Com observação</span>
+            <strong>{comObservacao}</strong>
+          </div>
+          <div className="retornos-admin__indicador">
+            <span>Últimos 7 dias</span>
+            <strong>{recentes}</strong>
           </div>
         </div>
 
@@ -131,66 +148,73 @@ function RetornosAdmin() {
             <span>Tipo</span>
             <select value={filtroTipo} onChange={(e) => setFiltroTipo(e.target.value)} className="alunos-admin__select">
               <option value="">Todos</option>
-              <option value="OBSERVACAO">Observações</option>
-              <option value="CIENCIA">Ciências</option>
+              <option value="OBSERVACAO">Com observação</option>
+              <option value="CIENCIA">Só ciência</option>
             </select>
           </label>
-
-          <label className="retornos-admin__check">
-            <input type="checkbox" checked={soNovos} onChange={(e) => setSoNovos(e.target.checked)} />
-            Só os não lidos
+          <label className="alunos-admin__filtro">
+            <span>Turma</span>
+            <select value={filtroTurma} onChange={(e) => setFiltroTurma(e.target.value)} className="alunos-admin__select">
+              <option value="">Todas</option>
+              {turmas.map((t) => <option key={t} value={t}>{t}</option>)}
+            </select>
+          </label>
+          <label className="alunos-admin__filtro">
+            <span>Bimestre</span>
+            <select value={filtroBimestre} onChange={(e) => setFiltroBimestre(e.target.value)} className="alunos-admin__select">
+              <option value="">Todos</option>
+              {bimestres.map((b) => <option key={b} value={String(b)}>{b}º bimestre</option>)}
+            </select>
           </label>
         </div>
 
-        {erroAcao && <p className="alunos-admin__erro-modal" role="alert">{erroAcao}</p>}
-
         {visiveis.length === 0 ? (
-          <p className="alunos-admin__vazio">Nenhum retorno com esses filtros. 🎉</p>
+          <p className="alunos-admin__vazio">Nenhum retorno com esses filtros.</p>
         ) : (
           <ul className="retornos-admin__lista">
-            {visiveis.map((r) => (
-              <li key={r.id} className={`retornos-admin__card ${!r.lido ? 'retornos-admin__card--novo' : ''}`}>
-                <div className="retornos-admin__card-topo">
-                  <span className={`retornos-admin__pilula retornos-admin__pilula--${String(r.tipo).toLowerCase()}`}>
-                    {NOMES_TIPO[r.tipo] ?? r.tipo}
-                  </span>
-                  {!r.lido && <span className="retornos-admin__pilula retornos-admin__pilula--novo">Novo</span>}
-                  <span className="retornos-admin__data">{formatarDataHora(r.criadoEm)}</span>
-                </div>
-
-                <p className="retornos-admin__quem">
-                  <strong>{nomeDe(r.responsavel)}</strong>, responsável por <strong>{nomeDe(r.aluno)}</strong>
-                </p>
-                <p className="retornos-admin__contexto">
-                  {nomeDe(r.disciplina)} · {r.bimestre}º bimestre · {r.anoLetivo}
-                </p>
-
-                {r.tipo === 'OBSERVACAO' && r.mensagem ? (
-                  <p className="retornos-admin__mensagem">“{r.mensagem}”</p>
-                ) : (
-                  <p className="retornos-admin__contexto">Confirmou que leu o relatório.</p>
-                )}
-
-                {!r.lido && (
-                  <div className="retornos-admin__acoes">
-                    <button
-                      type="button"
-                      className="alunos-admin__botao alunos-admin__botao--secundario"
-                      onClick={() => marcarComoLido(r)}
-                      disabled={marcando === r.id}
-                    >
-                      <CheckCheck size={16} aria-hidden="true" style={{ verticalAlign: 'middle', marginRight: 6 }} />
-                      {marcando === r.id ? 'Marcando...' : 'Marcar como lido'}
-                    </button>
+            {visiveis.map((r) => {
+              const observacao = temObservacao(r);
+              return (
+                <li key={chaveDe(r)} className={`retornos-admin__card ${observacao ? 'retornos-admin__card--novo' : ''}`}>
+                  <div className="retornos-admin__card-topo">
+                    <span className={`retornos-admin__pilula retornos-admin__pilula--${observacao ? 'observacao' : 'ciencia'}`}>
+                      {observacao ? 'Observação' : 'Ciência'}
+                    </span>
+                    <span className="retornos-admin__data">{formatarDataHora(r.dataHora)}</span>
                   </div>
-                )}
-              </li>
-            ))}
+
+                  <p className="retornos-admin__quem">
+                    <strong>{nomeDe(r.responsavel)}</strong>, responsável por <strong>{nomeDe(r.aluno)}</strong>
+                  </p>
+                  <p className="retornos-admin__contexto">
+                    {nomeDe(r.disciplina)} · {nomeDe(r.turma)} · {numeroBimestre(r)}º bimestre
+                  </p>
+
+                  {observacao ? (
+                    <p className="retornos-admin__mensagem">“{r.observacao}”</p>
+                  ) : (
+                    <p className="retornos-admin__contexto">Confirmou que leu o relatório.</p>
+                  )}
+
+                  <div className="retornos-admin__acoes">
+                    <Link
+                      to={`/admin/revisao/${r.idAcompanhamento}`}
+                      className="alunos-admin__botao alunos-admin__botao--secundario"
+                      style={{ textDecoration: 'none' }}
+                    >
+                      Ver acompanhamento
+                    </Link>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         )}
       </>
     );
   }
+
+  const prontoParaUsar = !carregando && !erro && visiveis.length > 0;
 
   return (
     <div className="alunos-admin">
@@ -202,11 +226,17 @@ function RetornosAdmin() {
             <h1>Retornos das famílias</h1>
             <p>Ciências e observações que os responsáveis deixaram nos relatórios publicados.</p>
           </div>
+
+          {prontoParaUsar && (
+            <button type="button" className="alunos-admin__botao alunos-admin__botao--secundario" onClick={exportar}>
+              Exportar
+            </button>
+          )}
         </header>
 
         {modoExemplo && (
           <p className="alunos-admin__aviso-exemplo" role="note">
-            Dados de exemplo: marcar como lido aqui não vai para a API.
+            Você está vendo dados de exemplo porque a API não respondeu.
           </p>
         )}
 
