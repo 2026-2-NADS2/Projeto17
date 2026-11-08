@@ -4,7 +4,7 @@ import EstadoCarregando from '../../components/EstadoCarregando/EstadoCarregando
 import EstadoErro from '../../components/EstadoErro/EstadoErro';
 import { listarAcompanhamentos } from '../../services/acompanhamentoService';
 import { exportarCsv } from '../../utils/exportarCsv';
-import { nomeDe, formatarMedia } from '../RevisaoAdmin/formatadores';
+import { nomeDe, formatarMedia, numeroDoBimestre } from '../RevisaoAdmin/formatadores';
 import { acompanhamentosExemplo } from '../DashboardAdmin/dadosExemplo';
 import './RelatoriosAdmin.css';
 
@@ -23,7 +23,7 @@ const FILTROS = [
   { campo: 'turma', rotulo: 'Turma', ler: (a) => (a.turma ? nomeDe(a.turma) : null) },
   { campo: 'disciplina', rotulo: 'Disciplina', ler: (a) => nomeDe(a.disciplina) },
   { campo: 'professor', rotulo: 'Professor', ler: (a) => nomeDe(a.professor) },
-  { campo: 'bimestre', rotulo: 'Bimestre', ler: (a) => (a.bimestre ? String(a.bimestre) : null), formatar: (v) => `${v}º bimestre` },
+  { campo: 'bimestre', rotulo: 'Bimestre', ler: (a) => (a.bimestre ? String(numeroDoBimestre(a.bimestre)) : null), formatar: (v) => `${v}º bimestre` },
   { campo: 'anoLetivo', rotulo: 'Ano letivo', ler: (a) => (a.anoLetivo ? String(a.anoLetivo) : null) },
   { campo: 'status', rotulo: 'Status', ler: (a) => a.status, formatar: (v) => NOMES_STATUS[v] ?? v },
 ];
@@ -117,7 +117,7 @@ function RelatoriosAdmin() {
         { titulo: 'Aluno', valor: (a) => nomeDe(a.aluno) },
         { titulo: 'Disciplina', valor: (a) => nomeDe(a.disciplina) },
         { titulo: 'Professor', valor: (a) => nomeDe(a.professor) },
-        { titulo: 'Bimestre', valor: (a) => (a.bimestre ? `${a.bimestre}º` : '') },
+        { titulo: 'Bimestre', valor: (a) => (a.bimestre ? `${numeroDoBimestre(a.bimestre)}º` : '') },
         { titulo: 'Ano letivo', valor: (a) => a.anoLetivo },
         { titulo: 'Média', valor: (a) => formatarMedia(a.media) },
         { titulo: 'Status', valor: (a) => NOMES_STATUS[a.status] ?? a.status },
@@ -224,7 +224,7 @@ function RelatoriosAdmin() {
                       <td className="relatorios-admin__aluno">{nomeDe(a.aluno)}</td>
                       <td>{nomeDe(a.disciplina)}</td>
                       <td>{nomeDe(a.professor)}</td>
-                      <td>{a.bimestre ? `${a.bimestre}º` : '—'}</td>
+                      <td>{a.bimestre ? `${numeroDoBimestre(a.bimestre)}º` : '—'}</td>
                       <td>{a.anoLetivo ?? '—'}</td>
                       <td>{formatarMedia(a.media)}</td>
                       <td>

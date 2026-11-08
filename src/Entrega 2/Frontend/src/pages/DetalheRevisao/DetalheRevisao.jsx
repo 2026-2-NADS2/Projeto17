@@ -9,7 +9,7 @@ import {
   devolverAcompanhamento,
 } from '../../services/acompanhamentoService';
 import { filaExemploAtual, removerDoExemplo } from '../RevisaoAdmin/dadosExemplo';
-import { nomeDe, formatarMedia } from '../RevisaoAdmin/formatadores';
+import { nomeDe, formatarMedia, numeroDoBimestre } from '../RevisaoAdmin/formatadores';
 import './DetalheRevisao.css';
 
 // Mensagem do backend (contrato: error.response.data.erro) ou uma padrão
@@ -153,7 +153,7 @@ function DetalheRevisao() {
             </div>
             <div>
               <span className="detalhe-revisao__rotulo">Período</span>
-              <strong>{item.bimestre}º bimestre · {item.anoLetivo}</strong>
+              <strong>{numeroDoBimestre(item.bimestre)}º bimestre · {item.anoLetivo}</strong>
             </div>
           </section>
 
@@ -227,7 +227,7 @@ function DetalheRevisao() {
         <header className="detalhe-revisao__topo">
           <h1>Revisar acompanhamento #{id}</h1>
           {item && (
-            <p>{aluno} · {nomeDe(item.disciplina)} · {item.bimestre}º bimestre</p>
+            <p>{aluno} · {nomeDe(item.disciplina)} · {numeroDoBimestre(item.bimestre)}º bimestre</p>
           )}
         </header>
 

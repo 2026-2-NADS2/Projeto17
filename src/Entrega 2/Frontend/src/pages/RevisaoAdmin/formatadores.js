@@ -9,3 +9,9 @@ export function nomeDe(valor) {
     if (media === null || media === undefined) return '—';
     return Number(media).toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   }
+
+// A API manda { id, numero }; os dados de exemplo mandam só o número
+export function numeroDoBimestre(bimestre) {
+  if (bimestre && typeof bimestre === 'object') return bimestre.numero;
+  return bimestre;
+}

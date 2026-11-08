@@ -5,7 +5,7 @@ import EstadoCarregando from '../../components/EstadoCarregando/EstadoCarregando
 import EstadoErro from '../../components/EstadoErro/EstadoErro';
 import { listarAcompanhamentos } from '../../services/acompanhamentoService';
 import { filaExemploAtual } from './dadosExemplo';
-import { nomeDe, formatarMedia } from './formatadores';
+import { nomeDe, formatarMedia, numeroDoBimestre } from './formatadores';
 import './RevisaoAdmin.css';
 import { exportarCsv } from '../../utils/exportarCsv';
 
@@ -71,7 +71,7 @@ function RevisaoAdmin() {
         { titulo: 'Aluno', valor: (i) => nomeDe(i.aluno) },
         { titulo: 'Disciplina', valor: (i) => nomeDe(i.disciplina) },
         { titulo: 'Professor', valor: (i) => nomeDe(i.professor) },
-        { titulo: 'Bimestre', valor: (i) => `${i.bimestre}º` },
+        { titulo: 'Bimestre', valor: (i) => `${numeroDoBimestre(i.bimestre)}º` },
         { titulo: 'Ano letivo', valor: (i) => i.anoLetivo },
         { titulo: 'Média', valor: (i) => formatarMedia(i.media) },
         { titulo: 'Descrição', valor: (i) => i.descricao },
@@ -111,7 +111,7 @@ function RevisaoAdmin() {
                 <td className="revisao-admin__aluno">{nomeDe(item.aluno)}</td>
                 <td>{nomeDe(item.disciplina)}</td>
                 <td>{nomeDe(item.professor)}</td>
-                <td>{item.bimestre}º</td>
+                <td>{numeroDoBimestre(item.bimestre)}º</td>
                 <td>{formatarMedia(item.media)}</td>
                 <td className="revisao-admin__acao">
                   <button
