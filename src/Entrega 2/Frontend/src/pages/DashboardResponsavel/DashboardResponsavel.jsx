@@ -11,11 +11,10 @@ import {
   buscarRelatoriosPublicados,
   mensagemDeErro,
 } from '../../services/responsavelService';
+import { obterUsuario, sair } from '../../services/authService';
 import './DashboardResponsavel.css';
 
-// TEMPORÁRIO: ainda não existe login nem vínculo responsável → aluno no banco.
-// Quando existir, esses dados virão do usuário logado.
-const RESPONSAVEL = { nome: 'Carla Mendes' };
+
 
 // Deixe vazio para considerar "vinculados" os alunos que têm relatório publicado.
 // Ou coloque IDs fixos para testar, ex.: [1, 2]
@@ -34,7 +33,12 @@ const ATALHOS = [
 
 function DashboardResponsavel() {
   const navigate = useNavigate();
+  const nomeCompleto = obterUsuario()?.nome ?? 'Responsável';
 
+  function handleSair() {
+    sair();
+    navigate('/entrar');
+  }
   const [alunos, setAlunos] = useState([]);
   const [relatorios, setRelatorios] = useState([]);
   const [carregando, setCarregando] = useState(true);
@@ -84,12 +88,12 @@ function DashboardResponsavel() {
     setTentativa((t) => t + 1);
   }
 
-  const primeiroNome = RESPONSAVEL.nome.split(' ')[0];
+    const primeiroNome = nomeCompleto.split(' ')[0];
   const pendentes = !carregando && !erro ? relatorios.length : null;
 
   return (
     <div className="dash-resp">
-      <HeaderResponsavel nomeUsuario={RESPONSAVEL.nome} onSair={() => navigate('/')} />
+            <HeaderResponsavel nomeUsuario={nomeCompleto} onSair={handleSair} />
 
       <main className="dash-resp__conteudo">
         <h1 className="dash-resp__saudacao">Olá, {primeiroNome}</h1>
