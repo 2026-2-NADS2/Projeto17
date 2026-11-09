@@ -1,0 +1,22 @@
+.layout-resp { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; background: #F7F9FC; }
+.layout-resp__menu { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; justify-content: space-between; padding: 20px 14px; background: #111B4C; color: #FFFFFF; }
+.layout-resp__logo { display: block; height: 48px; width: auto; margin: 0 0 12px 6px; }
+.layout-resp__perfil { display: inline-block; margin: 0 0 24px 6px; padding: 4px 12px; border-radius: 999px; background: rgba(38, 149, 253, 0.18); color: #7CC2FF; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.04em; }
+.layout-resp__nav { display: flex; flex-direction: column; gap: 4px; }
+.layout-resp__link { padding: 10px 14px; border-radius: 8px; color: #DCE6F7; font-size: 0.9rem; text-decoration: none; }
+.layout-resp__link:hover { background: rgba(255, 255, 255, 0.08); }
+.layout-resp__link--ativo { background: #0247CB; color: #FFFFFF; font-weight: 600; }
+.layout-resp__link:focus-visible, .layout-resp__sair:focus-visible { outline: 2px solid #2695FD; outline-offset: 2px; }
+.layout-resp__usuario { display: flex; flex-direction: column; gap: 12px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.15); }
+.layout-resp__usuario-linha { display: flex; align-items: center; gap: 10px; }
+.layout-resp__avatar { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #E6EEFC; color: #0247CB; font-size: 0.75rem; font-weight: 700; }
+.layout-resp__nome { display: block; font-size: 0.85rem; }
+.layout-resp__papel { display: block; font-size: 0.72rem; color: #9FB3D9; }
+.layout-resp__sair { padding: 8px; border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 8px; background: none; color: #FFFFFF; font: inherit; font-weight: 600; cursor: pointer; }
+.layout-resp__sair:hover { background: rgba(255, 255, 255, 0.1); }
+.layout-resp__conteudo { min-width: 0; }
+
+@media (max-width: 800px) {
+  .layout-resp { grid-template-columns: 1fr; }
+  .layout-resp__menu { position: static; height: auto; gap: 16px; }
+}

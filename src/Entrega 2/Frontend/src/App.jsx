@@ -37,6 +37,11 @@ import TurmaAlunos from './pages/TurmaAlunos/TurmaAlunos';
 import HistoricoAluno from './pages/HistoricoAluno/HistoricoAluno';
 import RelatoriosProfessor from './pages/RelatoriosProfessor/RelatoriosProfessor';
 import Contato from './pages/Contato/Contato';
+import MeusAlunosResponsavel from './pages/MeusAlunosResponsavel/MeusAlunosResponsavel';
+import RelatoriosResponsavel from './pages/RelatoriosResponsavel/RelatoriosResponsavel';
+import LayoutResponsavel from './components/LayoutResponsavel/LayoutResponsavel';
+import DetalheRelatorioResponsavel from './pages/DetalheRelatorioResponsavel/DetalheRelatorioResponsavel';
+import MeuPerfilResponsavel from './pages/MeuPerfilResponsavel/MeuPerfilResponsavel';
 
 function App() {
   return (
@@ -113,7 +118,13 @@ function App() {
         </Route>
 
         <Route element={<RotaProtegida perfis={['RESPONSAVEL']} />}>
-          <Route path="/responsavel" element={<DashboardResponsavel />} />
+          <Route element={<LayoutResponsavel />}>
+            <Route path="/responsavel" element={<DashboardResponsavel />} />
+                                    <Route path="/responsavel/perfil" element={<MeuPerfilResponsavel />} />
+            <Route path="/responsavel/alunos" element={<MeusAlunosResponsavel />} />
+            <Route path="/responsavel/relatorios" element={<RelatoriosResponsavel />} />
+            <Route path="/responsavel/relatorio/:id" element={<DetalheRelatorioResponsavel />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

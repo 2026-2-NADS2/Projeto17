@@ -1,39 +1,25 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import HeaderResponsavel from './components/HeaderResponsavel/HeaderResponsavel';
-import CardAluno from './components/CardAluno/CardAluno';
-import ResumoRelatorios from './components/ResumoRelatorios/ResumoRelatorios';
-import CardAtalho from './components/CardAtalho/CardAtalho';
-import ListaRelatorios from './components/ListaRelatorios/ListaRelatorios';
+import { Link, useNavigate } from 'react-router-dom';
 import EstadoRequisicao from './components/EstadoRequisicao/EstadoRequisicao';
 import {
   buscarAlunos,
   buscarRelatoriosPublicados,
   mensagemDeErro,
 } from '../../services/responsavelService';
+import { obterUsuario } from '../../services/authService';
+import {
+  bimestreDe,
+  disciplinaDe,
+  formatarMedia,
+  pegarIniciais,
+  pertenceAoAluno,
+} from '../../utils/relatorios';
 import './DashboardResponsavel.css';
-
-// TEMPORÁRIO: ainda não existe login nem vínculo responsável → aluno no banco.
-// Quando existir, esses dados virão do usuário logado.
-const RESPONSAVEL = { nome: 'Carla Mendes' };
-
-// Deixe vazio para considerar "vinculados" os alunos que têm relatório publicado.
-// Ou coloque IDs fixos para testar, ex.: [1, 2]
-const IDS_ALUNOS_VINCULADOS = [];
-
-const ATALHOS = [
-  { titulo: 'Meu(s) Aluno(s)', descricao: 'Lista de alunos vinculados → selecionar aluno' },
-  { titulo: 'Relatórios Públicos', descricao: 'Aluno → ano letivo → bimestre → disciplina' },
-  { titulo: 'Filtros de Relatório', descricao: 'Ano letivo → bimestre → disciplina' },
-  { titulo: 'Visualizar Relatório', descricao: 'Descrição + média + tags + informações do acompanhamento' },
-  { titulo: 'Gerar/Baixar PDF', descricao: 'Ação disponível dentro do relatório publicado' },
-  { titulo: 'Registrar Ciência', descricao: 'Confirmar ciência do relatório', mostraPendentes: true },
-  { titulo: 'Observação/Retorno', descricao: 'Mensagem vinculada ao relatório → visível ao professor/admin' },
-  { titulo: 'Meu Perfil', descricao: 'Dados da conta → alterar senha → sair' },
-];
 
 function DashboardResponsavel() {
   const navigate = useNavigate();
+  const nomeCompleto = obterUsuario()?.nome ?? 'Responsável';
+  const primeiroNome = nomeCompleto.split(' ')[0];
 
   const [alunos, setAlunos] = useState([]);
   const [relatorios, setRelatorios] = useState([]);
@@ -47,20 +33,13 @@ function DashboardResponsavel() {
 
     async function carregarDados() {
       try {
-        // As duas requisições saem ao mesmo tempo
         const [todosAlunos, publicados] = await Promise.all([
           buscarAlunos(),
           buscarRelatoriosPublicados(),
         ]);
-
-        const idsVinculados =
-          IDS_ALUNOS_VINCULADOS.length > 0
-            ? IDS_ALUNOS_VINCULADOS
-            : [...new Set(publicados.map((r) => r.idAluno))];
-
         if (!cancelado) {
-          setAlunos(todosAlunos.filter((a) => idsVinculados.includes(a.id)));
-          setRelatorios(publicados.filter((r) => idsVinculados.includes(r.idAluno)));
+          setAlunos(todosAlunos);
+          setRelatorios(publicados);
         }
       } catch (e) {
         if (!cancelado) setErro(mensagemDeErro(e));
@@ -70,9 +49,6 @@ function DashboardResponsavel() {
     }
 
     carregarDados();
-
-    // Limpeza: se a tela for fechada antes da resposta chegar,
-    // não tentamos atualizar um componente que já saiu da tela.
     return () => {
       cancelado = true;
     };
@@ -84,75 +60,130 @@ function DashboardResponsavel() {
     setTentativa((t) => t + 1);
   }
 
-  const primeiroNome = RESPONSAVEL.nome.split(' ')[0];
-  const pendentes = !carregando && !erro ? relatorios.length : null;
+  const pendentes = relatorios.filter((r) => r.cienciaRegistrada === false).length;
+  const recentes = [...relatorios]
+    .sort((a, b) => Number(bimestreDe(b)) - Number(bimestreDe(a)) || b.id - a.id)
+    .slice(0, 5);
+
+  function nomeDoAluno(r) {
+    return r.aluno ?? alunos.find((a) => a.id === r.idAluno)?.nome ?? `Aluno ${r.idAluno}`;
+  }
 
   return (
-    <div className="dash-resp">
-      <HeaderResponsavel nomeUsuario={RESPONSAVEL.nome} onSair={() => navigate('/')} />
+    <div className="inicio-resp">
+      <h1 className="inicio-resp__saudacao">Olá, {primeiroNome}</h1>
+      <p className="inicio-resp__subtitulo">
+        Resumo do(s) aluno(s) vinculado(s) e relatórios publicados
+      </p>
 
-      <main className="dash-resp__conteudo">
-        <h1 className="dash-resp__saudacao">Olá, {primeiroNome}</h1>
-        <p className="dash-resp__subtitulo">
-          Resumo do(s) aluno(s) vinculado(s) e relatórios publicados
-        </p>
+      {carregando && (
+        <EstadoRequisicao tipo="carregando" mensagem="Carregando dados do(s) aluno(s)…" />
+      )}
+      {!carregando && erro && (
+        <EstadoRequisicao tipo="erro" mensagem={erro} onTentarDeNovo={tentarDeNovo} />
+      )}
 
-        {carregando && (
-          <EstadoRequisicao tipo="carregando" mensagem="Carregando dados do(s) aluno(s)…" />
-        )}
-
-        {!carregando && erro && (
-          <EstadoRequisicao tipo="erro" mensagem={erro} onTentarDeNovo={tentarDeNovo} />
-        )}
-
-        {!carregando && !erro && (
-          <div className="dash-resp__resumo">
-            <div className="dash-resp__alunos">
+      {!carregando && !erro && (
+        <>
+          <div className="inicio-resp__topo">
+            <div className="inicio-resp__alunos">
               {alunos.length === 0 ? (
-                <EstadoRequisicao
-                  tipo="vazio"
-                  mensagem="Nenhum aluno vinculado com relatório publicado ainda."
-                />
+                <EstadoRequisicao tipo="vazio" mensagem="Nenhum aluno vinculado ao seu cadastro ainda." />
               ) : (
-                alunos.map((aluno) => (
-                  <CardAluno
-                    key={aluno.id}
-                    aluno={aluno}
-                    totalRelatorios={relatorios.filter((r) => r.idAluno === aluno.id).length}
-                  />
-                ))
+                alunos.map((aluno) => {
+                  const total = relatorios.filter((r) => pertenceAoAluno(r, aluno)).length;
+                  return (
+                    <button
+                      key={aluno.id}
+                      type="button"
+                      className="inicio-resp__aluno"
+                      onClick={() => navigate(`/responsavel/relatorios?aluno=${aluno.id}`)}
+                    >
+                      <span className="inicio-resp__avatar" aria-hidden="true">
+                        {pegarIniciais(aluno.nome)}
+                      </span>
+                      <span className="inicio-resp__aluno-texto">
+                        <strong>{aluno.nome}</strong>
+                        <small>
+                          {aluno.turma ?? `Turma ${aluno.idTurma ?? '—'}`} · {total} relatórios publicados
+                        </small>
+                      </span>
+                      <span aria-hidden="true">›</span>
+                    </button>
+                  );
+                })
               )}
             </div>
-            <ResumoRelatorios quantidade={relatorios.length} />
-          </div>
-        )}
 
-        <section className="dash-resp__secao">
-          <h2 className="dash-resp__titulo-secao">Acompanhamento</h2>
-          <div className="dash-resp__grade">
-            {ATALHOS.map((atalho) => (
-              <CardAtalho
-                key={atalho.titulo}
-                titulo={atalho.titulo}
-                descricao={atalho.descricao}
-                selo={atalho.mostraPendentes && pendentes > 0 ? `${pendentes} pendentes` : null}
-              />
-            ))}
+            <aside className="inicio-resp__pendencias">
+              <strong>{relatorios.length} relatórios publicados</strong>
+              <span>
+                {pendentes > 0 ? 'aguardando sua ciência' : 'nenhuma ciência pendente'}
+              </span>
+              <button
+                type="button"
+                className="inicio-resp__botao"
+                onClick={() => navigate('/responsavel/relatorios')}
+              >
+                Ver e registrar ciência
+              </button>
+            </aside>
           </div>
-        </section>
 
-        <section className="dash-resp__secao">
-          <h2 className="dash-resp__titulo-secao">Relatórios publicados</h2>
-          {carregando && <EstadoRequisicao tipo="carregando" mensagem="Carregando relatórios…" />}
-          {!carregando && erro && (
-            <EstadoRequisicao
-              tipo="erro"
-              mensagem="Os relatórios não puderam ser carregados. Veja o aviso acima."
-            />
+          <h2 className="inicio-resp__titulo-secao">Acompanhamento</h2>
+          <div className="inicio-resp__atalhos">
+            <Link to="/responsavel/alunos" className="inicio-resp__atalho">
+              <strong>Meus alunos</strong>
+              <small>Lista de alunos vinculados → selecionar aluno</small>
+            </Link>
+            <Link to="/responsavel/relatorios" className="inicio-resp__atalho">
+              <strong>
+                Relatórios
+                {pendentes > 0 && (
+                  <span className="inicio-resp__selo-pendente">{pendentes} pendentes</span>
+                )}
+              </strong>
+              <small>Por ano letivo, bimestre e disciplina · PDF e ciência</small>
+            </Link>
+            <Link to="/responsavel/perfil" className="inicio-resp__atalho">
+              <strong>Meu perfil</strong>
+              <small>Dados da conta → alterar senha</small>
+            </Link>
+          </div>
+
+          <h2 className="inicio-resp__titulo-secao">Relatórios publicados recentes</h2>
+          {recentes.length === 0 ? (
+            <EstadoRequisicao tipo="vazio" mensagem="Nenhum relatório publicado até agora." />
+          ) : (
+            <ul className="inicio-resp__lista">
+              {recentes.map((r) => (
+                <li key={r.id} className="inicio-resp__item">
+                  <div className="inicio-resp__item-topo">
+                    <strong>{nomeDoAluno(r)}</strong>
+                    {r.cienciaRegistrada === false && (
+                      <span className="inicio-resp__selo inicio-resp__selo--pendente">Ciência pendente</span>
+                    )}
+                    {r.cienciaRegistrada === true && (
+                      <span className="inicio-resp__selo inicio-resp__selo--ok">Ciência registrada</span>
+                    )}
+                  </div>
+                  <p className="inicio-resp__meta">
+                    {disciplinaDe(r)} · {bimestreDe(r)}º bimestre
+                    {r.professor ? ` · Prof. ${r.professor}` : ''}
+                  </p>
+                  {r.descricao && <p className="inicio-resp__descricao">{r.descricao}</p>}
+                  <div className="inicio-resp__item-rodape">
+                    <span>Média <strong>{formatarMedia(r.media)}</strong></span>
+                    <Link to={`/responsavel/relatorio/${r.id}`} className="inicio-resp__abrir">
+                      Abrir relatório ›
+                    </Link>
+                  </div>
+                </li>
+              ))}
+            </ul>
           )}
-          {!carregando && !erro && <ListaRelatorios relatorios={relatorios} alunos={alunos} />}
-        </section>
-      </main>
+        </>
+      )}
     </div>
   );
 }
