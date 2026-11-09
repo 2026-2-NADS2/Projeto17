@@ -59,6 +59,9 @@ class Acompanhamento {
     if (!motivo || motivo.trim().length < 10) {
       throw new ErroApp("Informe o motivo da devolução (mínimo de 10 caracteres).");
     }
+    if (motivo.trim().length > 255) {
+      throw new ErroApp("O motivo da devolução pode ter até 255 caracteres.");
+    }
     this.status = "DEVOLVIDO";
     this.motivoDevolucao = motivo.trim();
   }

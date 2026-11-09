@@ -1,0 +1,76 @@
+.contato {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  align-items: start;
+  gap: 24px;
+  padding: 0 40px 64px;
+}
+
+/* ----- Formulário ----- */
+.contato-form { display: flex; flex-direction: column; gap: 18px; }
+.contato-form .alerta:focus { outline: 2px solid var(--status-cancelado); outline-offset: 2px; }
+
+.contato-linha {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.contato-form textarea { resize: vertical; min-height: 110px; }
+
+.contato-consentimento {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--cor-neutro-900);
+  cursor: pointer;
+}
+.contato-consentimento input {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  accent-color: var(--cor-azul-600); /* a caixinha marcada fica no azul do sistema */
+}
+.contato-consentimento a { color: var(--cor-azul-600); text-decoration: underline; }
+
+.contato-enviar {
+  align-self: flex-end;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ----- Sucesso ----- */
+.contato-sucesso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px 16px;
+  text-align: center;
+}
+.contato-sucesso-icone {
+  display: flex;
+  padding: 12px;
+  border-radius: 50%;
+  background-color: var(--status-publicado-bg);
+  color: var(--status-publicado);
+}
+.contato-sucesso h2 { font-size: 20px; font-weight: 700; color: var(--cor-neutro-900); }
+.contato-sucesso p { max-width: 460px; font-size: 14px; line-height: 1.6; color: var(--cor-neutro-700); }
+
+/* ----- Outros canais ----- */
+.contato-canais { display: flex; flex-direction: column; gap: 18px; }
+.contato-canais h2 { font-size: 16px; font-weight: 600; color: var(--cor-neutro-900); }
+
+.contato-canal { display: flex; align-items: flex-start; gap: 12px; }
+.contato-canal svg { flex-shrink: 0; margin-top: 2px; color: var(--cor-azul-600); }
+.contato-canal div { display: flex; flex-direction: column; gap: 2px; }
+.contato-canal strong { font-size: 14px; color: var(--cor-neutro-900); }
+.contato-canal span { font-size: 13px; line-height: 1.5; color: var(--cor-neutro-600); }
+
+@media (max-width: 900px) {
+  .contato { grid-template-columns: 1fr; padding: 0 16px 48px; }
+  .contato-linha { grid-template-columns: 1fr; }
+}

@@ -36,6 +36,7 @@ import AcessoNegado from './pages/AcessoNegado/AcessoNegado';
 import TurmaAlunos from './pages/TurmaAlunos/TurmaAlunos';
 import HistoricoAluno from './pages/HistoricoAluno/HistoricoAluno';
 import RelatoriosProfessor from './pages/RelatoriosProfessor/RelatoriosProfessor';
+import Contato from './pages/Contato/Contato';
 
 function App() {
   return (
@@ -43,6 +44,11 @@ function App() {
       <Routes>
         <Route element={<LayoutPublico />}>
           <Route path="/" element={<Home />} />
+          <Route path="/servicos" element={<Servicos />} />
+          <Route path="/institucional" element={<Institucional />} />
+          <Route path="/privacidade" element={<Privacidade />} />
+          <Route path="/contato" element={<Contato />} />
+          <Route path="/acesso-negado" element={<AcessoNegado />} />
           <Route path="*" element={<NotFound />} />
         </Route>
 
@@ -69,7 +75,7 @@ function App() {
           <Route path="/admin/revisao" element={<RevisaoAdmin />} />
           <Route path="/admin/revisao/:id" element={<DetalheRevisao />} />
           <Route path="/admin/retornos" element={<RetornosAdmin />} />
-          <Route path="/admin/usuarios" element={<UsuariosAdmin />} />
+          <Route path="/admin/usuarios" element={<UsuariosAdmin key="usuarios" />} />
           <Route path="/admin/usuarios/novo" element={<NovoUsuario />} />
           <Route path="/admin/alunos" element={<AlunosAdmin />} />
           <Route path="/admin/turmas" element={<TurmasAdmin />} />
@@ -84,6 +90,7 @@ function App() {
             path="/admin/professores"
             element={
               <UsuariosAdmin
+                key="professores"
                 perfilFixo="PROFESSOR"
                 titulo="Professores"
                 subtitulo="Professores com acesso à plataforma."
@@ -95,6 +102,7 @@ function App() {
             path="/admin/responsaveis"
             element={
               <UsuariosAdmin
+                key="responsaveis"
                 perfilFixo="RESPONSAVEL"
                 titulo="Responsáveis"
                 subtitulo="Pais e responsáveis com acesso à plataforma."

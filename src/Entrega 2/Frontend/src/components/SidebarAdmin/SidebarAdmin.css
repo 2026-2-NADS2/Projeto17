@@ -19,9 +19,9 @@
   margin-bottom: 20px;
 }
 
-.sidebar-admin__marca {
-  font-size: 1.4rem;
-  font-weight: 700;
+.sidebar-admin__logo {
+  align-self: flex-start; /* sem isso, o flex esticaria a imagem na largura do menu */
+  height: 34px;
 }
 
 .sidebar-admin__perfil {

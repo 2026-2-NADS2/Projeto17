@@ -55,14 +55,14 @@ const TURMAS = [
 ];
 
 const TAGS = [
-  "Participativo",
-  "Entrega em dia",
-  "Destaque",
-  "Resolve problemas",
-  "Boa leitura",
-  "Colabora com os colegas",
-  "Precisa de reforço",
-  "Dificuldade de concentração",
+  { nome: "Participativo", descricao: "Participa ativamente das aulas e atividades." },
+  { nome: "Entrega em dia", descricao: "Cumpre prazos de tarefas e trabalhos." },
+  { nome: "Destaque", descricao: "Desempenho acima do esperado." },
+  { nome: "Resolve problemas", descricao: "Aplica estratégias próprias para resolver problemas." },
+  { nome: "Boa leitura", descricao: "Lê com fluência e boa compreensão." },
+  { nome: "Colabora com os colegas", descricao: "Ajuda e trabalha bem em grupo." },
+  { nome: "Precisa de reforço", descricao: "Necessita de apoio adicional no conteúdo." },
+  { nome: "Dificuldade de concentração", descricao: "Dispersa-se com frequência." },
 ];
 
 const PROFESSORES = [
@@ -269,9 +269,9 @@ async function inserirEstrutura(conexao) {
     );
     ids.turmas[t.nome] = r.insertId;
   }
-  for (const nome of TAGS) {
-    const [r] = await conexao.query("INSERT INTO tag (nome) VALUES (?)", [nome]);
-    ids.tags[nome] = r.insertId;
+  for (const tag of TAGS) {
+    const [r] = await conexao.query("INSERT INTO tag (nome, descricao) VALUES (?, ?)", [tag.nome, tag.descricao]);
+    ids.tags[tag.nome] = r.insertId;
   }
   return ids;
 }

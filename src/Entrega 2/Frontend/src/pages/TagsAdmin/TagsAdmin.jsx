@@ -410,7 +410,7 @@ function TagsAdmin() {
             <h2 id="titulo-modal-excluir-tag">Excluir a tag {modal.tag.nome}?</h2>
             <p className="alunos-admin__texto-modal">
               {uso && usoDe(modal.tag) > 0
-                ? `Ela está em ${usoDe(modal.tag)} acompanhamento(s). Os acompanhamentos continuam salvos, só perdem essa tag.`
+                ? `Ela já foi usada em ${usoDe(modal.tag)} acompanhamento(s) e não pode ser excluída, para não apagar informação dos relatórios. Você pode editar o nome ou a descrição.`
                 : 'Essa ação não pode ser desfeita.'}
             </p>
 
@@ -420,7 +420,7 @@ function TagsAdmin() {
               <button type="button" className="alunos-admin__botao alunos-admin__botao--secundario" onClick={fecharModal} disabled={enviando}>
                 Cancelar
               </button>
-              <button type="button" className="alunos-admin__botao alunos-admin__botao--perigo" onClick={confirmarExclusao} disabled={enviando}>
+              <button type="button" className="alunos-admin__botao alunos-admin__botao--perigo" onClick={confirmarExclusao}   disabled={enviando || usoDe(modal.tag) > 0}>
                 {enviando ? 'Excluindo...' : 'Excluir tag'}
               </button>
             </div>
