@@ -47,6 +47,13 @@ class CienciaRepository {
     );
   }
 
+  async atualizarObservacao(idAcompanhamento, idResponsavel, observacao) {
+    await pool.query(
+      "UPDATE ciencia_responsavel SET observacao = ? WHERE id_acompanhamento = ? AND id_responsavel = ?",
+      [observacao, idAcompanhamento, idResponsavel]
+    );
+  }
+
   #mapearParaResposta(row) {
     return {
       idAcompanhamento: row.id_acompanhamento,

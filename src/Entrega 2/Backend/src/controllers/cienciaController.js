@@ -17,4 +17,12 @@ async function registrarCiencia(req, res) {
   }
 }
 
-module.exports = { listarRetornos, registrarCiencia };
+async function atualizarObservacao(req, res) {
+  try {
+    res.status(200).json(await CienciaService.atualizarObservacao(req.params.id, req.body, req.usuario));
+  } catch (error) {
+    responderErro(res, error);
+  }
+}
+
+module.exports = { listarRetornos, registrarCiencia, atualizarObservacao };

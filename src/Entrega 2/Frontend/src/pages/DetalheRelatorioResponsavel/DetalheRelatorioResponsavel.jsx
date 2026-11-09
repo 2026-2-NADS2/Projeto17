@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import api from '../../services/api';
 import EstadoRequisicao from '../DashboardResponsavel/components/EstadoRequisicao/EstadoRequisicao';
-import { formatarMedia } from '../../utils/relatorios';
+import { formatarMedia, normalizarRelatorio } from '../../utils/relatorios';
+import { listarRetornos, registrarCiencia as registrarCienciaNaApi, atualizarObservacao } from '../../services/retornoService';
 import { obterUsuario } from '../../services/authService';
 import './DetalheRelatorioResponsavel.css';
 
@@ -42,8 +43,17 @@ function DetalheRelatorioResponsavel() {
     let cancelado = false;
     async function carregar() {
       try {
-        const resposta = await api.get(`/acompanhamentos/${id}`);
-        if (!cancelado) setRel(resposta.data?.dados ?? resposta.data);
+        const [resposta, ciencias] = await Promise.all([
+          api.get(`/acompanhamentos/${id}`),
+          listarRetornos({ idAcompanhamento: id }), // o responsável só recebe as ciências que ele deu
+        ]);
+        if (cancelado) return;
+        setRel(normalizarRelatorio(resposta.data?.dados ?? resposta.data));
+        const minha = ciencias[0];
+        if (minha) {
+          setCienciaEm(new Date(minha.dataHora).toLocaleString('pt-BR'));
+          setObservacaoEnviada(minha.observacao);
+        }
       } catch {
         if (!cancelado) setErro('Não foi possível carregar o relatório.');
       } finally {
@@ -62,19 +72,34 @@ function DetalheRelatorioResponsavel() {
     setTentativa((t) => t + 1);
   }
 
-  // TODO: quando o backend tiver a rota de ciência, chamar api.post aqui
-  function registrarCiencia() {
-    setCienciaEm(new Date().toLocaleString('pt-BR'));
-    setModalAberto(false);
-    setConfirmou(false);
+  async function registrarCiencia() {
+    try {
+      const ciencia = await registrarCienciaNaApi(id);
+      setCienciaEm(new Date(ciencia.dataHora).toLocaleString('pt-BR'));
+      setAviso('Ciência registrada. A escola e o professor foram informados.');
+    } catch (e) {
+      setAviso(e.response?.data?.erro ?? 'Não foi possível registrar a ciência.');
+    } finally {
+      setModalAberto(false);
+      setConfirmou(false);
+    }
   }
 
-  // TODO: quando o backend tiver a rota de observação, chamar api.post aqui
-  function enviarObservacao() {
-    if (!observacao.trim()) return;
-    setObservacaoEnviada(observacao.trim());
-        setAviso('Observação enviada à escola.');
-    setObservacao('');
+  // Sem ciência ainda: registra as duas coisas juntas. Com ciência: só atualiza a observação.
+  async function enviarObservacao() {
+    const texto = observacao.trim();
+    if (!texto) return;
+    try {
+      const ciencia = jaTemCiencia
+        ? await atualizarObservacao(id, texto)
+        : await registrarCienciaNaApi(id, { observacao: texto });
+      setCienciaEm(new Date(ciencia.dataHora).toLocaleString('pt-BR'));
+      setObservacaoEnviada(ciencia.observacao);
+      setObservacao('');
+      setAviso('Observação enviada à escola.');
+    } catch (e) {
+      setAviso(e.response?.data?.erro ?? 'Não foi possível enviar a observação.');
+    }
   }
 
   if (carregando) return <div className="det-rel"><EstadoRequisicao tipo="carregando" mensagem="Carregando relatório…" /></div>;

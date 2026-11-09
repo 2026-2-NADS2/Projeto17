@@ -14,3 +14,9 @@ export async function registrarCiencia(idAcompanhamento, dados = {}) {
   const resposta = await api.post(`/acompanhamentos/${idAcompanhamento}/ciencia`, dados);
   return resposta.data;
 }
+
+// Responsável acrescenta ou troca a observação de uma ciência já registrada
+export async function atualizarObservacao(idAcompanhamento, observacao) {
+  const resposta = await api.patch(`/acompanhamentos/${idAcompanhamento}/ciencia`, { observacao });
+  return resposta.data;
+}
