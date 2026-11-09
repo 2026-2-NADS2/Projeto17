@@ -43,6 +43,10 @@ function App() {
       <Routes>
         <Route element={<LayoutPublico />}>
           <Route path="/" element={<Home />} />
+          <Route path="/servicos" element={<Servicos />} />
+          <Route path="/institucional" element={<Institucional />} />
+          <Route path="/privacidade" element={<Privacidade />} />
+          <Route path="/acesso-negado" element={<AcessoNegado />} />
           <Route path="*" element={<NotFound />} />
         </Route>
 
