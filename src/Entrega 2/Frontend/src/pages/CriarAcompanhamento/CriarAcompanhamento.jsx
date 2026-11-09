@@ -77,35 +77,37 @@ function FormularioAcompanhamento({ idEdicao, inicial = {} }) {
     setTagsSelecionadas(registro.tags.map((t) => t.id));
   }
 
-  async function carregarDados() {
+  // Busca os dados na API. Os setState ficam dentro do .then/.catch/.finally,
+  // ou seja, só rodam quando a resposta chega. Por isso ela pode ser chamada
+  // direto no useEffect (regra react-hooks/set-state-in-effect do lint).
+  function buscarDados() {
+    return Promise.all([listarTurmas(), listarAlunos(), listarDisciplinas(), listarBimestres(), listarTags()])
+      .then(([listaTurmas, listaAlunos, listaDisciplinas, listaBimestres, listaTags]) => {
+        setTurmas(listaTurmas);
+        setAlunos(listaAlunos);
+        setDisciplinas(listaDisciplinas);
+        setBimestres(listaBimestres);
+        setTags(listaTags);
+        // Na edição, busca também o registro que vai preencher o formulário
+        return idEdicao ? buscarAcompanhamento(idEdicao) : null;
+      })
+      .then((registro) => {
+        if (registro) preencherComRegistro(registro);
+      })
+      .catch((error) => setErroCarregamento(mensagemDeErro(error)))
+      .finally(() => setCarregando(false));
+  }
+
+  // Botão "Tentar novamente": mostra o carregando de novo e refaz a busca
+  function carregarDados() {
     setCarregando(true);
     setErroCarregamento('');
-    try {
-      const [listaTurmas, listaAlunos, listaDisciplinas, listaBimestres, listaTags] = await Promise.all([
-        listarTurmas(),
-        listarAlunos(),
-        listarDisciplinas(),
-        listarBimestres(),
-        listarTags(),
-      ]);
-      setTurmas(listaTurmas);
-      setAlunos(listaAlunos);
-      setDisciplinas(listaDisciplinas);
-      setBimestres(listaBimestres);
-      setTags(listaTags);
-
-      if (idEdicao) {
-        preencherComRegistro(await buscarAcompanhamento(idEdicao));
-      }
-    } catch (error) {
-      setErroCarregamento(mensagemDeErro(error));
-    } finally {
-      setCarregando(false);
-    }
+    buscarDados();
   }
 
   useEffect(() => {
-    carregarDados();
+    buscarDados();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- carrega uma vez, ao abrir a tela
   }, []);
 
   // ---------- Valores calculados a partir do estado ----------

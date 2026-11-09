@@ -56,10 +56,11 @@
 
 @media print {
   @page { size: A4; margin: 12mm; }
-  .layout-resp__menu, .det-rel__trilha, .det-rel__cabecalho, .det-rel__aviso-ok,
+  .layout-resp__menu, .painel-sidebar, .painel-topo, .painel-fundo, .det-rel__trilha, .det-rel__cabecalho, .det-rel__aviso-ok,
   .det-rel__grade, .det-rel__fundo { display: none !important; }
   .layout-resp { display: block; background: #FFFFFF; }
   .det-rel { padding: 0; }
+  .painel-conteudo { margin-left: 0; padding: 0; }
   .det-rel__folha { display: flex; flex-direction: column; min-height: 262mm; }
 }
 
@@ -68,3 +69,6 @@
 .det-rel__toast button:focus-visible { outline: 2px solid #2695FD; outline-offset: 2px; }
 
 @media print { .det-rel__toast { display: none !important; } }
+
+/* Celular: o menu (LayoutPainel) já dá o espaçamento da página */
+@media (max-width: 900px) { .det-rel { padding: 0; } }

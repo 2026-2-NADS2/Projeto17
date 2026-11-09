@@ -131,3 +131,14 @@
 .dp-periodo--encerrado { background-color: var(--cor-neutro-100); color: var(--cor-neutro-700); }
 .dp-periodo--aberto { background-color: var(--status-publicado-bg); color: var(--status-publicado); }
 .dp-periodo--agendado { background-color: var(--status-enviado-bg); color: var(--status-enviado); }
+/* Celular: a barra de progresso desce para baixo do nome da turma */
+@media (max-width: 600px) {
+  .dp-pendencia {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px 12px;
+  }
+  .dp-pendencia .dp-barra {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}

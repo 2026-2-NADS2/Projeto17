@@ -57,7 +57,6 @@
 
 body {
   font-family: 'Sora', sans-serif;
-  min-width: 700px;
   color: var(--cor-neutro-900);
   background-color: var(--cor-neutro-50);
 }
@@ -197,6 +196,11 @@ textarea.campo-entrada {
 
 /* ----- Tabela ----- */
 .tabela-caixa { padding: 0; overflow-x: auto; }
+
+/* Toda caixa de tabela rola sozinha no celular. O "position: relative" segura
+   dentro dela os elementos invisíveis (como o .sr-only), que sem isso vazavam
+   para fora e criavam rolagem lateral na página inteira. */
+[class*='tabela-caixa'] { position: relative; }
 .tabela { width: 100%; border-collapse: collapse; font-size: 14px; }
 .tabela th {
   padding: 12px 16px;
@@ -340,3 +344,27 @@ textarea.campo-entrada {
   background-color: var(--cor-azul-600);
 }
 .linha-tempo-item--pendente { font-weight: 400; color: var(--cor-neutro-400); }
+/* =========================================================
+   Celular (regras gerais de responsividade)
+   ========================================================= */
+@media (max-width: 600px) {
+  /* Abas: se não couberem, rolam para o lado dentro da própria faixa */
+  .abas {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .abas::-webkit-scrollbar { display: none; }
+
+  /* Cabeçalhos "título + botão": o botão desce para a linha de baixo */
+  [class*='-cabecalho'] {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 600px) {
+  /* Tabelas: em vez de espremer as colunas, a tabela mantém uma largura
+     mínima legível e rola para o lado dentro da própria caixa */
+  [class*='tabela-caixa'] > table {
+    min-width: 600px;
+  }
+}

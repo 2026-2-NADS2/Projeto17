@@ -137,3 +137,27 @@
   color: #0247CB;
   font-weight: 600;
 }
+/* Celular e tablet: os dois lados ficam um embaixo do outro */
+@media (max-width: 768px) {
+  .login {
+    flex-direction: column;
+  }
+
+  .login-lado-esquerdo {
+    flex: none;
+    padding: 32px 20px;
+  }
+
+  .login-banner {
+    width: 140px;
+    margin-bottom: 20px;
+  }
+
+  .login-lado-esquerdo h1 {
+    font-size: 24px;
+  }
+
+  .login-lado-direito {
+    padding: 32px 20px 48px;
+  }
+}

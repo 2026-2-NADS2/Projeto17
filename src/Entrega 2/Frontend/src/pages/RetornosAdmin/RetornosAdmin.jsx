@@ -34,6 +34,8 @@ function RetornosAdmin() {
   const [retornos, setRetornos] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState(null);
+  // Momento em que a tela abriu (base do indicador "Últimos 7 dias")
+  const [agora] = useState(() => Date.now());
   const [modoExemplo, setModoExemplo] = useState(false);
   const [tentativa, setTentativa] = useState(0);
 
@@ -74,9 +76,9 @@ function RetornosAdmin() {
     setModoExemplo(true);
   }
 
-  // Indicadores
+  // Indicadores ("agora" é fixado ao abrir a tela: Date.now() direto no render muda a cada renderização)
   const comObservacao = retornos.filter(temObservacao).length;
-  const recentes = retornos.filter((r) => Date.now() - tempoDe(r.dataHora) <= SETE_DIAS).length;
+  const recentes = retornos.filter((r) => agora - tempoDe(r.dataHora) <= SETE_DIAS).length;
 
   // Opções dos filtros, tiradas dos próprios dados
   const turmas = [...new Set(retornos.map((r) => nomeDe(r.turma)).filter((t) => t && t !== '—'))]

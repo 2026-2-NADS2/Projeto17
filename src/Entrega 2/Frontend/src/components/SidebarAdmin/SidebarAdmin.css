@@ -183,36 +183,76 @@ a.sidebar-admin__item--ativo:hover {
   outline-offset: 2px;
 }
 
-/* Celular: a lateral vira uma barra no topo */
+/* O botão ☰ só existe no celular */
+.sidebar-admin__menu-botao {
+  display: none;
+}
+
+/* Celular: a lateral vira uma barra no topo; o botão ☰ abre o menu em tela cheia */
 @media (max-width: 768px) {
   .sidebar-admin {
+    z-index: 30;
     width: 100%;
     height: auto;
-    position: static;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    padding: 14px 16px;
+    gap: 12px;
+    padding: 10px 16px;
+  }
+
+  .sidebar-admin__menu-botao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-left: -8px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #FFFFFF;
+    cursor: pointer;
   }
 
   .sidebar-admin__topo {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
     margin-bottom: 0;
     padding: 0;
   }
 
-  .sidebar-admin__nav {
-    display: none;
+  .sidebar-admin__logo {
+    height: 26px;
   }
 
-  .sidebar-admin__rodape {
-    flex-direction: row;
-    align-items: center;
-    padding-top: 0;
+  .sidebar-admin__perfil {
     margin-top: 0;
-    border-top: none;
   }
 
-  .sidebar-admin__usuario-info {
+  .sidebar-admin__nav,
+  .sidebar-admin__rodape {
     display: none;
+  }
+
+  /* Menu aberto: ocupa a tela toda e rola se precisar */
+  .sidebar-admin--aberto {
+    position: fixed;
+    inset: 0;
+    align-content: flex-start;
+    overflow-y: auto;
+  }
+
+  .sidebar-admin--aberto .sidebar-admin__nav {
+    display: block;
+    flex: 0 0 100%;
+    overflow: visible;
+    margin-top: 8px;
+  }
+
+  .sidebar-admin--aberto .sidebar-admin__rodape {
+    display: flex;
+    flex: 0 0 100%;
   }
 }

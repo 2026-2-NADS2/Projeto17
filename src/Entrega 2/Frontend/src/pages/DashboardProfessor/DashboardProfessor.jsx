@@ -54,27 +54,29 @@ function DashboardProfessor() {
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState('');
 
-  async function carregar() {
+  // Busca os dados na API. Os setState ficam dentro do .then/.catch/.finally,
+  // ou seja, só rodam quando a resposta chega. Por isso ela pode ser chamada
+  // direto no useEffect (regra react-hooks/set-state-in-effect do lint).
+  function buscar() {
+    return Promise.all([listarAcompanhamentos(), listarBimestres(), listarAlunos()])
+      .then(([listaRegistros, listaBimestres, listaAlunos]) => {
+        setRegistros(listaRegistros);
+        setBimestres(listaBimestres);
+        setAlunos(listaAlunos);
+      })
+      .catch((error) => setErro(mensagemDeErro(error)))
+      .finally(() => setCarregando(false));
+  }
+
+  // Botão "Tentar novamente": mostra o carregando de novo e refaz a busca
+  function carregar() {
     setCarregando(true);
     setErro('');
-    try {
-      const [listaRegistros, listaBimestres, listaAlunos] = await Promise.all([
-        listarAcompanhamentos(),
-        listarBimestres(),
-        listarAlunos(),
-      ]);
-      setRegistros(listaRegistros);
-      setBimestres(listaBimestres);
-      setAlunos(listaAlunos);
-    } catch (error) {
-      setErro(mensagemDeErro(error));
-    } finally {
-      setCarregando(false);
-    }
+    buscar();
   }
 
   useEffect(() => {
-    carregar();
+    buscar();
   }, []);
 
   // ---------- Números calculados a partir dos registros ----------

@@ -1,4 +1,6 @@
 .navbar {
+  position: relative;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -45,4 +47,62 @@
 
 .navbar-btn-entrar:hover {
   opacity: 0.9;
+}
+
+.navbar-acoes {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* O botão ☰ só existe no celular */
+.navbar-menu-botao {
+  display: none;
+}
+
+/* Celular: os links saem da barra e abrem numa lista logo abaixo dela */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 16px;
+  }
+
+  .navbar-logo img {
+    height: 26px;
+  }
+
+  .navbar-menu-botao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-right: -8px;
+    border: none;
+    border-radius: var(--raio-campo);
+    background: transparent;
+    color: var(--cor-branco);
+    cursor: pointer;
+  }
+
+  .navbar-links {
+    display: none;
+  }
+
+  .navbar--aberta .navbar-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 16px 16px;
+    background-color: var(--cor-azul-600);
+    box-shadow: 0 8px 16px rgba(7, 18, 51, 0.2);
+  }
+
+  .navbar--aberta .navbar-links a {
+    padding: 12px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
 }

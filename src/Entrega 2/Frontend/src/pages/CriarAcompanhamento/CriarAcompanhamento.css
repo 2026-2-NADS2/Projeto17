@@ -88,8 +88,10 @@
 /* ----- Botões do rodapé ----- */
 .ca-acoes {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
   margin-top: 8px;
 }
 
@@ -166,7 +168,7 @@
   color: var(--status-devolvido);
 }
 
-.ca-acoes-direita { display: flex; gap: 12px; }
+.ca-acoes-direita { display: flex; flex-wrap: wrap; gap: 12px; }
 
 /* ----- Modal de envio (T08) ----- */
 .ca-modal-texto { font-size: 14px; line-height: 1.5; color: var(--cor-neutro-600); }
@@ -184,3 +186,10 @@
 .ca-modal-resumo span { font-size: 12px; color: var(--cor-neutro-600); }
 
 .ca-modal-acoes { display: flex; justify-content: flex-end; gap: 8px; }
+/* Celular: um campo por linha */
+@media (max-width: 600px) {
+  .ca-campos,
+  .ca-linha {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

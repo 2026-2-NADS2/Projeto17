@@ -50,20 +50,25 @@ function AcompanhamentosAlunos() {
   // Mensagem vinda de outra tela (ex.: "Acompanhamento enviado para revisão.")
   const [toast, setToast] = useState(location.state?.mensagem || '');
 
-  async function carregar() {
+  // Busca os dados na API. Os setState ficam dentro do .then/.catch/.finally,
+  // ou seja, só rodam quando a resposta chega. Por isso ela pode ser chamada
+  // direto no useEffect (regra react-hooks/set-state-in-effect do lint).
+  function buscar() {
+    return listarAcompanhamentos()
+      .then((lista) => setRegistros(lista))
+      .catch((error) => setErro(mensagemDeErro(error)))
+      .finally(() => setCarregando(false));
+  }
+
+  // Botão "Tentar novamente": mostra o carregando de novo e refaz a busca
+  function carregar() {
     setCarregando(true);
     setErro('');
-    try {
-      setRegistros(await listarAcompanhamentos());
-    } catch (error) {
-      setErro(mensagemDeErro(error));
-    } finally {
-      setCarregando(false);
-    }
+    buscar();
   }
 
   useEffect(() => {
-    carregar();
+    buscar();
     // Apaga a mensagem do histórico para ela não reaparecer ao atualizar a página
     window.history.replaceState({}, '');
   }, []);

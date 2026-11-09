@@ -1,5 +1,6 @@
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { LogOut } from 'lucide-react';
+import { useState } from 'react';
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { LogOut, Menu, X } from 'lucide-react';
 import { obterUsuario, sair } from '../../services/authService';
 import logo from '../../assets/Logo_ClassSync_Branco.png';
 import './LayoutPainel.css';
@@ -21,7 +22,13 @@ function iniciais(nome = '') {
 
 function LayoutPainel({ itens }) {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const usuario = obterUsuario();
+  // Celular/tablet: o menu fica escondido e abre por cima da tela pelo botão ☰.
+  // Guardamos EM QUAL PÁGINA o menu foi aberto: ao trocar de página,
+  // a comparação dá falso e o menu fecha sozinho (sem precisar de useEffect).
+  const [menuAbertoEm, setMenuAbertoEm] = useState(null);
+  const menuAberto = menuAbertoEm === pathname;
   const nomePerfil = NOMES_PERFIL[usuario?.perfil] || '';
 
   function handleSair() {
@@ -30,7 +37,25 @@ function LayoutPainel({ itens }) {
   }
 
   return (
-    <div className="painel">
+    <div className={`painel ${menuAberto ? 'painel--menu-aberto' : ''}`}>
+      {/* Barra do topo: só aparece em telas pequenas (ver LayoutPainel.css) */}
+      <header className="painel-topo">
+        <button
+          type="button"
+          className="painel-topo-botao"
+          onClick={() => setMenuAbertoEm(menuAberto ? null : pathname)}
+          aria-label={menuAberto ? 'Fechar menu' : 'Abrir menu'}
+          aria-expanded={menuAberto}
+        >
+          {menuAberto ? <X size={22} /> : <Menu size={22} />}
+        </button>
+        <img src={logo} alt="ClassSync" className="painel-topo-logo" />
+        <span className="painel-perfil-tag">{nomePerfil.toUpperCase()}</span>
+      </header>
+
+      {/* Fundo escuro atrás do menu aberto: clicar fora fecha */}
+      <div className="painel-fundo" onClick={() => setMenuAbertoEm(null)} aria-hidden="true" />
+
       <aside className="painel-sidebar">
         <div className="painel-marca">
           <img src={logo} alt="ClassSync" className="painel-logo" />

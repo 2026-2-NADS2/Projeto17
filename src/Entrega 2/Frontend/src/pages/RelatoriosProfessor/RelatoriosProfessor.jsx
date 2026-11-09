@@ -18,7 +18,7 @@ const formatarPorcentagem = (valor) => (valor === null ? '—' : `${Math.round(v
 // "2026-07-20T19:12" → "20/07"
 function formatarDia(dataHora) {
   if (!dataHora) return '';
-  const [ano, mes, dia] = dataHora.split('T')[0].split('-');
+  const [, mes, dia] = dataHora.split('T')[0].split('-');
   return `${dia}/${mes}`;
 }
 
@@ -92,37 +92,43 @@ function RelatoriosProfessor() {
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState('');
 
-  async function carregar() {
+  // Busca os dados na API. Os setState ficam dentro do .then/.catch/.finally,
+  // ou seja, só rodam quando a resposta chega. Por isso ela pode ser chamada
+  // direto no useEffect (regra react-hooks/set-state-in-effect do lint).
+  function buscar() {
+    return Promise.all([
+      listarVinculos(),
+      listarAlunos(),
+      listarAcompanhamentos(),
+      listarBimestres(),
+      listarRetornos(), // o backend devolve só os retornos dos registros deste professor
+    ])
+      .then(([vinculos, alunos, acompanhamentos, todosBimestres, retornos]) => {
+        const anoAtual = new Date().getFullYear();
+        const bimestres = todosBimestres.filter((b) => b.anoLetivo === anoAtual).sort((a, b) => a.numero - b.numero);
+
+        setDados({
+          vinculos,
+          alunos,
+          acompanhamentos: acompanhamentos.filter((a) => a.status !== 'CANCELADO'),
+          bimestres,
+          retornos,
+        });
+        setIdBimestre((atual) => atual ?? bimestrePadrao(bimestres)?.id ?? null);
+      })
+      .catch((error) => setErro(mensagemDeErro(error)))
+      .finally(() => setCarregando(false));
+  }
+
+  // Botão "Tentar novamente": mostra o carregando de novo e refaz a busca
+  function carregar() {
     setCarregando(true);
     setErro('');
-    try {
-      const [vinculos, alunos, acompanhamentos, todosBimestres, retornos] = await Promise.all([
-        listarVinculos(),
-        listarAlunos(),
-        listarAcompanhamentos(),
-        listarBimestres(),
-        listarRetornos(), // o backend devolve só os retornos dos registros deste professor
-      ]);
-      const anoAtual = new Date().getFullYear();
-      const bimestres = todosBimestres.filter((b) => b.anoLetivo === anoAtual).sort((a, b) => a.numero - b.numero);
-
-      setDados({
-        vinculos,
-        alunos,
-        acompanhamentos: acompanhamentos.filter((a) => a.status !== 'CANCELADO'),
-        bimestres,
-        retornos,
-      });
-      setIdBimestre((atual) => atual ?? bimestrePadrao(bimestres)?.id ?? null);
-    } catch (error) {
-      setErro(mensagemDeErro(error));
-    } finally {
-      setCarregando(false);
-    }
+    buscar();
   }
 
   useEffect(() => {
-    carregar();
+    buscar();
   }, []);
 
   const bimestre = dados.bimestres.find((b) => b.id === idBimestre);

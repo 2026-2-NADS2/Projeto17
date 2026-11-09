@@ -9,7 +9,7 @@
 .rel-resp__filtros select { min-width: 150px; padding: 8px 10px; border: 1px solid #D5DCEA; border-radius: 8px; background: #FFFFFF; font: inherit; font-weight: 400; }
 .rel-resp__grupo { margin-bottom: 24px; }
 .rel-resp__grupo-titulo { margin: 0 0 10px; font-size: 0.7rem; letter-spacing: 0.06em; color: #5A6B8C; }
-.rel-resp__grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+.rel-resp__grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); gap: 16px; }
 .rel-resp__card { padding: 16px 18px; background: #FFFFFF; border: 1px solid #E3E8F2; border-left: 3px solid #0247CB; border-radius: 10px; }
 .rel-resp__card-topo { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
 .rel-resp__selo { padding: 3px 10px; border-radius: 999px; font-size: 0.7rem; font-weight: 600; }
@@ -21,3 +21,6 @@
 .rel-resp__rodape strong { color: #0F1B33; font-size: 1rem; }
 .rel-resp__abrir { color: #0247CB; font-weight: 600; text-decoration: none; }
 .rel-resp__abrir:hover { text-decoration: underline; }
+
+/* Celular: o menu (LayoutPainel) já dá o espaçamento da página */
+@media (max-width: 900px) { .rel-resp { padding: 0; } }
