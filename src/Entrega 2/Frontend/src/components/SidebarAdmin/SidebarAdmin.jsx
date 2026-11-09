@@ -17,6 +17,7 @@ import {
   LogOut,
 } from 'lucide-react';
 import { sair, obterUsuario } from '../../services/authService';
+import logo from '../../assets/Logo_ClassSync_Branco.png';
 import './SidebarAdmin.css';
 
 // Menu igual ao Figma (A01). Itens com "para" são links; os outros aparecem apagados até a tela existir.
@@ -83,7 +84,7 @@ function SidebarAdmin() {
   return (
     <aside className="sidebar-admin">
       <div className="sidebar-admin__topo">
-        <span className="sidebar-admin__marca">ClassSync</span>
+        <img src={logo} alt="ClassSync" className="sidebar-admin__logo" />
         <span className="sidebar-admin__perfil">Administração</span>
       </div>
 
