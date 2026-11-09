@@ -31,7 +31,7 @@ api.interceptors.response.use(
     if (status === 401 && !ehLogin) {
       localStorage.removeItem(CHAVE_TOKEN);
       localStorage.removeItem(CHAVE_USUARIO);
-      window.location.href = '/entrar';
+      window.location.href = '/entrar?sessao=expirada';
     }
 
     return Promise.reject(erro);

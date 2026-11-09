@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import banner from '../../assets/BANNER - ClassSync.png';
 import { login, rotaDoPerfil } from '../../services/authService';
 import EntradaSenha from '../../components/EntradaSenha/EntradaSenha';
@@ -7,6 +7,9 @@ import './Login.css';
 
 function Login() {
   const navigate = useNavigate();
+  // ?sessao=expirada: o token venceu e o api.js mandou o usuário de volta para cá
+  const [busca] = useSearchParams();
+  const sessaoExpirada = busca.get('sessao') === 'expirada';
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
@@ -59,6 +62,13 @@ function Login() {
           <h2>Entrar</h2>
           <p className="login-subtitulo">Acesse sua conta ClassSync</p>
 
+          {sessaoExpirada && (
+            <div className="login-aviso" role="status">
+              <strong>Sua sessão expirou</strong>
+              Por segurança, você foi desconectado após um período sem atividade. Entre novamente para continuar.
+            </div>
+          )}
+
           <form onSubmit={handleSubmit}>
             <label htmlFor="email">E-mail</label>
             <input
@@ -88,7 +98,8 @@ function Login() {
               {carregando ? 'Entrando...' : 'Entrar'}
             </button>
           </form>
-          
+
+          <Link to="/" className="login-voltar login-voltar--centro">← Voltar ao site</Link>
         </div>
       </div>
     </div>

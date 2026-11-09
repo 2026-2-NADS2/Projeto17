@@ -37,4 +37,25 @@ async function alterarSenha(req, res) {
   }
 }
 
-module.exports = { login, cadastrarUsuario, listarUsuarios, alterarSenha };
+// Sempre a mesma resposta, exista o e-mail ou não (não revela quem tem conta)
+async function solicitarRecuperacao(req, res) {
+  try {
+    await AuthService.solicitarRecuperacao(req.body.email);
+    res.status(200).json({
+      mensagem: "Se o e-mail estiver cadastrado, enviamos um link para redefinir a senha.",
+    });
+  } catch (error) {
+    responderErro(res, error);
+  }
+}
+
+async function redefinirSenha(req, res) {
+  try {
+    await AuthService.redefinirSenha(req.body.token, req.body.novaSenha);
+    res.status(200).json({ mensagem: "Senha alterada com sucesso." });
+  } catch (error) {
+    responderErro(res, error);
+  }
+}
+
+module.exports = { login, cadastrarUsuario, listarUsuarios, alterarSenha, solicitarRecuperacao, redefinirSenha };

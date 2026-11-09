@@ -41,3 +41,11 @@ export function rotaDoPerfil(perfil) {
 export async function alterarSenha(senhaAtual, novaSenha) {
   await api.patch('/auth/senha', { senhaAtual, novaSenha });
 }
+// Recuperação de senha (rotas públicas: quem esqueceu a senha não tem token)
+export async function solicitarRecuperacao(email) {
+  await api.post('/auth/recuperar-senha', { email });
+}
+
+export async function redefinirSenha(token, novaSenha) {
+  await api.post('/auth/redefinir-senha', { token, novaSenha });
+}
