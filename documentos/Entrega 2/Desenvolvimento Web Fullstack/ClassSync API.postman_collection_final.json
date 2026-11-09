@@ -862,7 +862,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{ \"idAluno\": 17, \"idDisciplina\": 6, \"idBimestre\": 4, \"descricao\": \"Teste de tag inexistente\", \"tags\": [999] }",
+              "raw": "{ \"idAluno\": 17, \"idDisciplina\": 6, \"idBimestre\": 4, \"media\": 8, \"descricao\": \"Teste de professor sem vínculo com a disciplina\", \"tags\": [1] }",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1701,5 +1701,27 @@
         "type": "string"
       }
     ]
-  }
+  },
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "exec": [
+          "// Status esperado vem do nome da requisição: \"Criar duplicado (409)\" → 409\r",
+          "const esperado = pm.info.requestName.match(/\\((\\d{3})\\)\\s*$/);\r",
+          "if (esperado) {\r",
+          "  pm.test(`Status ${esperado[1]}`, () => {\r",
+          "    pm.response.to.have.status(Number(esperado[1]));\r",
+          "  });\r",
+          "}\r",
+          "\r",
+          "// Toda resposta da API deve chegar em menos de 3 segundos\r",
+          "pm.test(\"Resposta em menos de 3 s\", () => {\r",
+          "  pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+          "});"
+        ],
+        "type": "text/javascript"
+      }
+    }
+  ]
 }
