@@ -36,6 +36,7 @@ import AcessoNegado from './pages/AcessoNegado/AcessoNegado';
 import TurmaAlunos from './pages/TurmaAlunos/TurmaAlunos';
 import HistoricoAluno from './pages/HistoricoAluno/HistoricoAluno';
 import RelatoriosProfessor from './pages/RelatoriosProfessor/RelatoriosProfessor';
+import Contato from './pages/Contato/Contato';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
           <Route path="/servicos" element={<Servicos />} />
           <Route path="/institucional" element={<Institucional />} />
           <Route path="/privacidade" element={<Privacidade />} />
+          <Route path="/contato" element={<Contato />} />
           <Route path="/acesso-negado" element={<AcessoNegado />} />
           <Route path="*" element={<NotFound />} />
         </Route>
