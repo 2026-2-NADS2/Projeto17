@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import logo from '../../assets/Logo_ClassSync.svg';
+import logo from '../../assets/Logo_ClassSync_Branco.png';
 import { obterUsuario, sair } from '../../services/authService';
 import { pegarIniciais } from '../../utils/relatorios';
 import './LayoutResponsavel.css';

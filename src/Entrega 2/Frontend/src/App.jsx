@@ -27,7 +27,7 @@ import RegistrosDevolvidos from './pages/RegistrosDevolvidos/RegistrosDevolvidos
 import MeuPerfil from './pages/MeuPerfil/MeuPerfil';
 import RotaProtegida from './components/RotaProtegida/RotaProtegida';
 import LayoutPainel from './components/LayoutPainel/LayoutPainel';
-import { menuProfessor } from './components/LayoutPainel/menus';
+import { menuProfessor, menuResponsavel } from './components/LayoutPainel/menus';
 import DetalheAcompanhamento from './pages/DetalheAcompanhamento/DetalheAcompanhamento';
 import Servicos from './pages/Servicos/Servicos';
 import Institucional from './pages/Institucional/Institucional';
@@ -39,7 +39,6 @@ import RelatoriosProfessor from './pages/RelatoriosProfessor/RelatoriosProfessor
 import Contato from './pages/Contato/Contato';
 import MeusAlunosResponsavel from './pages/MeusAlunosResponsavel/MeusAlunosResponsavel';
 import RelatoriosResponsavel from './pages/RelatoriosResponsavel/RelatoriosResponsavel';
-import LayoutResponsavel from './components/LayoutResponsavel/LayoutResponsavel';
 import DetalheRelatorioResponsavel from './pages/DetalheRelatorioResponsavel/DetalheRelatorioResponsavel';
 import MeuPerfilResponsavel from './pages/MeuPerfilResponsavel/MeuPerfilResponsavel';
 
@@ -118,9 +117,9 @@ function App() {
         </Route>
 
         <Route element={<RotaProtegida perfis={['RESPONSAVEL']} />}>
-          <Route element={<LayoutResponsavel />}>
+          <Route element={<LayoutPainel itens={menuResponsavel} />}>
             <Route path="/responsavel" element={<DashboardResponsavel />} />
-                                    <Route path="/responsavel/perfil" element={<MeuPerfilResponsavel />} />
+            <Route path="/responsavel/perfil" element={<MeuPerfilResponsavel />} />
             <Route path="/responsavel/alunos" element={<MeusAlunosResponsavel />} />
             <Route path="/responsavel/relatorios" element={<RelatoriosResponsavel />} />
             <Route path="/responsavel/relatorio/:id" element={<DetalheRelatorioResponsavel />} />

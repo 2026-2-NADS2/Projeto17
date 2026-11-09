@@ -43,6 +43,25 @@ class CienciaService {
     const [ciencia] = await CienciaRepository.listar({ idAcompanhamento: id, idResponsavel: usuario.id });
     return ciencia;
   }
+
+  // A observação pode chegar depois da ciência (a tela tem os dois botões separados)
+  async atualizarObservacao(idAcompanhamento, dados = {}, usuario) {
+    const id = Number(idAcompanhamento);
+    const [existente] = Number.isInteger(id)
+      ? await CienciaRepository.listar({ idAcompanhamento: id, idResponsavel: usuario.id })
+      : [];
+    if (!existente) {
+      throw new ErroApp("Registre a ciência deste relatório antes de enviar uma observação.", 404);
+    }
+
+    const observacao = String(dados.observacao ?? "").trim();
+    if (!observacao) throw new ErroApp("Escreva a observação.");
+    if (observacao.length > 1000) throw new ErroApp("A observação pode ter até 1000 caracteres.");
+
+    await CienciaRepository.atualizarObservacao(id, usuario.id, observacao);
+    const [ciencia] = await CienciaRepository.listar({ idAcompanhamento: id, idResponsavel: usuario.id });
+    return ciencia;
+  }
 }
 
 module.exports = new CienciaService();
