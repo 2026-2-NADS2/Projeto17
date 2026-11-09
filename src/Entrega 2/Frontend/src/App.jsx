@@ -69,7 +69,7 @@ function App() {
           <Route path="/admin/revisao" element={<RevisaoAdmin />} />
           <Route path="/admin/revisao/:id" element={<DetalheRevisao />} />
           <Route path="/admin/retornos" element={<RetornosAdmin />} />
-          <Route path="/admin/usuarios" element={<UsuariosAdmin />} />
+          <Route path="/admin/usuarios" element={<UsuariosAdmin key="usuarios" />} />
           <Route path="/admin/usuarios/novo" element={<NovoUsuario />} />
           <Route path="/admin/alunos" element={<AlunosAdmin />} />
           <Route path="/admin/turmas" element={<TurmasAdmin />} />
@@ -84,6 +84,7 @@ function App() {
             path="/admin/professores"
             element={
               <UsuariosAdmin
+                key="professores"
                 perfilFixo="PROFESSOR"
                 titulo="Professores"
                 subtitulo="Professores com acesso à plataforma."
@@ -95,6 +96,7 @@ function App() {
             path="/admin/responsaveis"
             element={
               <UsuariosAdmin
+                key="responsaveis"
                 perfilFixo="RESPONSAVEL"
                 titulo="Responsáveis"
                 subtitulo="Pais e responsáveis com acesso à plataforma."
