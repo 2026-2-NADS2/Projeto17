@@ -1,7 +1,7 @@
 .meus-alunos { padding: 32px; }
 .meus-alunos__titulo { margin: 0; font-size: 1.6rem; color: #0F1B33; }
 .meus-alunos__subtitulo { margin: 4px 0 24px; color: #5A6B8C; font-size: 0.9rem; }
-.meus-alunos__grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+.meus-alunos__grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); gap: 16px; }
 .meus-alunos__card { display: flex; flex-direction: column; gap: 12px; padding: 20px; background: #FFFFFF; border: 1px solid #E3E8F2; border-radius: 12px; }
 .meus-alunos__topo { display: flex; align-items: center; gap: 14px; }
 .meus-alunos__avatar { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: #E6EEFC; color: #0247CB; font-weight: 700; }
@@ -16,3 +16,7 @@
 .meus-alunos__botao:focus-visible { outline: 2px solid #2695FD; outline-offset: 3px; }
 .meus-alunos__aviso { margin-top: 24px; padding: 16px 20px; background: #E6EEFC; border-radius: 10px; color: #111B4C; font-size: 0.85rem; }
 .meus-alunos__aviso p { margin: 4px 0 0; color: #5A6B8C; }
+
+
+/* Celular: o menu (LayoutPainel) já dá o espaçamento da página */
+@media (max-width: 900px) { .meus-alunos { padding: 0; } }

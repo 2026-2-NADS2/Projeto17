@@ -15,7 +15,7 @@
 .inicio-resp__botao { margin-top: 8px; padding: 9px 18px; border: none; border-radius: 8px; background: #0247CB; color: #FFFFFF; font: inherit; font-weight: 600; cursor: pointer; }
 .inicio-resp__botao:hover { background: #2695FD; }
 .inicio-resp__titulo-secao { margin: 0 0 12px; font-size: 1rem; color: #0F1B33; }
-.inicio-resp__atalhos { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 28px; }
+.inicio-resp__atalhos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 16px; margin-bottom: 28px; }
 .inicio-resp__atalho { display: flex; flex-direction: column; gap: 6px; padding: 18px; border: 1px solid #E3E8F2; border-radius: 12px; background: #FFFFFF; text-decoration: none; }
 .inicio-resp__atalho:hover { border-color: #2695FD; }
 .inicio-resp__atalho strong { display: flex; align-items: center; gap: 8px; color: #0F1B33; }
@@ -35,3 +35,6 @@
 .inicio-resp__abrir:hover { text-decoration: underline; }
 
 @media (max-width: 900px) { .inicio-resp__topo { grid-template-columns: 1fr; } }
+
+/* Celular: o menu (LayoutPainel) já dá o espaçamento da página */
+@media (max-width: 900px) { .inicio-resp { padding: 0; } }

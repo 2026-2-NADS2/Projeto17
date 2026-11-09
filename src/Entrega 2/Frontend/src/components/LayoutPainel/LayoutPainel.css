@@ -145,3 +145,81 @@
   margin-left: 248px;
   padding: 32px 40px;
 }
+
+/* ---------- Barra do topo e fundo (só em telas pequenas) ---------- */
+.painel-topo,
+.painel-fundo {
+  display: none;
+}
+
+/* Celular e tablet: o menu lateral vira uma gaveta que abre pelo botão ☰ */
+@media (max-width: 900px) {
+  .painel-topo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 56px;
+    padding: 0 16px;
+    background-color: var(--cor-navy-800);
+    color: var(--cor-branco);
+  }
+
+  .painel-topo-botao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-left: -8px;
+    border: none;
+    border-radius: var(--raio-campo);
+    background: transparent;
+    color: var(--cor-branco);
+    cursor: pointer;
+  }
+
+  .painel-topo-logo {
+    height: 26px;
+  }
+
+  .painel-topo .painel-perfil-tag {
+    margin-left: auto;
+    font-size: 10px;
+  }
+
+  /* A gaveta abre logo abaixo da barra do topo, assim o botão ✕ continua à mostra.
+     O logo e a etiqueta já estão na barra, então saem da gaveta. */
+  .painel-sidebar {
+    top: 56px;
+    z-index: 40;
+    width: min(280px, 85vw);
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+  }
+
+  .painel--menu-aberto .painel-sidebar {
+    transform: translateX(0);
+  }
+
+  .painel-sidebar .painel-marca {
+    display: none;
+  }
+
+  .painel--menu-aberto .painel-fundo {
+    position: fixed;
+    inset: 56px 0 0 0;
+    z-index: 35;
+    display: block;
+    background-color: rgba(7, 18, 51, 0.5);
+  }
+
+  .painel-conteudo {
+    margin-left: 0;
+    padding: 76px 16px 32px; /* 56px da barra do topo + 20px */
+  }
+}

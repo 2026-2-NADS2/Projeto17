@@ -84,30 +84,32 @@ function TurmaAlunos() {
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState('');
 
-  async function carregar() {
+  // Busca os dados na API. Os setState ficam dentro do .then/.catch/.finally,
+  // ou seja, só rodam quando a resposta chega. Por isso ela pode ser chamada
+  // direto no useEffect (regra react-hooks/set-state-in-effect do lint).
+  function buscar() {
+    return Promise.all([listarVinculos({ idTurma }), listarAlunos(), listarAcompanhamentos(), listarBimestres()])
+      .then(([vinculos, alunos, acompanhamentos, todosBimestres]) => {
+        const anoAtual = new Date().getFullYear();
+        const bimestres = todosBimestres
+          .filter((b) => b.anoLetivo === anoAtual)
+          .sort((a, b) => a.numero - b.numero);
+        setDados({ vinculos, alunos, acompanhamentos, bimestres });
+      })
+      .catch((error) => setErro(mensagemDeErro(error)))
+      .finally(() => setCarregando(false));
+  }
+
+  // Botão "Tentar novamente": mostra o carregando de novo e refaz a busca
+  function carregar() {
     setCarregando(true);
     setErro('');
-    try {
-      const [vinculos, alunos, acompanhamentos, todosBimestres] = await Promise.all([
-        listarVinculos({ idTurma }),
-        listarAlunos(),
-        listarAcompanhamentos(),
-        listarBimestres(),
-      ]);
-      const anoAtual = new Date().getFullYear();
-      const bimestres = todosBimestres
-        .filter((b) => b.anoLetivo === anoAtual)
-        .sort((a, b) => a.numero - b.numero);
-      setDados({ vinculos, alunos, acompanhamentos, bimestres });
-    } catch (error) {
-      setErro(mensagemDeErro(error));
-    } finally {
-      setCarregando(false);
-    }
+    buscar();
   }
 
   useEffect(() => {
-    carregar();
+    buscar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- recarrega só quando muda a turma da URL
   }, [idTurma]);
 
   // Disciplina e bimestre ficam na URL (?disciplina=3&bimestre=4): o link do card já abre no lugar certo

@@ -90,33 +90,34 @@ function TelaTurmas() {
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState('');
 
-  async function carregar() {
+  // Busca os dados na API. Os setState ficam dentro do .then/.catch/.finally,
+  // ou seja, só rodam quando a resposta chega. Por isso ela pode ser chamada
+  // direto no useEffect (regra react-hooks/set-state-in-effect do lint).
+  function buscar() {
+    // As 4 consultas não dependem uma da outra: vão juntas
+    return Promise.all([listarVinculos(), listarAlunos(), listarAcompanhamentos(), listarBimestres()])
+      .then(([vinculos, alunos, acompanhamentos, todosBimestres]) => {
+        const anoAtual = new Date().getFullYear();
+        const bimestres = todosBimestres
+          .filter((b) => b.anoLetivo === anoAtual)
+          .sort((a, b) => a.numero - b.numero);
+
+        setDados({ vinculos, alunos, acompanhamentos, bimestres });
+        setIdBimestre((atual) => atual ?? bimestrePadrao(bimestres)?.id ?? null);
+      })
+      .catch((error) => setErro(mensagemDeErro(error)))
+      .finally(() => setCarregando(false));
+  }
+
+  // Botão "Tentar novamente": mostra o carregando de novo e refaz a busca
+  function carregar() {
     setCarregando(true);
     setErro('');
-    try {
-      // As 4 consultas não dependem uma da outra: vão juntas
-      const [vinculos, alunos, acompanhamentos, todosBimestres] = await Promise.all([
-        listarVinculos(),
-        listarAlunos(),
-        listarAcompanhamentos(),
-        listarBimestres(),
-      ]);
-      const anoAtual = new Date().getFullYear();
-      const bimestres = todosBimestres
-        .filter((b) => b.anoLetivo === anoAtual)
-        .sort((a, b) => a.numero - b.numero);
-
-      setDados({ vinculos, alunos, acompanhamentos, bimestres });
-      setIdBimestre((atual) => atual ?? bimestrePadrao(bimestres)?.id ?? null);
-    } catch (error) {
-      setErro(mensagemDeErro(error));
-    } finally {
-      setCarregando(false);
-    }
+    buscar();
   }
 
   useEffect(() => {
-    carregar();
+    buscar();
   }, []);
 
   const bimestre = dados.bimestres.find((b) => b.id === idBimestre);

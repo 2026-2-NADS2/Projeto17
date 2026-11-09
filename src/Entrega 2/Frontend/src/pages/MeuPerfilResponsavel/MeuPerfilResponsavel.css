@@ -20,3 +20,6 @@
 .perfil-resp__link:hover { text-decoration: underline; }
 
 @media (max-width: 900px) { .perfil-resp__grade { grid-template-columns: 1fr; } }
+
+/* Celular: o menu (LayoutPainel) já dá o espaçamento da página */
+@media (max-width: 900px) { .perfil-resp { padding: 0; } }

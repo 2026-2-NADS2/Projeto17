@@ -15,6 +15,6 @@ export async function buscarRelatoriosPublicados() {
     .map(normalizarRelatorio);
 }
 
-export function mensagemDeErro(error) {
+export function mensagemDeErro() {
   return 'Não foi possível carregar os dados. Verifique sua conexão com o servidor.';
 }

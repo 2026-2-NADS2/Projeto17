@@ -1,4 +1,5 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
   House,
   ClipboardCheck,
@@ -15,6 +16,8 @@ import {
   History,
   CircleUser,
   LogOut,
+  Menu,
+  X,
 } from 'lucide-react';
 import { sair, obterUsuario } from '../../services/authService';
 import logo from '../../assets/Logo_ClassSync_Branco.png';
@@ -73,7 +76,13 @@ function obterIniciais(nome) {
 
 function SidebarAdmin() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const usuario = obterUsuario();
+  // Celular: o menu fica escondido e abre em tela cheia pelo botão ☰.
+  // Guardamos EM QUAL PÁGINA o menu foi aberto: ao trocar de página,
+  // a comparação dá falso e o menu fecha sozinho (sem precisar de useEffect).
+  const [menuAbertoEm, setMenuAbertoEm] = useState(null);
+  const menuAberto = menuAbertoEm === pathname;
   const nome = usuario?.nome ?? 'Administrador';
 
   function handleSair() {
@@ -82,7 +91,18 @@ function SidebarAdmin() {
   }
 
   return (
-    <aside className="sidebar-admin">
+    <aside className={`sidebar-admin ${menuAberto ? 'sidebar-admin--aberto' : ''}`}>
+      {/* Botão ☰: só aparece no celular (ver SidebarAdmin.css) */}
+      <button
+        type="button"
+        className="sidebar-admin__menu-botao"
+        onClick={() => setMenuAbertoEm(menuAberto ? null : pathname)}
+        aria-label={menuAberto ? 'Fechar menu' : 'Abrir menu'}
+        aria-expanded={menuAberto}
+      >
+        {menuAberto ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
+      </button>
+
       <div className="sidebar-admin__topo">
         <img src={logo} alt="ClassSync" className="sidebar-admin__logo" />
         <span className="sidebar-admin__perfil">Administração</span>

@@ -38,34 +38,41 @@ function HistoricoAluno() {
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState('');
 
-  async function carregar() {
+  // Busca os dados na API. Os setState ficam dentro do .then/.catch/.finally,
+  // ou seja, só rodam quando a resposta chega. Por isso ela pode ser chamada
+  // direto no useEffect (regra react-hooks/set-state-in-effect do lint).
+  function buscar() {
+    return Promise.all([
+      listarVinculos({ idTurma }),
+      listarAlunos(),
+      listarAcompanhamentos({ idAluno }), // o backend já filtra: só os registros deste professor
+      listarBimestres(),
+      listarRetornos(), // só os retornos dos registros deste professor
+    ])
+      .then(([vinculos, alunos, registros, todosBimestres, retornos]) => {
+        const anoAtual = new Date().getFullYear();
+        setDados({
+          vinculos,
+          aluno: alunos.find((a) => a.id === idAluno && a.idTurma === idTurma) ?? null,
+          registros: registros.filter((r) => r.status !== 'CANCELADO'),
+          bimestres: todosBimestres.filter((b) => b.anoLetivo === anoAtual).sort((a, b) => a.numero - b.numero),
+          retornos: retornos.filter((r) => r.aluno.id === idAluno),
+        });
+      })
+      .catch((error) => setErro(mensagemDeErro(error)))
+      .finally(() => setCarregando(false));
+  }
+
+  // Botão "Tentar novamente": mostra o carregando de novo e refaz a busca
+  function carregar() {
     setCarregando(true);
     setErro('');
-    try {
-      const [vinculos, alunos, registros, todosBimestres, retornos] = await Promise.all([
-        listarVinculos({ idTurma }),
-        listarAlunos(),
-        listarAcompanhamentos({ idAluno }), // o backend já filtra: só os registros deste professor
-        listarBimestres(),
-        listarRetornos(), // só os retornos dos registros deste professor
-      ]);
-      const anoAtual = new Date().getFullYear();
-      setDados({
-        vinculos,
-        aluno: alunos.find((a) => a.id === idAluno && a.idTurma === idTurma) ?? null,
-        registros: registros.filter((r) => r.status !== 'CANCELADO'),
-        bimestres: todosBimestres.filter((b) => b.anoLetivo === anoAtual).sort((a, b) => a.numero - b.numero),
-        retornos: retornos.filter((r) => r.aluno.id === idAluno),
-      });
-    } catch (error) {
-      setErro(mensagemDeErro(error));
-    } finally {
-      setCarregando(false);
-    }
+    buscar();
   }
 
   useEffect(() => {
-    carregar();
+    buscar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- recarrega só quando muda a turma/aluno da URL
   }, [idTurma, idAluno]);
 
   if (carregando) {
