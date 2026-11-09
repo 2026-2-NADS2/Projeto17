@@ -36,6 +36,10 @@ import AcessoNegado from './pages/AcessoNegado/AcessoNegado';
 import TurmaAlunos from './pages/TurmaAlunos/TurmaAlunos';
 import HistoricoAluno from './pages/HistoricoAluno/HistoricoAluno';
 import RelatoriosProfessor from './pages/RelatoriosProfessor/RelatoriosProfessor';
+import MeusAlunosResponsavel from './pages/MeusAlunosResponsavel/MeusAlunosResponsavel';
+import RelatoriosResponsavel from './pages/RelatoriosResponsavel/RelatoriosResponsavel';
+import LayoutResponsavel from './components/LayoutResponsavel/LayoutResponsavel';
+import DetalheRelatorioResponsavel from './pages/DetalheRelatorioResponsavel/DetalheRelatorioResponsavel';
 
 function App() {
   return (
@@ -43,6 +47,12 @@ function App() {
       <Routes>
         <Route element={<LayoutPublico />}>
           <Route path="/" element={<Home />} />
+                    <Route path="/institucional" element={<Institucional />} />
+          <Route path="/servicos" element={<Servicos />} />
+          <Route path="/privacidade" element={<Privacidade />} />
+                    <Route path="/institucional" element={<Institucional />} />
+          <Route path="/servicos" element={<Servicos />} />
+          <Route path="/privacidade" element={<Privacidade />} />
           <Route path="*" element={<NotFound />} />
         </Route>
 
@@ -105,7 +115,14 @@ function App() {
         </Route>
 
         <Route element={<RotaProtegida perfis={['RESPONSAVEL']} />}>
-          <Route path="/responsavel" element={<DashboardResponsavel />} />
+          <Route element={<LayoutResponsavel />}>
+            <Route path="/responsavel" element={<DashboardResponsavel />} />
+                        <Route path="/responsavel/perfil" element={<MeuPerfil />} />
+            <Route path="/responsavel/alunos" element={<MeusAlunosResponsavel />} />
+            <Route path="/responsavel/relatorios" element={<RelatoriosResponsavel />} />
+            <Route path="/responsavel/relatorio/:id" element={<DetalheRelatorioResponsavel />} />
+                        <Route path="/responsavel/perfil" element={<MeuPerfil />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,0 +1,23 @@
+.rel-resp { padding: 32px; }
+.rel-resp__titulo { margin: 0; font-size: 1.6rem; color: #0F1B33; }
+.rel-resp__subtitulo { margin: 4px 0 20px; color: #5A6B8C; font-size: 0.9rem; }
+.rel-resp__abas { display: flex; gap: 20px; border-bottom: 1px solid #E3E8F2; margin-bottom: 20px; }
+.rel-resp__aba { padding: 8px 2px; border: none; border-bottom: 2px solid transparent; background: none; color: #5A6B8C; font: inherit; cursor: pointer; }
+.rel-resp__aba--ativa { color: #0247CB; border-bottom-color: #0247CB; font-weight: 600; }
+.rel-resp__filtros { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+.rel-resp__filtros label { display: flex; flex-direction: column; gap: 6px; font-size: 0.8rem; font-weight: 600; color: #0F1B33; }
+.rel-resp__filtros select { min-width: 150px; padding: 8px 10px; border: 1px solid #D5DCEA; border-radius: 8px; background: #FFFFFF; font: inherit; font-weight: 400; }
+.rel-resp__grupo { margin-bottom: 24px; }
+.rel-resp__grupo-titulo { margin: 0 0 10px; font-size: 0.7rem; letter-spacing: 0.06em; color: #5A6B8C; }
+.rel-resp__grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+.rel-resp__card { padding: 16px 18px; background: #FFFFFF; border: 1px solid #E3E8F2; border-left: 3px solid #0247CB; border-radius: 10px; }
+.rel-resp__card-topo { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.rel-resp__selo { padding: 3px 10px; border-radius: 999px; font-size: 0.7rem; font-weight: 600; }
+.rel-resp__selo--ok { background: #DDF5E6; color: #1B7A43; }
+.rel-resp__selo--pendente { background: #FFF1D6; color: #9A6200; }
+.rel-resp__meta { margin: 6px 0; font-size: 0.78rem; color: #5A6B8C; }
+.rel-resp__descricao { margin: 0 0 10px; font-size: 0.85rem; color: #0F1B33; }
+.rel-resp__rodape { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: #5A6B8C; }
+.rel-resp__rodape strong { color: #0F1B33; font-size: 1rem; }
+.rel-resp__abrir { color: #0247CB; font-weight: 600; text-decoration: none; }
+.rel-resp__abrir:hover { text-decoration: underline; }
