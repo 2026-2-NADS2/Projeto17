@@ -40,6 +40,7 @@ import MeusAlunosResponsavel from './pages/MeusAlunosResponsavel/MeusAlunosRespo
 import RelatoriosResponsavel from './pages/RelatoriosResponsavel/RelatoriosResponsavel';
 import LayoutResponsavel from './components/LayoutResponsavel/LayoutResponsavel';
 import DetalheRelatorioResponsavel from './pages/DetalheRelatorioResponsavel/DetalheRelatorioResponsavel';
+import MeuPerfilResponsavel from './pages/MeuPerfilResponsavel/MeuPerfilResponsavel';
 
 function App() {
   return (
@@ -50,9 +51,7 @@ function App() {
                     <Route path="/institucional" element={<Institucional />} />
           <Route path="/servicos" element={<Servicos />} />
           <Route path="/privacidade" element={<Privacidade />} />
-                    <Route path="/institucional" element={<Institucional />} />
-          <Route path="/servicos" element={<Servicos />} />
-          <Route path="/privacidade" element={<Privacidade />} />
+                    
           <Route path="*" element={<NotFound />} />
         </Route>
 
@@ -117,11 +116,10 @@ function App() {
         <Route element={<RotaProtegida perfis={['RESPONSAVEL']} />}>
           <Route element={<LayoutResponsavel />}>
             <Route path="/responsavel" element={<DashboardResponsavel />} />
-                        <Route path="/responsavel/perfil" element={<MeuPerfil />} />
+                                    <Route path="/responsavel/perfil" element={<MeuPerfilResponsavel />} />
             <Route path="/responsavel/alunos" element={<MeusAlunosResponsavel />} />
             <Route path="/responsavel/relatorios" element={<RelatoriosResponsavel />} />
             <Route path="/responsavel/relatorio/:id" element={<DetalheRelatorioResponsavel />} />
-                        <Route path="/responsavel/perfil" element={<MeuPerfil />} />
           </Route>
         </Route>
       </Routes>
