@@ -137,6 +137,117 @@
   color: #0247CB;
   font-weight: 600;
 }
+/* ---------- Recuperação de senha e avisos ---------- */
+.login-voltar {
+  align-self: flex-start;
+  display: inline-block;
+  margin-bottom: 16px;
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  color: #0247CB;
+}
+
+.login-voltar--centro {
+  display: block;
+  margin: 16px 0 0;
+  text-align: center;
+}
+
+.login-aviso {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+  padding: 12px 14px;
+  border: 1px solid #BFD3F8;
+  border-radius: 8px;
+  background-color: #EEF4FF;
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  color: #0F1B33;
+}
+
+.login-aviso strong {
+  color: #0247CB;
+}
+
+.login-icone-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 16px;
+  border-radius: 50%;
+}
+
+.login-icone-status--azul { background-color: #EEF4FF; color: #0247CB; }
+.login-icone-status--verde { background-color: #E7F7EE; color: #15803D; }
+.login-icone-status--vermelho { background-color: #FDECEC; color: #DC2626; }
+
+.login-btn-link {
+  display: block;
+  margin-top: 8px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.login-btn-secundario {
+  display: block;
+  padding: 13px;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  font-family: 'Sora', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #0F1B33;
+  text-align: center;
+  text-decoration: none;
+}
+
+.login-link-botao {
+  display: block;
+  margin: 16px auto 0;
+  border: none;
+  background: none;
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  color: #0247CB;
+  cursor: pointer;
+}
+
+.login-regras {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 12px 0 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background-color: #F6F8FC;
+  list-style: none;
+  font-family: 'Sora', sans-serif;
+  font-size: 12px;
+  color: #5A6B8C;
+}
+
+.login-regras li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.login-regras svg {
+  color: #DC2626;
+}
+
+.login-regras .login-regra--ok {
+  color: #15803D;
+}
+
+.login-regras .login-regra--ok svg {
+  color: #15803D;
+}
+
 /* Celular e tablet: os dois lados ficam um embaixo do outro */
 @media (max-width: 768px) {
   .login {

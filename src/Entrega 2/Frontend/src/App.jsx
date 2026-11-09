@@ -3,6 +3,8 @@ import LayoutPublico from './components/LayoutPublico/LayoutPublico';
 import Home from './pages/Home/Home';
 import NotFound from './pages/NotFound/NotFound';
 import Login from './pages/Login/Login';
+import RecuperarSenha from './pages/RecuperarSenha/RecuperarSenha';
+import RedefinirSenha from './pages/RedefinirSenha/RedefinirSenha';
 import DashboardProfessor from './pages/DashboardProfessor/DashboardProfessor';
 import DashboardAdmin from './pages/DashboardAdmin/DashboardAdmin';
 import RevisaoAdmin from './pages/RevisaoAdmin/RevisaoAdmin';
@@ -57,6 +59,8 @@ function App() {
         </Route>
 
         <Route path="/entrar" element={<Login />} />
+        <Route path="/recuperar-senha" element={<RecuperarSenha />} />
+        <Route path="/redefinir-senha" element={<RedefinirSenha />} />
 
         <Route element={<RotaProtegida perfis={['PROFESSOR']} />}>
           <Route element={<LayoutPainel itens={menuProfessor} />}>
