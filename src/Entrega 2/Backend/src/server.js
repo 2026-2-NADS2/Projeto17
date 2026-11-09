@@ -11,6 +11,7 @@ const bimestreRoutes = require("./routes/bimestreRoutes");
 const vinculoRoutes = require("./routes/vinculoRoutes");
 const cienciaRoutes = require("./routes/cienciaRoutes");
 const tagRoutes = require("./routes/tagRoutes");
+const auditoriaRoutes = require("./routes/auditoriaRoutes");
 const pool = require("./config/database");
 
 const app = express();
@@ -37,6 +38,7 @@ app.use("/api/bimestres", bimestreRoutes);
 app.use("/api/vinculos", vinculoRoutes);
 app.use("/api/tags", tagRoutes);
 app.use("/api", cienciaRoutes);
+app.use("/api/auditoria", auditoriaRoutes);
 
 // Rota de teste da conexão com o banco
 app.get("/api/teste-banco", async (req, res) => {
