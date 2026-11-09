@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import api from '../../services/api';
 import EstadoRequisicao from '../DashboardResponsavel/components/EstadoRequisicao/EstadoRequisicao';
 import { formatarMedia } from '../../utils/relatorios';
+import { obterUsuario } from '../../services/authService';
 import './DetalheRelatorioResponsavel.css';
 
 function formatarData(valor) {
@@ -22,6 +23,12 @@ function DetalheRelatorioResponsavel() {
   const [cienciaEm, setCienciaEm] = useState(null);
   const [observacao, setObservacao] = useState('');
   const [observacaoEnviada, setObservacaoEnviada] = useState(null);
+    const [geradoEm, setGeradoEm] = useState('');
+
+  function baixarPdf() {
+    setGeradoEm(new Date().toLocaleString('pt-BR'));
+    setTimeout(() => window.print(), 150);
+  }
 
   useEffect(() => {
     let cancelado = false;
@@ -83,7 +90,7 @@ function DetalheRelatorioResponsavel() {
           </p>
         </div>
         <div className="det-rel__acoes">
-          <button type="button" className="det-rel__btn" onClick={() => window.print()}>
+                    <button type="button" className="det-rel__btn" onClick={baixarPdf}>
             Baixar PDF
           </button>
           {!jaTemCiencia && (
@@ -162,6 +169,52 @@ function DetalheRelatorioResponsavel() {
         </aside>
       </div>
 
+      <section className="det-rel__folha" aria-hidden="true">
+        <header className="folha__faixa">
+          <strong className="folha__marca">Class<span>Sync</span></strong>
+          <div className="folha__titulo">
+            <strong>Relatório de acompanhamento bimestral</strong>
+            <span>Escola Municipal Horizonte</span>
+          </div>
+        </header>
+
+        <div className="folha__linha">
+          <div><small>Aluno</small><strong>{rel.aluno}</strong></div>
+          <div><small>Turma</small><strong>{rel.turma ?? '—'}</strong></div>
+          <div><small>Ano letivo</small><strong>{rel.anoLetivo}</strong></div>
+          <div><small>Bimestre</small><strong>{rel.bimestre}º</strong></div>
+        </div>
+
+        <div className="folha__linha">
+          <div><small>Disciplina</small><strong>{rel.disciplina}</strong></div>
+          <div><small>Professor(a)</small><strong>{rel.professor ?? '—'}</strong></div>
+          <div><small>Média</small><strong className="folha__media">{formatarMedia(rel.media)}</strong></div>
+        </div>
+
+        <h2 className="folha__subtitulo">Descrição</h2>
+        <p className="folha__texto">{rel.descricao || 'Sem descrição.'}</p>
+
+        {tags.length > 0 && (
+          <>
+            <small className="folha__rotulo">Tags</small>
+            <div className="folha__tags">
+              {tags.map((t) => <span key={t}>{t}</span>)}
+            </div>
+          </>
+        )}
+
+        <footer className="folha__rodape">
+          <p>
+            Publicado pela administração em {formatarData(rel.publicadoEm)} · Ciência do responsável:{' '}
+            {jaTemCiencia ? 'registrada' : 'pendente'}
+          </p>
+          <p>
+            Gerado em {geradoEm} por {obterUsuario()?.nome ?? 'Responsável'} · Documento com dados
+            pessoais de menor — uso restrito à família (LGPD).
+          </p>
+        </footer>
+      </section>
+      
       {modalAberto && (
         <div className="det-rel__fundo" role="dialog" aria-modal="true" aria-labelledby="titulo-modal">
           <div className="det-rel__modal">
