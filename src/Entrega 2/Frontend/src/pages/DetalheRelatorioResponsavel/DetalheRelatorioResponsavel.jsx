@@ -24,6 +24,14 @@ function DetalheRelatorioResponsavel() {
   const [observacao, setObservacao] = useState('');
   const [observacaoEnviada, setObservacaoEnviada] = useState(null);
     const [geradoEm, setGeradoEm] = useState('');
+      const [aviso, setAviso] = useState('');
+
+  useEffect(() => {
+    if (!aviso) return undefined;
+    const temporizador = setTimeout(() => setAviso(''), 4000);
+    return () => clearTimeout(temporizador);
+  }, [aviso]);
+
 
   function baixarPdf() {
     setGeradoEm(new Date().toLocaleString('pt-BR'));
@@ -65,6 +73,7 @@ function DetalheRelatorioResponsavel() {
   function enviarObservacao() {
     if (!observacao.trim()) return;
     setObservacaoEnviada(observacao.trim());
+        setAviso('Observação enviada à escola.');
     setObservacao('');
   }
 
@@ -169,6 +178,13 @@ function DetalheRelatorioResponsavel() {
         </aside>
       </div>
 
+      {aviso && (
+        <div className="det-rel__toast" role="status">
+          <span>{aviso}</span>
+          <button type="button" aria-label="Fechar aviso" onClick={() => setAviso('')}>×</button>
+        </div>
+      )}
+      
       <section className="det-rel__folha" aria-hidden="true">
         <header className="folha__faixa">
           <strong className="folha__marca">Class<span>Sync</span></strong>
@@ -214,7 +230,7 @@ function DetalheRelatorioResponsavel() {
           </p>
         </footer>
       </section>
-      
+
       {modalAberto && (
         <div className="det-rel__fundo" role="dialog" aria-modal="true" aria-labelledby="titulo-modal">
           <div className="det-rel__modal">
