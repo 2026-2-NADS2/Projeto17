@@ -12,7 +12,7 @@
 
 ## Professores Orientadores: <a href="https://www.linkedin.com/in/adriano-valente/">Adriano Valente</a>, <a href="https://www.linkedin.com/in/eduardo-savino/">Eduardo Savino</a>, <a href="https://www.linkedin.com/in/francisco-escobar/">Francisco Escobar</a>, <a href="https://www.linkedin.com/in/jbuesso/">José Buesso</a>, <a href="https://www.linkedin.com/in/ronaldo-araujo-pinto-3542811a/">Ronaldo Araújo</a>
 
-## Status do Projeto: Entrega 2 concluída · em evolução 🚧
+## Status do Projeto: Publicado 🚀
 
 ## 🌐 Acesse o sistema
 
@@ -101,6 +101,11 @@ O backend é organizado em camadas: **routes → controllers → services → re
 |<br>
 |-->documentos<br>
 |  &emsp;|-->Entrega 1<br>
+|  &emsp; &emsp;|-->BD<br>
+|  &emsp; &emsp;|-->Desenvolvimento Web Fullstack<br>
+|  &emsp; &emsp;|-->Design de Interface Digital<br>
+|  &emsp; &emsp;|-->Estrutura de Dados<br>
+|  &emsp; &emsp;|-->POO<br>
 |  &emsp;|-->Entrega 2<br>
 |  &emsp; &emsp;|-->BD<br>
 |  &emsp; &emsp;|-->Desenvolvimento Web Fullstack<br>
@@ -108,10 +113,13 @@ O backend é organizado em camadas: **routes → controllers → services → re
 |  &emsp; &emsp;|-->Estrutura de Dados<br>
 |  &emsp; &emsp;|-->POO<br>
 |  &emsp;|-->Documento - Projeto de Extensão - COM Empresa - 2026_1.docx<br>
+|  &emsp;|-->Etapas 1 e 2 da PI.pdf<br>
 |  &emsp;|-->MODELO_BANNER_FECAP_2026_1.pptx<br>
+|  &emsp;|-->README.md<br>
 |<br>
 |-->imagens<br>
 |  &emsp;|-->Logo<br>
+|  &emsp;|-->QRCode<br>
 |<br>
 |-->src<br>
 |  &emsp;|-->Entrega 1 (versão anterior, mantida como histórico)<br>
@@ -317,9 +325,9 @@ Bibliotecas principais: React Router, Axios, Lucide (ícones), Express, mysql2, 
 
 Aqui estão as referências usadas no projeto.
 
-1. <https://github.com/iuricode/readme-template>
-2. <https://github.com/gabrieldejesus/readme-model>
-3. <https://chooser-beta.creativecommons.org/>
-4. <https://freesound.org/>
-5. <https://www.toptal.com/developers/gitignore>
-6. Músicas por: <a href="https://freesound.org/people/DaveJf/sounds/616544/"> DaveJf </a> e <a href="https://freesound.org/people/DRFX/sounds/338986/"> DRFX </a> ambas com Licença CC 0.
+1. REACT. **Documentação oficial do React**. Disponível em: <https://react.dev/>.
+2. EXPRESS. **Documentação oficial do Express (Node.js)**. Disponível em: <https://expressjs.com/>.
+3. ORACLE. **MySQL 8.0 Reference Manual**. Disponível em: <https://dev.mysql.com/doc/refman/8.0/en/>.
+4. JONES, M.; BRADLEY, J.; SAKIMURA, N. **RFC 7519: JSON Web Token (JWT)**. IETF, 2015. Disponível em: <https://datatracker.ietf.org/doc/html/rfc7519>.
+5. OWASP. **Password Storage Cheat Sheet**. Disponível em: <https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html>.
+6. BRASIL. **Lei nº 13.709, de 14 de agosto de 2018: Lei Geral de Proteção de Dados Pessoais (LGPD)**. Disponível em: <https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm>.
