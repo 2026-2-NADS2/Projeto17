@@ -12,7 +12,7 @@
 
 ## Professores Orientadores: <a href="https://www.linkedin.com/in/adriano-valente/">Adriano Valente</a>, <a href="https://www.linkedin.com/in/eduardo-savino/">Eduardo Savino</a>, <a href="https://www.linkedin.com/in/francisco-escobar/">Francisco Escobar</a>, <a href="https://www.linkedin.com/in/jbuesso/">José Buesso</a>, <a href="https://www.linkedin.com/in/ronaldo-araujo-pinto-3542811a/">Ronaldo Araújo</a>
 
-## Status do Projeto: Entrega 2 concluída · em evolução 🚧
+## Status do Projeto: Publicado 🚀
 
 ## 🌐 Acesse o sistema
 
