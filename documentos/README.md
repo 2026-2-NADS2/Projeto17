@@ -81,7 +81,7 @@
 | **Versão/modelo** | Claude Opus 5.5 |
 | **Disciplina / Trabalho** | Desenvolvimento Web Fullstack / Entrega 2: API, frontend, deploy e testes |
 | **Finalidade de uso** | Apoio na implementação e revisão do backend e do frontend, correção de responsividade e lint, deploy (Aiven, Render e Vercel) e documentação dos testes. Todo código foi revisado, testado e commitado pelo grupo. |
-| ***Prompts* principais utilizados** | “Vamos concluir todas as telas do professor.”<br>“Eu quero que você me ajude a fazer uma correção de CSS no projeto inteiro (…) todas as telas criam uma barra de rolagem horizontal.”<br>“Vamos fazer a documentação do Postman.”<br>“Consegue verificar as telas de autenticação no Figma e verificar quais faltam?” |
+| ***Prompts* principais utilizados** | “O lint acusou isso, tem problema?”<br>“Hoje nós temos 3 domínios para o site, tem problema isso? Seria melhor apenas 1? O que você acha?”<br>“Nós estamos usando as variáveis de senha nos bodys? (…) isso está certo?” |
 | **Trechos ou entregas afetadas** | `src/Entrega 2` (backend e frontend), coleção do Postman, documento “ClassSync - Documentação dos testes da API (Postman)” e README principal. |
 
 ### Design de Interface Digital
@@ -114,7 +114,7 @@
 | **Versão/modelo** | Claude Opus 5.5 |
 | **Disciplina / Trabalho** | POO / Entrega 2: backend completo e funcionando |
 | **Finalidade de uso** | Apoio na organização do backend em classes (models, repositories, services e controllers), com encapsulamento (métodos privados), herança (ErroApp estende Error) e regras de negócio nas classes. |
-| ***Prompts* principais utilizados** | “Podemos continuar? (…) Essas informações que a Mel usou estão de acordo com o edital?”<br>“Como os testes do catálogo ainda funcionam se nós apagamos as classes dele no backend?” |
+| ***Prompts* principais utilizados** | “Como os testes do catálogo ainda funcionam se nós apagamos as classes dele no backend?”<br>“Trocar a senha só pelo site já é suficiente ou precisa em algum outro lugar?” |
 | **Trechos ou entregas afetadas** | `src/Entrega 2/Backend/src` (models, repositories, services, controllers, errors e utils). |
 
 ***Declaro que o uso acima descrito está em conformidade com o GUIA PARA O USO RESPONSÁVEL DE
